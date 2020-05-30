@@ -30,17 +30,16 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 /**
- * Confirms that exercise name is added correctly and button works correctly
+ * Tests that the pop up confirmation window is displayed and showing the correct information
  */
-
 @LargeTest
-public class TestName1 {
+public class WindowTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void testName1() {
+    public void windowTest() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.buttonCoach), withText("I am a Coach"),
                         childAtPosition(
@@ -68,17 +67,36 @@ public class TestName1 {
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 1)));
-        appCompatEditText.perform(scrollTo(), replaceText("Test 1"), closeSoftKeyboard());
+        appCompatEditText.perform(scrollTo(), replaceText("Test 2"), closeSoftKeyboard());
 
-        ViewInteraction editText = onView(
-                allOf(withId(R.id.ExerciseNameBox), withText("Test 1"),
+        ViewInteraction appCompatEditText2 = onView(
+                allOf(withId(R.id.RepNumBox),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class),
+                                        withClassName(is("android.widget.ScrollView")),
                                         0),
-                                1),
-                        isDisplayed()));
-        editText.check(matches(withText("Test 1")));
+                                2)));
+        appCompatEditText2.perform(scrollTo(), replaceText("1"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText3 = onView(
+                allOf(withId(R.id.SetNumBox),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        appCompatEditText3.perform(scrollTo(), replaceText("5"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText4 = onView(
+                allOf(withId(R.id.Notes),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                4)));
+        appCompatEditText4.perform(scrollTo(), replaceText("Test"), closeSoftKeyboard());
+
+
     }
 
     private static Matcher<View> childAtPosition(
