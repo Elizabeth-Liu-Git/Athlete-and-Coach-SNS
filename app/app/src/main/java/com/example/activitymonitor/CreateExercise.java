@@ -3,23 +3,17 @@ package com.example.activitymonitor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
-import android.content.Intent;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +35,6 @@ public class CreateExercise extends AppCompatActivity {
         note = findViewById(R.id.Notes);
 
         db = FirebaseFirestore.getInstance();
-
 
 
         Button confirmExerciseButton = findViewById(R.id.button);
@@ -74,7 +67,6 @@ public class CreateExercise extends AppCompatActivity {
 
         AlertDialog alert = window.create();
         alert.show();
-
     }
 
     private void uploadData(String name, String rep, String set, String note){
@@ -85,18 +77,22 @@ public class CreateExercise extends AppCompatActivity {
         activity.put("Reps", rep);
         activity.put("Sets", set);
 
-        db.collection("Activities").add(activity)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+        db.collection("Activities").document().set(activity)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                    public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(CreateExercise.this, "Uploaded", Toast.LENGTH_SHORT).show();
                     }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(CreateExercise.this, "Failed", Toast.LENGTH_SHORT).show();
+                    }
                 });
-
     }
 
     private void goBack(){
-        Intent intent = new Intent (String.valueOf(CreateExercise.class));
-        startActivity(intent);
+        finish();
     }
 }
