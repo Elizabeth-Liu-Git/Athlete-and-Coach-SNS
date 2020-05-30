@@ -16,6 +16,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Allows the user to create a new exercise
+ */
 public class CreateExercise extends AppCompatActivity {
 
     String exerciseNameString, repNumString, setNumString, noteString;
@@ -35,7 +38,6 @@ public class CreateExercise extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-
         Button confirmExerciseButton = findViewById(R.id.button);
         confirmExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +51,11 @@ public class CreateExercise extends AppCompatActivity {
         });
     }
 
+    /**
+     * opens the pop-up window that allows the user to confirm the info they entered
+     * once confirmed will add to database
+     */
     public void showDialog() {
-
         AlertDialog.Builder window = new AlertDialog.Builder(CreateExercise.this);
         window.setTitle("Please Confirm Info Below")
                 .setMessage("Exercise name: " + exerciseNameString + '\n' + "Reps: " + repNumString+
@@ -68,10 +73,17 @@ public class CreateExercise extends AppCompatActivity {
         alert.show();
     }
 
+    /**
+     * Adds the data to the data base
+     * @param name - the name of exercise
+     * @param rep - number of reps set
+     * @param set - number of sets
+     * @param note - any notes that the coach may have
+     */
     private void uploadData(String name, String rep, String set, String note){
         Map<String, Object> activity = new HashMap<>();
         activity.put("ActivityName", name);
-        activity.put("Creator", "Zach");
+        activity.put("Creator", ""); // Creator ID is left empty for now
         activity.put("Instructional Notes", note);
         activity.put("Reps", rep);
         activity.put("Sets", set);
@@ -91,6 +103,9 @@ public class CreateExercise extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Takes user back a page
+     */
     private void goBack(){
         finish();
     }

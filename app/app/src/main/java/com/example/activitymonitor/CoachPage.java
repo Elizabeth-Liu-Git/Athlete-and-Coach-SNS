@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * Coaches page, this allows the coach to create a new exercise
+ */
 
 public class CoachPage extends AppCompatActivity {
 
@@ -25,6 +28,10 @@ public class CoachPage extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Takes the user to a new activity (CreateExercise) when clicked
+     */
     public void openNewExercise(){
         Intent intent = new Intent (this, CreateExercise.class);
         startActivity(intent);
