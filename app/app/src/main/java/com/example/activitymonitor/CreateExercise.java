@@ -1,21 +1,29 @@
 package com.example.activitymonitor;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * Allows the user to create a new exercise
+ */
 public class CreateExercise extends AppCompatActivity {
 
-    String exerciseNameString, repNumString, setNumString, noteString, phoneNumString;
-    EditText exerciseName, repNum, setNum, note, phoneNum;
+    String exerciseNameString, repNumString, setNumString, noteString;
+    EditText exerciseName, repNum, setNum, note;
+    FirebaseFirestore db;
 
 
     @Override
@@ -27,9 +35,8 @@ public class CreateExercise extends AppCompatActivity {
         repNum = findViewById(R.id.RepNumBox);
         setNum = findViewById(R.id.SetNumBox);
         note = findViewById(R.id.Notes);
-        phoneNum = findViewById(R.id.AthleteNumber);
 
-
+        db = FirebaseFirestore.getInstance();
 
         Button confirmExerciseButton = findViewById(R.id.button);
         confirmExerciseButton.setOnClickListener(new View.OnClickListener() {
@@ -39,22 +46,24 @@ public class CreateExercise extends AppCompatActivity {
                 repNumString = repNum.getText().toString();
                 setNumString = setNum.getText().toString();
                 noteString = note.getText().toString();
-                phoneNumString = phoneNum.getText().toString();
                 showDialog();
             }
         });
     }
 
+    /**
+     * opens the pop-up window that allows the user to confirm the info they entered
+     * once confirmed will add to database
+     */
     public void showDialog() {
-
         AlertDialog.Builder window = new AlertDialog.Builder(CreateExercise.this);
         window.setTitle("Please Confirm Info Below")
                 .setMessage("Exercise name: " + exerciseNameString + '\n' + "Reps: " + repNumString+
-                        '\n' + "Sets: " + setNumString + '\n' + "Coach notes: " + noteString+
-                        '\n' + "Athlete Phone Number: " + phoneNumString)
+                        '\n' + "Sets: " + setNumString + '\n' + "Coach notes: " + noteString)
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        uploadData(exerciseNameString, repNumString, setNumString, noteString);
                         goBack();
                     }
                 })
@@ -62,11 +71,42 @@ public class CreateExercise extends AppCompatActivity {
 
         AlertDialog alert = window.create();
         alert.show();
-
     }
 
+    /**
+     * Adds the data to the data base
+     * @param name - the name of exercise
+     * @param rep - number of reps set
+     * @param set - number of sets
+     * @param note - any notes that the coach may have
+     */
+    private void uploadData(String name, String rep, String set, String note){
+        Map<String, Object> activity = new HashMap<>();
+        activity.put("ActivityName", name);
+        activity.put("Creator", ""); // Creator ID is left empty for now
+        activity.put("Instructional Notes", note);
+        activity.put("Reps", rep);
+        activity.put("Sets", set);
+
+        db.collection("Activities").document().set(activity)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(CreateExercise.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(CreateExercise.this, "Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    /**
+     * Takes user back a page
+     */
     private void goBack(){
-        Intent intent = new Intent (String.valueOf(CreateExercise.class));
-        startActivity(intent);
+        finish();
     }
 }
