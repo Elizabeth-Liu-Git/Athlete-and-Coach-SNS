@@ -25,13 +25,32 @@ public class MainActivity extends AppCompatActivity {
                 openCoach();
             }
         });
+
+        //Athlete Button Event listener
+        Button buttonAthlete = findViewById(R.id.buttonAthlete);
+        buttonAthlete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAthlete();
+            }
+        });
     }
+
+
 
     /**
      * Opens coach activity after clicking coach button
      */
     public void openCoach(){
         Intent intent = new Intent (this, CoachPage.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Opens Athlete Page
+     */
+    public void openAthlete(){
+        Intent intent = new Intent (this, AthletePage.class);
         startActivity(intent);
     }
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Activity Monitor</string>
+    <string name="athlete_tab_upcoming_text">Upcoming Exercises</string>
+    <string name="athlete_tab_history_text">Exercise History</string>
 </resources>
