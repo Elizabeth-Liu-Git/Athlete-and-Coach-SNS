@@ -33,6 +33,44 @@ public class AthletePage extends AppCompatActivity {
         tabLayoutAthletePage = (TabLayout) findViewById(R.id.athlete_layout);
         tabUpcoming = (TabItem) findViewById(R.id.athlete_tab_upcoming);
         tabHistory = (TabItem) findViewById(R.id.athlete_tab_history);
+        viewPagerAthletePage = findViewById(R.id.athlete_viewpager);
+
+        pagerAdapterAthletePage = new PageAdapter(getSupportFragmentManager(), tabLayoutAthletePage.getTabCount());
+        viewPagerAthletePage.setAdapter(pagerAdapterAthletePage);
+
+
+        /**
+         *
+         */
+        tabLayoutAthletePage.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                viewPagerAthletePage.setCurrentItem(tab.getPosition());
+                //First Tab
+                if(tab.getPosition() == 0){
+                    pagerAdapterAthletePage.notifyDataSetChanged();
+
+                }
+                //Second Tab
+                else if(tab.getPosition() == 1){
+                    pagerAdapterAthletePage.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewPagerAthletePage.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayoutAthletePage));
 
     }
 
