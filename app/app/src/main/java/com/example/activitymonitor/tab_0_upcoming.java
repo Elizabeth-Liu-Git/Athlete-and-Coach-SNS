@@ -64,13 +64,7 @@ public class tab_0_upcoming extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        //Firebase retreivals
-        //db = FirebaseDatabase.getInstance().getReference().child();//TODO
-        db.keepSynced(true);
 
-        upcoming_list=(RecyclerView) upcoming_list.findViewById(R.id.upcoming_recycleview);
-        upcoming_list.setHasFixedSize(true);
-        upcoming_list.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
