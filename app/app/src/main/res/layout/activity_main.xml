@@ -6,32 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="428dp"
-        android:text="Welcome to the Activity Monitor. Select option below" />
 
-    <Button
-        android:id="@+id/buttonCoach"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="344dp"
-        android:text="I am a Coach"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/buttonAthlete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="258dp"
-        android:text="I am an Athlete"
-        android:textAllCaps="false" />
 
 </RelativeLayout>
