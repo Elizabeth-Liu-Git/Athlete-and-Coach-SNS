@@ -29,6 +29,8 @@ public class AthletePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_athlete_page);
 
+
+
         //Instantiating Tab Items
         tabLayoutAthletePage = (TabLayout) findViewById(R.id.athlete_layout);
         tabUpcoming = (TabItem) findViewById(R.id.athlete_tab_upcoming);
@@ -50,6 +52,7 @@ public class AthletePage extends AppCompatActivity {
                 //First Tab
                 if(tab.getPosition() == 0){
                     pagerAdapterAthletePage.notifyDataSetChanged();
+
 
                 }
                 //Second Tab

@@ -3,10 +3,15 @@ package com.example.activitymonitor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +19,11 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class tab_0_upcoming extends Fragment {
+
+    //
+    private RecyclerView upcoming_list;
+    private DatabaseReference db;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,6 +63,15 @@ public class tab_0_upcoming extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        //Firebase retreivals
+        //db = FirebaseDatabase.getInstance().getReference().child();//TODO
+        db.keepSynced(true);
+
+        upcoming_list=(RecyclerView) upcoming_list.findViewById(R.id.upcoming_recycleview);
+        upcoming_list.setHasFixedSize(true);
+        upcoming_list.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     @Override
