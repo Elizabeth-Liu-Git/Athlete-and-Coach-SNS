@@ -1,14 +1,28 @@
 package com.example.activitymonitor;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class AthletePage extends AppCompatActivity {
 
@@ -20,6 +34,7 @@ public class AthletePage extends AppCompatActivity {
     private TabItem tabUpcoming, tabHistory;
 
     public PageAdapter pagerAdapterAthletePage;
+
 
     /**
      *
@@ -51,8 +66,6 @@ public class AthletePage extends AppCompatActivity {
                 viewPagerAthletePage.setCurrentItem(tab.getPosition());
                 //First Tab
                 if(tab.getPosition() == 0){
-                    pagerAdapterAthletePage.notifyDataSetChanged();
-
 
                 }
                 //Second Tab
@@ -65,6 +78,9 @@ public class AthletePage extends AppCompatActivity {
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
+                if(tab.getPosition() == 0){
+
+                }
             }
 
             @Override
@@ -76,6 +92,8 @@ public class AthletePage extends AppCompatActivity {
         viewPagerAthletePage.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayoutAthletePage));
 
     }
+
+
 
 
 

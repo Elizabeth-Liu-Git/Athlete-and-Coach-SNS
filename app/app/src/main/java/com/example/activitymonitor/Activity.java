@@ -1,13 +1,19 @@
 package com.example.activitymonitor;
 
+import com.google.common.collect.Sets;
+
 public class Activity {
     private String ActivityName;
     private String Creator;
     private String InstructionalNotes;
-    private int Reps;
-    private int Sets;
+    private String Reps;
+    private String Sets;
 
-    public Activity(String activityName, String creator, String instructionalNotes, int reps, int sets) {
+
+    public Activity() {}
+
+
+    public Activity(String activityName, String creator, String instructionalNotes, String reps, String sets) {
         ActivityName = activityName;
         Creator = creator;
         InstructionalNotes = instructionalNotes;
@@ -39,19 +45,19 @@ public class Activity {
         InstructionalNotes = instructionalNotes;
     }
 
-    public int getReps() {
+    public String getReps() {
         return Reps;
     }
 
-    public void setReps(int reps) {
+    public void setReps(String reps) {
         Reps = reps;
     }
 
-    public int getSets() {
+    public String getSets() {
         return Sets;
     }
 
-    public void setSets(int sets) {
+    public void setSets(String sets) {
         Sets = sets;
     }
 }

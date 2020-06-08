@@ -13,7 +13,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    public String curr_userid="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
         //Hard coding userid global variable (as if user signed in)
-        curr_userid= "h3dm13R32eJSxWD7aqhh";
+
     }
 }
