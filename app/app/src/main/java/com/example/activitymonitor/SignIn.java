@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+
 
 
 public class SignIn extends AppCompatActivity {
@@ -144,7 +144,7 @@ public class SignIn extends AppCompatActivity {
                                 switchPageLanding();
                             }
                         } else {
-                            Log.d(TAG, "No such document");
+                            SignOut();
                         }
                     } else {
                         Log.d(TAG, "get failed with ", task.getException());
@@ -158,14 +158,14 @@ public class SignIn extends AppCompatActivity {
         findViewById(R.id.Layout1).setVisibility(View.INVISIBLE);
         findViewById(R.id.Layout2).setVisibility(View.INVISIBLE);
         findViewById(R.id.Layout3).setVisibility(View.VISIBLE);
-        Log.d("Error", "switchPageSelect not visible");
+
         final Context context = this;
         buttonAthlete = findViewById(R.id.buttonAthlete);
         buttonAthlete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 db.collection("Users").document(USERID).update("User Type", 2);
-                Intent intent = new Intent(context, AthleteLanding.class);
+                Intent intent = new Intent(context, AthletePage.class);
                 startActivity(intent);
             }
         });
@@ -182,7 +182,7 @@ public class SignIn extends AppCompatActivity {
 
     }
     private void switchPageLanding(){
-        Intent intent = new Intent (this, AthleteLanding.class);
+        Intent intent = new Intent (this, AthletePage.class);
         startActivity(intent);
     }
 
@@ -254,5 +254,12 @@ public class SignIn extends AppCompatActivity {
                         // ...
                     }
                 });
+    }
+
+    private void SignOut() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(this, SignIn.class);
+        this.startActivity(intent);
+        this.finishAffinity();
     }
 }
