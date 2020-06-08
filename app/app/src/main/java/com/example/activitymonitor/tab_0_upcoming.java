@@ -95,7 +95,6 @@ public class tab_0_upcoming extends Fragment {
 
 
         //Setting adapter for list and start listening
-
         adapter.startListening();//TODO
         myActivityList.setAdapter(adapter);
 
@@ -114,7 +113,7 @@ public class tab_0_upcoming extends Fragment {
 
             //getting
             exercise_name = itemView.findViewById(R.id.exercise_name);
-           exercise_reps = itemView.findViewById(R.id.exercise_reps);
+            exercise_reps = itemView.findViewById(R.id.exercise_reps);
             exercise_sets = itemView.findViewById(R.id.exercise_sets);
             exercise_notes = itemView.findViewById(R.id.exercise_notes);
         }
