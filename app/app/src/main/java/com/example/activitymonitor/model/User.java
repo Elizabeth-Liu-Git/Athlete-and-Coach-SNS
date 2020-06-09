@@ -8,6 +8,8 @@ public class User {
     private int UserType;
     private double Weight;
 
+    // TODO: 2020-06-09 How will User objects store & access CommentCollection objects?
+
     public User(int age, String firstName, String lastName, String phoneNumber, int userType, double weight) {
         Age = age;
         FirstName = firstName;

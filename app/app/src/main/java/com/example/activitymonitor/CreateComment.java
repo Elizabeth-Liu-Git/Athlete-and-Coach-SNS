@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
  * @author Will Robbins
  *
  * CreateComment: This class allows users to create comments, which will then be stored for later
- * access by CommentsView. This class can be called when users are creating comments in
- * CommentsView, and when users are submitting an activity.
+ * access by CommentsPage. This class can be called when users are creating comments in
+ * CommentsPage, and when users are submitting an activity.
  */
 
 public class CreateComment extends AppCompatActivity {
