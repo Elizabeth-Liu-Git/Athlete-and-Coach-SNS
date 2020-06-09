@@ -19,7 +19,7 @@ public class CreateComment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.comments_create_page);
+        setContentView(R.layout.activity_create_comment);
 
         
     }

@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".CoachPage"></activity>
+        <activity android:name=".CommentsView"></activity>
+        <activity android:name=".CreateComment"></activity>
         <activity android:name=".CreateExercise" />
         <activity android:name=".MainActivity">
             <intent-filter>
