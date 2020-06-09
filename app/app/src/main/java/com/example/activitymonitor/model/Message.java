@@ -2,7 +2,7 @@ package com.example.activitymonitor.model;
 
 /**
  * @author Will Robbins
- * Comment POJO
+ * Message POJO
  * Messages are stored by MessageCollections. They contain Sender and Receiver users, content
  * and a timestamp to record when the message was sent.
  */
@@ -12,18 +12,19 @@ import com.google.firebase.firestore.Exclude;
 
 import java.time.LocalTime;
 
-public class Comment {
+public class Message {
 
+    // Auto-generated ID for each Message
     @DocumentId
-    private String documentID;
+    private String MessageID;
 
     private User Sender, Receiver;
     private String Content;
     private LocalTime Time;
 
-    public Comment() {}
+    public Message() {}
 
-    public Comment(User Sender, User Receiver, String Content) {
+    public Message(User Sender, User Receiver, String Content) {
         this.Time = LocalTime.now();
         this.Sender = Sender;
         this.Receiver = Receiver;
@@ -31,12 +32,12 @@ public class Comment {
     }
 
     @Exclude
-    public String getDocumentID() {
-        return documentID;
+    public String getMessageID() {
+        return MessageID;
     }
 
-    public void setDocumentID(String documentID) {
-        this.documentID = documentID;
+    public void setMessageID(String messageID) {
+        this.MessageID = messageID;
     }
 
     public User getSender() {

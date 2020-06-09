@@ -2,8 +2,8 @@ package com.example.activitymonitor.model;
 
 /**
  * @author Will Robbins
- * CommentCollection POJO
- * CommentCollection objects store messages, and are only accessible by two users, who can
+ * MessageCollection POJO
+ * MessageCollection objects store Messages, and are only accessible by two users, who can
  * both be senders and receivers of messages. MessageCollections sort and display their Message
  * contents to the UI.
  */
@@ -11,28 +11,28 @@ package com.example.activitymonitor.model;
 import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.Exclude;
 
-public class CommentCollection {
+public class MessageCollection {
 
+    // Auto-generated ID for each MessageCollection
     @DocumentId
-    private String documentID;
+    private String CollectionID;
 
     private User UserA, UserB;
-    // TODO: 2020-06-08 What data structure should be used for Firestore? Apparently only maps work
 
-    public CommentCollection() {}
+    public MessageCollection() {}
 
-    public CommentCollection(User UserA, User UserB) {
+    public MessageCollection(User UserA, User UserB) {
         this.UserA = UserA;
         this.UserB = UserB;
     }
 
     @Exclude
-    public String getDocumentID() {
-        return documentID;
+    public String getCollectionID() {
+        return CollectionID;
     }
 
-    public void setDocumentID(String documentID) {
-        this.documentID = documentID;
+    public void setCollectionID(String collectionID) {
+        this.CollectionID = collectionID;
     }
 
     public User getUserA() {

@@ -121,6 +121,7 @@ public class SignIn extends AppCompatActivity {
             }
         });
     }
+
     private void updateUI(FirebaseUser currentUser) {
         if(currentUser == null){
             findViewById(R.id.Layout2).setVisibility(View.INVISIBLE);
@@ -182,17 +183,20 @@ public class SignIn extends AppCompatActivity {
 
 
     }
+
     private void switchPageLandingAthlete(){
         Intent intent = new Intent (this, AthletePage.class);
         startActivity(intent);
     }
+
     private void switchPageLandingCoach(){
         Intent intent = new Intent (this, CoachPage.class);
         startActivity(intent);
     }
 
     public void createAccount(String email, String password){
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -200,14 +204,19 @@ public class SignIn extends AppCompatActivity {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser firebaseUser = mAuth.getCurrentUser();
                             assert firebaseUser != null;
+
                             Map<String, Object> user = new HashMap<>();
+
                             user.put("First Name", "Not Set");
                             user.put("Last Name", "Not Set"); // Creator ID is left empty for now
                             user.put("Age", 0);
                             user.put("Height", 0);
                             user.put("Weight", 0);
                             user.put("User Type", 0);
+
                             USERID = firebaseUser.getUid();
+                            user.put("UserID", USERID);
+
                             db.collection("Users").document(USERID).set(user)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override

@@ -3,15 +3,14 @@ package com.example.activitymonitor.model;
 import com.google.common.collect.Sets;
 
 public class Activity {
+
     private String ActivityName;
     private String Creator;
     private String InstructionalNotes;
     private String Reps;
     private String Sets;
 
-
     public Activity() {}
-
 
     public Activity(String activityName, String creator, String instructionalNotes, String reps, String sets) {
         ActivityName = activityName;

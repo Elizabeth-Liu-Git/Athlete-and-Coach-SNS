@@ -1,6 +1,23 @@
 package com.example.activitymonitor.model;
 
+import com.google.firebase.firestore.DocumentId;
+import com.google.firebase.firestore.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
+
+    // Auto-generated ID for each User
+    @DocumentId
+    private String UserID;
+
+    /*
+    Map object to store keys to MessageCollection objects.
+    e.g. UID of MessageCollection : true/false
+     */
+    //private Map<String, Object> msgConvo;
+
     private int Age;
     private String FirstName;
     private String LastName;
@@ -8,7 +25,7 @@ public class User {
     private int UserType;
     private double Weight;
 
-    // TODO: 2020-06-09 How will User objects store & access CommentCollection objects?
+    public User() {}
 
     public User(int age, String firstName, String lastName, String phoneNumber, int userType, double weight) {
         Age = age;
@@ -17,10 +34,12 @@ public class User {
         PhoneNumber = phoneNumber;
         UserType = userType;
         Weight = weight;
+        //msgConvo = new HashMap<>();
     }
 
-    public User(){
-
+    @Exclude
+    public String getUserID() {
+        return UserID;
     }
 
     public int getAge() {
@@ -70,4 +89,12 @@ public class User {
     public void setWeight(double weight) {
         Weight = weight;
     }
+
+    /*public Map<String, Object> getMsgConvo() {
+        return msgConvo;
+    }
+
+    public void setMsgConvo(Map<String, Object> msgConvo) {
+        this.msgConvo = msgConvo;
+    }*/
 }
