@@ -1,4 +1,4 @@
-package com.example.activitymonitor;
+package com.example.activitymonitor.model;
 
 public class User {
     private int Age;

@@ -1,4 +1,4 @@
-package com.example.activitymonitor;
+package com.example.activitymonitor.model;
 
 import com.google.common.collect.Sets;
 
