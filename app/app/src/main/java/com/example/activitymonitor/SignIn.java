@@ -26,8 +26,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 public class SignIn extends AppCompatActivity {
 
     Button signUp, signIn, submit, buttonCoach, buttonAthlete;
@@ -140,8 +138,11 @@ public class SignIn extends AppCompatActivity {
                             if(num == 0){
                                 switchPageSelect();
                             }
+                            else if(num == 2){
+                                switchPageLandingAthlete();
+                            }
                             else{
-                                switchPageLanding();
+                                switchPageLandingCoach();
                             }
                         } else {
                             SignOut();
@@ -174,15 +175,19 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 db.collection("Users").document(USERID).update("User Type", 1);
-                Intent intent = new Intent(context, CoachLanding.class);
+                Intent intent = new Intent(context, CoachPage.class);
                 startActivity(intent);
             }
         });
 
 
     }
-    private void switchPageLanding(){
+    private void switchPageLandingAthlete(){
         Intent intent = new Intent (this, AthletePage.class);
+        startActivity(intent);
+    }
+    private void switchPageLandingCoach(){
+        Intent intent = new Intent (this, CoachPage.class);
         startActivity(intent);
     }
 
