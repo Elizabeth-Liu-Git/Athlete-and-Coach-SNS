@@ -1,8 +1,14 @@
 package com.example.activitymonitor.model;
 
 import com.google.common.collect.Sets;
+import com.google.firebase.firestore.DocumentId;
+import com.google.firebase.firestore.Exclude;
 
 public class Activity {
+
+    // Auto-generated ID for each Activity
+    @DocumentId
+    private String ActivityID;
 
     private String ActivityName;
     private String Creator;
@@ -18,6 +24,11 @@ public class Activity {
         InstructionalNotes = instructionalNotes;
         Reps = reps;
         Sets = sets;
+    }
+
+    @Exclude
+    public String getActivityID() {
+        return ActivityID;
     }
 
     public String getActivityName() {

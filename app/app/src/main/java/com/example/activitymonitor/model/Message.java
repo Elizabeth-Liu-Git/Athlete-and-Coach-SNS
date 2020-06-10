@@ -18,13 +18,13 @@ public class Message {
     @DocumentId
     private String MessageID;
 
-    private User Sender, Receiver;
+    private String Sender, Receiver;
     private String Content;
     private LocalTime Time;
 
     public Message() {}
 
-    public Message(User Sender, User Receiver, String Content) {
+    public Message(String Sender, String Receiver, String Content) {
         this.Time = LocalTime.now();
         this.Sender = Sender;
         this.Receiver = Receiver;
@@ -40,19 +40,19 @@ public class Message {
         this.MessageID = messageID;
     }
 
-    public User getSender() {
+    public String getSender() {
         return Sender;
     }
 
-    public void setSender(User Sender) {
+    public void setSender(String Sender) {
         this.Sender = Sender;
     }
 
-    public User getReceiver() {
+    public String getReceiver() {
         return Receiver;
     }
 
-    public void setReceiver(User Receiver) {
+    public void setReceiver(String Receiver) {
         this.Receiver = Receiver;
     }
 

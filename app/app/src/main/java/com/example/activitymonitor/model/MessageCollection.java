@@ -17,13 +17,13 @@ public class MessageCollection {
     @DocumentId
     private String CollectionID;
 
-    private User UserA, UserB;
+    private String userA, userB;
 
     public MessageCollection() {}
 
-    public MessageCollection(User UserA, User UserB) {
-        this.UserA = UserA;
-        this.UserB = UserB;
+    public MessageCollection(String userA, String userB) {
+        this.userA = userA;
+        this.userB = userB;
     }
 
     @Exclude
@@ -35,19 +35,19 @@ public class MessageCollection {
         this.CollectionID = collectionID;
     }
 
-    public User getUserA() {
-        return UserA;
+    public String getUserA() {
+        return userA;
     }
 
-    public void setUserA(User UserA) {
-        this.UserA = UserA;
+    public void setUserA(String userA) {
+        this.userA = userA;
     }
 
-    public User getUserB() {
-        return UserB;
+    public String getUserB() {
+        return userB;
     }
 
-    public void setUserB(User UserB) {
-        this.UserB = UserB;
+    public void setUserB(String userB) {
+        this.userB = userB;
     }
 }
