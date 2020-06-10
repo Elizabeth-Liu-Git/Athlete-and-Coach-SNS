@@ -7,12 +7,13 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.Chronometer;
 
-public class startExercise extends AppCompatActivity {
+public class StartExercise extends AppCompatActivity {
 
-    private Chronometer exerciseChrono;
-    private boolean chronoRunning;
-    private long offSet;
-    private boolean doneExercise = false;
+    private Chronometer exerciseChrono; //Chronometer to time activity
+    private boolean chronoRunning;//Boolean that keeps track of whether the chronometer is running
+    private long offSet;//Offset for calculating the amount of time elapsed
+    private boolean doneExercise = false;//Boolean that keeps track of whether the exercise has been completed
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,17 +27,23 @@ public class startExercise extends AppCompatActivity {
 
         //Listener that goes off every 10 second
         exerciseChrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener(){
-           @Override
-           public void onChronometerTick(Chronometer exerciseChrono){
-               //Every 10 s
-               if((SystemClock.elapsedRealtime() - exerciseChrono.getBase()) >= 10000){
+            @Override
+            public void onChronometerTick(Chronometer exerciseChrono){
+                //Every 10 s
+                if((SystemClock.elapsedRealtime() - exerciseChrono.getBase()) >= 10000){
 
-                   //TODO collecting biometrics every 10s
-               }
-           }
+                    //TODO collecting biometrics every 10s
+                }
+            }
         });
     }
 
+    /**
+     * startExercise()
+     * Serves to start the exercise and start the exercise timer
+     * @param v Contains the view
+     *
+     */
     public void startExercise(View v){
         //When Chronometer not running
         if(!chronoRunning){
@@ -46,11 +53,22 @@ public class startExercise extends AppCompatActivity {
         }
 
     }
+
+    /**
+     * finishExercise()
+     * Serves to finish and submit the exercise information to the database
+     * @param v contains View
+     */
     public void finishExercise(View v){
-        //Method for button that submits exercise
+        //TODO Method for button that submits exercise
 
     }
 
+    /**
+     * pauseExercise()
+     * serves to pause the exercise and pause the timer
+     * @param v contains View
+     */
     public void pauseExercise(View v){
 
         if(chronoRunning){

@@ -1,5 +1,8 @@
 package com.example.activitymonitor;
 
+/**
+ * User() class which is used to store user objects retreived from the firebase cloud storage
+ */
 public class User {
     private int Age;
     private String FirstName;
@@ -8,6 +11,15 @@ public class User {
     private int UserType;
     private double Weight;
 
+    /**
+     * User()
+     * @param age Age of user
+     * @param firstName first name of user
+     * @param lastName last name of user
+     * @param phoneNumber phone number of user
+     * @param userType UserType integer. 1= coach, 2= athlete
+     * @param weight
+     */
     public User(int age, String firstName, String lastName, String phoneNumber, int userType, double weight) {
         Age = age;
         FirstName = firstName;
@@ -17,6 +29,9 @@ public class User {
         Weight = weight;
     }
 
+    /**
+     * User() empty constructor for FireStore
+     */
     public User(){
 
     }
