@@ -1,27 +1,18 @@
 package com.example.activitymonitor;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.api.Distribution;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -79,9 +70,7 @@ public class tab_0_upcoming extends Fragment {
                 holder.exercise_notes.setText(model.getInstructionalNotes());
                 holder.exercise_reps.setText(model.getReps());
                 holder.exercise_sets.setText(model.getSets());
-
             }
-
             @NonNull
             @Override
             public ActivityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -92,15 +81,10 @@ public class tab_0_upcoming extends Fragment {
                 return viewHolder;
             }
         };
-
-
         //Setting adapter for list and start listening
-        adapter.startListening();//TODO
+        adapter.startListening();
         myActivityList.setAdapter(adapter);
-
     }
-
-
 
     //ViewHolder For the RecycleView
     public static class ActivityViewHolder extends RecyclerView.ViewHolder{
@@ -119,10 +103,4 @@ public class tab_0_upcoming extends Fragment {
         }
 
     }
-
-
-
-
-
-
 }

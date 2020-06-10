@@ -1,50 +1,33 @@
 package com.example.activitymonitor;
 
-import androidx.annotation.NonNull;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AthletePage extends AppCompatActivity {
 
-    /**
-     *
-     */
     private TabLayout tabLayoutAthletePage;
     private ViewPager viewPagerAthletePage;
     private TabItem tabUpcoming, tabHistory;
-
     public PageAdapter pagerAdapterAthletePage;
 
-
-    /**
-     *
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_athlete_page);
-
-
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
         //Instantiating Tab Items
         tabLayoutAthletePage = (TabLayout) findViewById(R.id.athlete_layout);
@@ -55,10 +38,6 @@ public class AthletePage extends AppCompatActivity {
         pagerAdapterAthletePage = new PageAdapter(getSupportFragmentManager(), tabLayoutAthletePage.getTabCount());
         viewPagerAthletePage.setAdapter(pagerAdapterAthletePage);
 
-
-        /**
-         *
-         */
         tabLayoutAthletePage.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -66,7 +45,7 @@ public class AthletePage extends AppCompatActivity {
                 viewPagerAthletePage.setCurrentItem(tab.getPosition());
                 //First Tab
                 if(tab.getPosition() == 0){
-
+                    pagerAdapterAthletePage.notifyDataSetChanged();
                 }
                 //Second Tab
                 else if(tab.getPosition() == 1){
@@ -93,10 +72,25 @@ public class AthletePage extends AppCompatActivity {
 
     }
 
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 
-
-
-
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // action with ID action_refresh was selected
+            case R.id.miCompose:
+                Intent intent = new Intent(this, ProfilePage.class);
+                this.startActivity(intent);
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
 }

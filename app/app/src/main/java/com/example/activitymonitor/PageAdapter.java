@@ -38,4 +38,4 @@ public class PageAdapter extends FragmentPagerAdapter {
     public int getItemPosition(@NonNull Object object) {
         return POSITION_NONE;
     }
-}
+
