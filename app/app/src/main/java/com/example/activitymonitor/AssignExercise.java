@@ -28,8 +28,8 @@ public class AssignExercise extends AppCompatActivity {
 
     DatePickerDialog picker;
     EditText eText;
-    Button btnGet;
     TextView tvw;
+    String getDateString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,28 +74,29 @@ public class AssignExercise extends AppCompatActivity {
         atheleteDropDown.setAdapter(adapterathlete);
 
 
-//        tvw=(TextView)findViewById(R.id.textView1);
-//        eText=(EditText) findViewById(R.id.editText1);
-//        eText.setInputType(InputType.TYPE_NULL);
-//        eText.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final Calendar cldr = Calendar.getInstance();
-//                int day = cldr.get(Calendar.DAY_OF_MONTH);
-//                int month = cldr.get(Calendar.MONTH);
-//                int year = cldr.get(Calendar.YEAR);
-//                // date picker dialog
-//                picker = new DatePickerDialog(AssignExercise.this,
-//                        new DatePickerDialog.OnDateSetListener() {
-//                            @Override
-//                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-//                            }
-//                        }, year, month, day);
-//                picker.show();
-//            }
-//        });
-//        btnGet=(Button)findViewById(R.id.button1);
+        tvw=(TextView)findViewById(R.id.textView1);
+        eText=(EditText) findViewById(R.id.editText1);
+        eText.setInputType(InputType.TYPE_NULL);
+        eText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                picker = new DatePickerDialog(AssignExercise.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                getDateString = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
+//        btnGet=(Button)findViewById(R.id.button2);
 //        btnGet.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -121,7 +122,7 @@ public class AssignExercise extends AppCompatActivity {
         AlertDialog.Builder window = new AlertDialog.Builder(AssignExercise.this);
         window.setTitle("Please Confirm Exercise Below")
                 .setMessage("Exercise name: " + exerciseNameString + '\n' + "Coach notes: " + noteString+
-                        '\n')
+                        '\n' + "Date " + getDateString+ '\n')
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

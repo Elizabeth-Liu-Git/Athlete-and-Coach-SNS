@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "1032812674878",
+    "firebase_url": "https://activityapp-csci3130group13.firebaseio.com",
+    "project_id": "activityapp-csci3130group13",
+    "storage_bucket": "activityapp-csci3130group13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032812674878:android:15b2a54ca996f4da5af66f",
+        "android_client_info": {
+          "package_name": "com.example.activitymonitor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032812674878-l8pm5llbuj6rgb9j4t2kd8n1knhjd4n5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.activitymonitor",
+            "certificate_hash": "b253c08cbcf6ceff1705c85f1bd69eee29b957ef"
+          }
+        },
+        {
+          "client_id": "1032812674878-ve35899ik544404v9qct2vq3555f5u5n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.activitymonitor",
+            "certificate_hash": "c8d7442d178abbcd8a03be9549cf7d534d12944b"
+          }
+        },
+        {
+          "client_id": "1032812674878-ef8qhnv3e0dbs9al4meflkcnkjrf8stf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.activitymonitor",
+            "certificate_hash": "6e83c5a90e6f2ac243beddeb399e985963b851e7"
+          }
+        },
+        {
+          "client_id": "1032812674878-88q6v2s4a9ooseg6trcuqiha7tb2lts1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVE88-Vdp3fplfPK5Ql3PsACQDCJtFJhY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032812674878-88q6v2s4a9ooseg6trcuqiha7tb2lts1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
