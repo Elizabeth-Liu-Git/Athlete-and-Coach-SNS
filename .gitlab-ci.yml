@@ -51,8 +51,6 @@ unit_tests:
     expire_in: 4 days
     paths:
      - app/build/reports/tests/
-    tags:
-     - ugrad
 
 
 debugTests:
