@@ -28,7 +28,7 @@
         android:layout_marginBottom="193dp"
         android:background="#E66666"
         android:fontFamily="sans-serif-condensed"
-        android:text="Sign In"
+        android:text="Sign Up"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
@@ -48,19 +48,6 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/textViewAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="590dp"
-        android:text="Don't have an account?"
-        android:textColor="#817676"
-        android:textSize="18sp"
-        android:typeface="normal" />
-
-    <TextView
         android:id="@+id/textViewPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,22 +59,6 @@
         android:textColor="#817676"
         android:textSize="18sp"
         tools:layout_editor_absoluteY="655dp" />
-
-    <Button
-        android:id="@+id/buttonSignUp"
-        style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
-        android:layout_width="77dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="272dp"
-        android:layout_marginTop="579dp"
-        android:text="Sign Up"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textStyle="italic"
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="506dp" />
 
     <EditText
         android:id="@+id/editTextTextPassword"

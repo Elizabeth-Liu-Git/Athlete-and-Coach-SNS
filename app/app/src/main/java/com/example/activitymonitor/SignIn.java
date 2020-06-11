@@ -28,9 +28,8 @@ import java.util.Map;
 
 public class SignIn extends AppCompatActivity {
 
-    Button signUp, signIn, submit, buttonCoach, buttonAthlete;
+    Button signUp, submit;
     EditText emailText, passwordText;
-    TextView passwordView, emailView;
 
     FirebaseFirestore db;
     String TAG = "EmailandPassword";
@@ -45,6 +44,9 @@ public class SignIn extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
+        emailText = findViewById(R.id.editTextTextEmailAddress);
+        passwordText = findViewById(R.id.editTextTextPassword);
+
         signUp = findViewById(R.id.buttonSignUp);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,11 +55,19 @@ public class SignIn extends AppCompatActivity {
             }
         });
 
-        signIn = findViewById(R.id.buttonSignIn);
-        signIn.setOnClickListener(new View.OnClickListener() {
+        submit = findViewById(R.id.buttonSubmit);
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SignInPage();
+                String email = emailText.getText().toString();
+                String password = passwordText.getText().toString();
+                if(email.equals("") || password.equals("")){
+                    Toast.makeText(SignIn.this, "Please Fill Out The Form",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    signIn(email, password);
+                }
             }
         });
 
@@ -75,74 +85,29 @@ public class SignIn extends AppCompatActivity {
     }
 
     private void SignUpPage(){
-        emailText = findViewById(R.id.editTextTextEmailAddress);
-        passwordText = findViewById(R.id.editTextTextPassword);
-        emailView = findViewById(R.id.textViewEmail);
-        passwordView = findViewById(R.id.textViewPassword);
-        submit = findViewById(R.id.buttonSubmit);
-
-        findViewById(R.id.Layout2).setVisibility(View.VISIBLE);
-        findViewById(R.id.Layout1).setVisibility(View.INVISIBLE);
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = emailText.getText().toString();
-                String password = passwordText.getText().toString();
-
-                createAccount(email, password);
-            }
-        });
+        Intent intent = new Intent(this, SignUp.class);
+        this.startActivity(intent);
     }
 
-    private void SignInPage(){
-        emailText = findViewById(R.id.editTextTextEmailAddress);
-        passwordText = findViewById(R.id.editTextTextPassword);
-        emailView = findViewById(R.id.textViewEmail);
-        passwordView = findViewById(R.id.textViewPassword);
-        submit = findViewById(R.id.buttonSubmit);
-
-        findViewById(R.id.Layout2).setVisibility(View.VISIBLE);
-        findViewById(R.id.Layout1).setVisibility(View.INVISIBLE);
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = emailText.getText().toString();
-                String password = passwordText.getText().toString();
-                if(email.equals("") || password.equals("")){
-                    Toast.makeText(SignIn.this, "Please Fill Out The Form",
-                            Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    signIn(email, password);
-                }
-
-            }
-        });
-    }
     private void updateUI(FirebaseUser currentUser) {
-        if(currentUser == null){
-            findViewById(R.id.Layout2).setVisibility(View.INVISIBLE);
-            findViewById(R.id.Layout1).setVisibility(View.VISIBLE);
-        }
-        else{
+        if(currentUser != null){
             DocumentReference docRef = db.collection("Users").document(currentUser.getUid());
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
+                        assert document != null;
                         if (document.exists()) {
-                            long num = (long) document.get("User Type");
+                            long num = (long) document.get("userType");
                             if(num == 0){
-                                switchPageSelect();
+                                profileSetup();
                             }
                             else if(num == 2){
-                                switchPageLandingAthlete();
+                                athletePage();
                             }
                             else{
-                                switchPageLandingCoach();
+                                coachPage();
                             }
                         } else {
                             SignOut();
@@ -155,85 +120,19 @@ public class SignIn extends AppCompatActivity {
         }
     }
 
-    private void switchPageSelect(){
-        findViewById(R.id.Layout1).setVisibility(View.INVISIBLE);
-        findViewById(R.id.Layout2).setVisibility(View.INVISIBLE);
-        findViewById(R.id.Layout3).setVisibility(View.VISIBLE);
-
-        final Context context = this;
-        buttonAthlete = findViewById(R.id.buttonAthlete);
-        buttonAthlete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db.collection("Users").document(USERID).update("User Type", 2);
-                Intent intent = new Intent(context, AthletePage.class);
-                startActivity(intent);
-            }
-        });
-        buttonCoach = findViewById(R.id.buttonCoach);
-        buttonCoach.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db.collection("Users").document(USERID).update("User Type", 1);
-                Intent intent = new Intent(context, CoachPage.class);
-                startActivity(intent);
-            }
-        });
-
-
-    }
-    private void switchPageLandingAthlete(){
-        Intent intent = new Intent (this, AthletePage.class);
-        startActivity(intent);
-    }
-    private void switchPageLandingCoach(){
-        Intent intent = new Intent (this, CoachPage.class);
-        startActivity(intent);
+    private void athletePage() {
+        Intent intent = new Intent(this, AthletePage.class);
+        this.startActivity(intent);
     }
 
-    public void createAccount(String email, String password){
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                            assert firebaseUser != null;
-                            Map<String, Object> user = new HashMap<>();
-                            user.put("First Name", "Not Set");
-                            user.put("Last Name", "Not Set"); // Creator ID is left empty for now
-                            user.put("Age", 0);
-                            user.put("Height", 0);
-                            user.put("Weight", 0);
-                            user.put("User Type", 0);
-                            USERID = firebaseUser.getUid();
-                            db.collection("Users").document(USERID).set(user)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                Toast.makeText(SignIn.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(SignIn.this, "Failed", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+    private void coachPage() {
+        Intent intent = new Intent(this, CoachPage.class);
+        this.startActivity(intent);
+    }
 
-                            updateUI(firebaseUser);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignIn.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-
-                        // ...
-                    }
-                });
+    private void profileSetup() {
+        Intent intent = new Intent(this, ProfileSetUp.class);
+        this.startActivity(intent);
     }
 
     public void signIn(String email, String password){
