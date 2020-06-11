@@ -36,6 +36,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Will Robbins
@@ -64,15 +65,6 @@ public class SendMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
 
-
-        // TODO: 2020-06-10 Need to be sure about data model structure. This is for testing:
-        Message testMessage = new Message("sender info","receiver info","test content");
-        List<Message> testMsgList = new ArrayList<>();
-        testMsgList.add(testMessage);
-
-        mMessageRecycler = findViewById(R.id.recycler_view_messagelist);
-        mMessageAdapter = new MessageListAdapter(this, testMsgList);
-        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -110,9 +102,20 @@ public class SendMessageActivity extends AppCompatActivity {
                 if (((User) parent.getSelectedItem()).getUserID() != null) {
                     displayContactData(user);
                     createMessageCollection(user);
+
+                    // Get MessageCollection relevant to these two users
+
+
+                    // TODO: 2020-06-10 Need to be sure about data model structure. This is for testing:
+                    /*Message testMessage = new Message("sender info","receiver info","test content");
+                    List<Message> testMsgList = new ArrayList<>();
+                    testMsgList.add(testMessage);
+
+                    mMessageRecycler = findViewById(R.id.recycler_view_messagelist);
+                    mMessageAdapter = new MessageListAdapter(SendMessageActivity.this, testMsgList);
+                    mMessageRecycler.setLayoutManager(new LinearLayoutManager(SendMessageActivity.this));*/
                 }
 
-                
             }
 
             @Override
@@ -122,6 +125,7 @@ public class SendMessageActivity extends AppCompatActivity {
         });
     }
 
+
     private void createMessageCollection(User receiver) {
 
         // When a contact is selected, generate a new MessageCollection
@@ -130,8 +134,28 @@ public class SendMessageActivity extends AppCompatActivity {
 
         MessageCollection msgCo = new MessageCollection(sendID, receiveID);
 
+        // TODO: 2020-06-11 Check for duplicate MessageCollection objects
         // Add MessageCollection to Firebase
-        db.collection("Communications").add(msgCo);
+        final String msgCoID = db.collection("Communications").document().getId();
+        msgCo.setCollectionID(msgCoID);
+
+        db.collection("Communications").document(msgCoID)
+                .set(msgCo)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: " + msgCoID);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, e.toString());
+                    }
+                });
+
+        // Add MessageCollection key to both users
+
     }
 
     public void readData(final FirestoreCallback callback) {

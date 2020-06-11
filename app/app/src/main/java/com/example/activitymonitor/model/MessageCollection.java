@@ -11,11 +11,15 @@ package com.example.activitymonitor.model;
 import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.Exclude;
 
+import java.util.ArrayList;
+
 public class MessageCollection {
 
     // Auto-generated ID for each MessageCollection
-    @DocumentId
     private String CollectionID;
+
+    // Arraylist of Message objects
+    ArrayList<Message> msgList;
 
     private String userA, userB;
 
@@ -24,9 +28,9 @@ public class MessageCollection {
     public MessageCollection(String userA, String userB) {
         this.userA = userA;
         this.userB = userB;
+        msgList = new ArrayList<>();
     }
 
-    @Exclude
     public String getCollectionID() {
         return CollectionID;
     }
@@ -49,5 +53,13 @@ public class MessageCollection {
 
     public void setUserB(String userB) {
         this.userB = userB;
+    }
+
+    public ArrayList<Message> getMsgList() {
+        return msgList;
+    }
+
+    public void setMsgList(ArrayList<Message> msgList) {
+        this.msgList = msgList;
     }
 }
