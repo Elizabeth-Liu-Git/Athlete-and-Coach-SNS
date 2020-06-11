@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.activitymonitor.model.Message;
+import com.example.activitymonitor.model.MessageCollection;
 import com.example.activitymonitor.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -102,9 +104,15 @@ public class SendMessageActivity extends AppCompatActivity {
 
                 User user = (User) parent.getSelectedItem();
 
-                Toast.makeText(SendMessageActivity.this,"User: " + user.getUserID(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(SendMessageActivity.this,"User: " + user.getUserID(), Toast.LENGTH_SHORT).show();
 
-                displayContactData(user);
+                // Create a MessageCollection when the user makes an actual selection
+                if (((User) parent.getSelectedItem()).getUserID() != null) {
+                    displayContactData(user);
+                    createMessageCollection(user);
+                }
+
+                
             }
 
             @Override
@@ -112,6 +120,18 @@ public class SendMessageActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void createMessageCollection(User receiver) {
+
+        // When a contact is selected, generate a new MessageCollection
+        String sendID = FirebaseAuth.getInstance().getUid();
+        String receiveID = receiver.getUserID();
+
+        MessageCollection msgCo = new MessageCollection(sendID, receiveID);
+
+        // Add MessageCollection to Firebase
+        db.collection("Communications").add(msgCo);
     }
 
     public void readData(final FirestoreCallback callback) {
