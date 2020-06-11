@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * Coaches page, this allows the coach to create a new exercise
@@ -27,6 +29,11 @@ public class CoachPage extends AppCompatActivity {
         setContentView(R.layout.activity_coach_page);
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
+        // Update UserType parameter to 1
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users").document(fUser.getUid()).update("userType",1);
 
         buttonCreateExercise = findViewById(R.id.buttonNewExercise);
         buttonCreateExercise.setOnClickListener(new View.OnClickListener() {

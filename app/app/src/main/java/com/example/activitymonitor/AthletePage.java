@@ -11,9 +11,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.activitymonitor.model.User;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AthletePage extends AppCompatActivity {
 
@@ -28,6 +31,11 @@ public class AthletePage extends AppCompatActivity {
         setContentView(R.layout.activity_athlete_page);
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
+        // Update UserType parameter to 2
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users").document(fUser.getUid()).update("userType",2);
         
         //Instantiating Tab Items
         tabLayoutAthletePage = (TabLayout) findViewById(R.id.athlete_layout);

@@ -37,7 +37,7 @@ public class ProfilePage extends AppCompatActivity {
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent msgIntent = new Intent(ProfilePage.this, CommentsActivity.class);
+                Intent msgIntent = new Intent(ProfilePage.this, SendMessageActivity.class);
 
                 // Get user profile to pass to CommentsPage
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();

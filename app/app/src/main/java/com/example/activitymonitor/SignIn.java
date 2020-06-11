@@ -13,8 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.activitymonitor.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -123,19 +125,23 @@ public class SignIn extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser currentUser) {
+
         if(currentUser == null){
             findViewById(R.id.Layout2).setVisibility(View.INVISIBLE);
             findViewById(R.id.Layout1).setVisibility(View.VISIBLE);
         }
         else{
             DocumentReference docRef = db.collection("Users").document(currentUser.getUid());
+
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            long num = (long) document.get("User Type");
+
+                            long num = document.toObject(User.class).getUserType();
+
                             if(num == 0){
                                 switchPageSelect();
                             }
@@ -163,19 +169,20 @@ public class SignIn extends AppCompatActivity {
 
         final Context context = this;
         buttonAthlete = findViewById(R.id.buttonAthlete);
+        buttonCoach = findViewById(R.id.buttonCoach);
+
         buttonAthlete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.collection("Users").document(USERID).update("User Type", 2);
+
                 Intent intent = new Intent(context, AthletePage.class);
                 startActivity(intent);
             }
         });
-        buttonCoach = findViewById(R.id.buttonCoach);
         buttonCoach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.collection("Users").document(USERID).update("User Type", 1);
+
                 Intent intent = new Intent(context, CoachPage.class);
                 startActivity(intent);
             }
@@ -205,19 +212,12 @@ public class SignIn extends AppCompatActivity {
                             FirebaseUser firebaseUser = mAuth.getCurrentUser();
                             assert firebaseUser != null;
 
-                            Map<String, Object> user = new HashMap<>();
-
-                            user.put("First Name", "Not Set");
-                            user.put("Last Name", "Not Set"); // Creator ID is left empty for now
-                            user.put("Age", 0);
-                            user.put("Height", 0);
-                            user.put("Weight", 0);
-                            user.put("User Type", 0);
+                            User u = new User();
 
                             USERID = firebaseUser.getUid();
-                            user.put("UserID", USERID);
+                            u.setUserID(USERID);
 
-                            db.collection("Users").document(USERID).set(user)
+                            db.collection("Users").document(USERID).set(u)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {

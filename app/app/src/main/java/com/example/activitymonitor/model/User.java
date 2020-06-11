@@ -9,14 +9,10 @@ import java.util.Map;
 public class User {
 
     // Auto-generated ID for each User
-    @DocumentId
     private String UserID;
 
-    /*
-    Map object to store keys to MessageCollection objects.
-    e.g. UID of MessageCollection : true/false
-     */
-    //private Map<String, Object> msgConvo;
+    // Set of keys which are the IDs of MessageCollection objects
+    Map<String, Boolean> keys;
 
     private int Age;
     private String FirstName;
@@ -34,12 +30,21 @@ public class User {
         PhoneNumber = phoneNumber;
         UserType = userType;
         Weight = weight;
-        //msgConvo = new HashMap<>();
+        keys = new HashMap<>();
     }
 
-    @Exclude
+    // TODO: 2020-06-10 toString set to ID for testing
+    @Override
+    public String toString() {
+        return FirstName + " " + LastName;
+    }
+
     public String getUserID() {
         return UserID;
+    }
+
+    public void setUserID(String UserID) {
+        this.UserID = UserID;
     }
 
     public int getAge() {
@@ -90,11 +95,11 @@ public class User {
         Weight = weight;
     }
 
-    /*public Map<String, Object> getMsgConvo() {
-        return msgConvo;
+    public Map<String, Boolean> getKeys() {
+        return keys;
     }
 
-    public void setMsgConvo(Map<String, Object> msgConvo) {
-        this.msgConvo = msgConvo;
-    }*/
+    public void setKeys(Map<String, Boolean> keys) {
+        this.keys = keys;
+    }
 }
