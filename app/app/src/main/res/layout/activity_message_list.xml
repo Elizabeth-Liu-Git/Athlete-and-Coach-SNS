@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/msg_main">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_messagelist"
@@ -18,6 +19,7 @@
 
 
     <LinearLayout
+        android:id="@+id/layout_contacts"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
