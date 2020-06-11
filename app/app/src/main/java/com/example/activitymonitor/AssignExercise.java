@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class AssignExercise extends AppCompatActivity {
@@ -74,16 +75,20 @@ public class AssignExercise extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .whereEqualTo("User Type", "2")
+                .whereEqualTo("userType", 2)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String name = document.get("First Name").toString() + " " + document.get("Last Name").toString();
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                Log.d("Success", documentSnapshot.getId() + " -> " + documentSnapshot.getData());
+                                String name = documentSnapshot.get("First Name") + " " + documentSnapshot.get("Last Name");
                                 atheletes.add(name);
                             }
+                        }
+                        else{
+                            Log.d("Error" , String.valueOf(task.getException()));
                         }
                     }
                 });
@@ -93,8 +98,8 @@ public class AssignExercise extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String name = document.get("ActivityName").toString();
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                String name = Objects.requireNonNull(document.get("ActivityName")).toString();
                                 exercises.add(name);
                             }
                         }

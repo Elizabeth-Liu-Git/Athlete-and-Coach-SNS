@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class CoachPage extends AppCompatActivity {
 
-    Button buttonCreateExercise;
+    Button buttonCreateExercise, buttonAssignExercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +29,24 @@ public class CoachPage extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         buttonCreateExercise = findViewById(R.id.buttonNewExercise);
+        buttonAssignExercise = findViewById(R.id.buttonAssignExercise);
         buttonCreateExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewExercise();
             }
         });
+        buttonAssignExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                assignExercise();
+            }
+        });
+    }
+
+    private void assignExercise() {
+        Intent assignIntent = new Intent (this, AssignExercise.class);
+        startActivity(assignIntent);
     }
 
     /**

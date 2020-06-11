@@ -73,7 +73,8 @@ public class SignUp extends AppCompatActivity {
 
                             USERID = firebaseUser.getUid();
                             u.setUserID(USERID);
-
+                            u.setFirstName("Default");
+                            u.setLastName("Default");
                             db.collection("Users").document(USERID).set(u)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

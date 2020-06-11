@@ -47,11 +47,11 @@ public class ProfileSetUp extends AppCompatActivity {
                     }
                     else{
                         if(checkBox.isChecked()) {
-                            db.collection("Users").document(USERID).update("First Name", firstString, "Last Name", lastString, "userType", 1);
+                            db.collection("Users").document(USERID).update("firstName", firstString, "lastName", lastString, "userType", 1);
                             coachPage();
                         }
                         else{
-                            db.collection("Users").document(USERID).update("First Name", firstString, "Last Name", lastString, "userType", 2);
+                            db.collection("Users").document(USERID).update("firstName", firstString, "lastName", lastString, "userType", 2);
                             athletePage();
                         }
                     }
