@@ -36,7 +36,7 @@ public class User {
     // TODO: 2020-06-10 toString set to ID for testing
     @Override
     public String toString() {
-        return FirstName + " " + LastName;
+        return UserID;
     }
 
     public String getUserID() {

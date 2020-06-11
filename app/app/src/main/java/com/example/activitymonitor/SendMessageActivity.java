@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +24,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -43,40 +48,19 @@ public class SendMessageActivity extends AppCompatActivity {
 
     public static final String TAG = "SendMessageActivity";
     private Spinner contactSpinner;
-    List<User> userList;
+    private List<User> userList;
 
     private RecyclerView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
+
+    // Retrieve CollectionReference of Users collection in Firebase
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    CollectionReference UsersRef = db.collection("Users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
-
-        // Populate spinner with contacts
-        contactSpinner = findViewById(R.id.contacts_spinner);
-        userList = new ArrayList<>();
-        getContacts();
-
-        ArrayAdapter<User> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, userList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        contactSpinner.setAdapter(adapter);
-
-        contactSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                User user = (User) parent.getSelectedItem();
-                displayContactData(user);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
 
 
         // TODO: 2020-06-10 Need to be sure about data model structure. This is for testing:
@@ -89,28 +73,79 @@ public class SendMessageActivity extends AppCompatActivity {
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void getContacts() {
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-        // Retrieve CollectionReference of Users collection in Firebase
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference UsersRef = db.collection("Users");
+        this.contactSpinner = (Spinner) findViewById(R.id.contacts_spinner);
 
-        // Add each documents in Users to userList
+        readData(new FirestoreCallback() {
+            @Override
+            public void onCallback(ArrayList<User> list) {
+                Log.d(TAG, list.toString());
+
+                userList = list;
+
+                ArrayAdapter<User> adapter = new ArrayAdapter<>(SendMessageActivity.this,
+                        android.R.layout.simple_spinner_dropdown_item, userList);
+                adapter.notifyDataSetChanged();
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                contactSpinner.setAdapter(adapter);
+            }
+        });
+
+        contactSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                User user = (User) parent.getSelectedItem();
+
+                Toast.makeText(SendMessageActivity.this,"User: " + user.getUserID(), Toast.LENGTH_SHORT).show();
+
+                displayContactData(user);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    public void readData(final FirestoreCallback callback) {
+
+        final ArrayList<User> uList = new ArrayList<>();
+
         UsersRef.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot doc : task.getResult()) {
-                                userList.add(doc.toObject(User.class));
+                            for (DocumentSnapshot documentSnapshot : task.getResult()) {
 
-                                // TODO: 2020-06-10 logd needed
+                                uList.add(documentSnapshot.toObject(User.class));
                             }
+
+                            callback.onCallback(uList);
                         } else {
-                            // TODO: 2020-06-10 logd needed
+                            Log.d(TAG, "Error retrieving users: ", task.getException());
                         }
                     }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, e.toString());
+                    }
                 });
+
+    }
+
+    // Custom callback to get data
+    interface FirestoreCallback {
+        void onCallback(ArrayList<User> list);
     }
 
     public void getSelectedContact(View v) {
