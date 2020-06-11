@@ -7,8 +7,6 @@ package com.example.activitymonitor;
  * Time : June 11, 2020
  */
 
-
-
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
