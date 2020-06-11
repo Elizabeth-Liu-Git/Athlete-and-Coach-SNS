@@ -1,6 +1,13 @@
 package com.example.activitymonitor;
-//https://www.tutlane.com/tutorial/android/android-datepicker-with-examples
-//https://stackoverflow.com/questions/13377361/how-to-create-a-drop-down-list
+/*
+ *Project: CSCI 3130 Acitivity App
+ * Author: Rita Liu, Zacary Long, Android Tutorial, Nicolas Tyler
+ * //https://www.tutlane.com/tutorial/android/android-datepicker-with-examples
+   //https://stackoverflow.com/questions/13377361/how-to-create-a-drop-down-list
+ * Time : June 11, 2020
+ */
+
+
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -94,27 +101,6 @@ public class AssignExercise extends AppCompatActivity {
                     }
                 });
 
-//        db.collection("Users").get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        if(!queryDocumentSnapshots.isEmpty()) {
-//                          List<DocumentSnapshot> allAthletes = queryDocumentSnapshots.getDocuments();
-//                            int i = 0;
-//                           for(DocumentSnapshot d:allAthletes){
-//                                String name = d.get("First Name").toString() + " " + d.get("Last Name").toString();
-////                                if(d.get("User Type").toString().equals("2")){
-//                                    atheletes.add(name);
-//                                    i ++;
-////                                }
-//                            }
-//                        }
-//                    }
-//                });
-
-//        String[] exercises = new String[]{"choose an exercise", "create a new exercise", "exercise 1", "exercise 2", "exercise3"};
-////create an adapter to describe how the items are displayed, adapters are used in several places in android.
-////There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapterexercise = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, exercises);
 //set the spinners adapter to the previously created one.
         exerciseDropDown.setAdapter(adapterexercise);
