@@ -35,30 +35,25 @@
         tools:layout_editor_absoluteX="144dp"
         tools:layout_editor_absoluteY="212dp" />
 
-    <TextView
-        android:id="@+id/textViewEmail"
-        android:layout_width="49dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="232dp"
-        android:text="Email"
-        android:textColor="#3C3F41"
-        android:textSize="18sp" />
+        <Button
+            android:id="@+id/buttonCoach"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="280dp"
+            android:text="I am a Coach"
+            android:textAlignment="center"
+            android:textAllCaps="false" />
 
-    <TextView
-        android:id="@+id/textViewAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="590dp"
-        android:text="Don't have an account?"
-        android:textColor="#817676"
-        android:textSize="18sp"
-        android:typeface="normal" />
+        <Button
+            android:id="@+id/buttonAthlete"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="350dp"
+            android:text="I am an Athlete"
+            android:textAllCaps="false" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/textViewPassword"
