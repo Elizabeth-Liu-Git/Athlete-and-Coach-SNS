@@ -28,32 +28,24 @@
         android:layout_marginBottom="193dp"
         android:background="#E66666"
         android:fontFamily="sans-serif-condensed"
-        android:text="Sign In"
+        android:text="Sign Up"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         tools:layout_editor_absoluteX="144dp"
         tools:layout_editor_absoluteY="212dp" />
 
-        <Button
-            android:id="@+id/buttonCoach"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="280dp"
-            android:text="I am a Coach"
-            android:textAlignment="center"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/buttonAthlete"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="350dp"
-            android:text="I am an Athlete"
-            android:textAllCaps="false" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/textViewEmail"
+        android:layout_width="49dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="232dp"
+        android:text="Email"
+        android:textColor="#3C3F41"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewPassword"
@@ -67,22 +59,6 @@
         android:textColor="#817676"
         android:textSize="18sp"
         tools:layout_editor_absoluteY="655dp" />
-
-    <Button
-        android:id="@+id/buttonSignUp"
-        style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
-        android:layout_width="77dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="272dp"
-        android:layout_marginTop="579dp"
-        android:text="Sign Up"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textStyle="italic"
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="506dp" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
