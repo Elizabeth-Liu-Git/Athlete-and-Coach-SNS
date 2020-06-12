@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+fragment_tab_0_upcoming: Tab layout file
+XML Layout File for the Fragment that displays the athlete's upcoming exercises
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tab_0_upcoming">
+
+    <!--This linearlayout can be populated with a title/ other persistent information-->
+    <LinearLayout
+        android:id="@+id/upcoming_toplayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+    </LinearLayout>
+
+    <!--This recyclerview is dynamically updated with exercises from firestore-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/upcoming_recycleview">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</FrameLayout>

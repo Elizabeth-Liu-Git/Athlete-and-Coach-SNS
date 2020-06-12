@@ -5,7 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CreateExercise">
-
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,5 +29,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="278dp"
         android:text="Create New Exercise" />
+    <Button
+        android:id="@+id/buttonAssignExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="259dp"
+        android:text="Assign Exercise to an athlete" />
 
 </RelativeLayout>
