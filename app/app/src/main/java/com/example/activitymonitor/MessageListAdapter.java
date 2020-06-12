@@ -2,6 +2,7 @@ package com.example.activitymonitor;
 
 /**
  * @author Will Robbins
+ * Adapter which will populate the drop-down menu with contacts to select for messaging
  */
 
 import android.content.Context;

@@ -73,6 +73,7 @@ public class SendMessageActivity extends AppCompatActivity {
 
         this.contactSpinner = (Spinner) findViewById(R.id.contacts_spinner);
 
+        // Populate userList with users to display in spinner
         readData(new FirestoreCallback() {
             @Override
             public void onCallback(ArrayList<User> list) {
@@ -80,6 +81,7 @@ public class SendMessageActivity extends AppCompatActivity {
 
                 userList = list;
 
+                // Set these users to be displayed in the spinner
                 ArrayAdapter<User> adapter = new ArrayAdapter<>(SendMessageActivity.this,
                         android.R.layout.simple_spinner_dropdown_item, userList);
                 adapter.notifyDataSetChanged();
@@ -160,6 +162,7 @@ public class SendMessageActivity extends AppCompatActivity {
 
     public void readData(final FirestoreCallback callback) {
 
+        // Add users from Firebase to arraylist
         final ArrayList<User> uList = new ArrayList<>();
 
         UsersRef.get()
