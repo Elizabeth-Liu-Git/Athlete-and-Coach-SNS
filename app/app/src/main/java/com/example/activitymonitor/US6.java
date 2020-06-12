@@ -4,25 +4,22 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 
 
-public class StartExercise extends AppCompatActivity implements SensorEventListener{
+public class US6 extends AppCompatActivity implements SensorEventListener{
     SensorManager sManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
     Sensor stepSensor = sManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_exercise);
+        setContentView(R.layout.activity_US6);
     }
 
     @Override

@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class StartExerciseTest {
+public class US6Test {
 
     @Test
     public void onCreate() {
