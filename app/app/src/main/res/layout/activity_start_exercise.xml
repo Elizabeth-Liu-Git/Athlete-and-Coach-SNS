@@ -16,6 +16,7 @@
         android:textSize="35sp"/>
     <!--Button that starts the exercise-->
     <Button
+        android:id="@+id/start_btn_startexercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
@@ -23,6 +24,7 @@
         />
     <!--Button that pauses exercise-->
     <Button
+        android:id="@+id/pause_btn_startexercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pause"
@@ -30,6 +32,7 @@
         />
     <!--Button that completes/submits exercise-->
     <Button
+        android:id="@+id/submit_btn_startexercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Finish!"
