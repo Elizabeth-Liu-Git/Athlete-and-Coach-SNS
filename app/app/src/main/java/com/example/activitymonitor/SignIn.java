@@ -26,17 +26,53 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Signs the user into the application using a sign in form
+ */
 public class SignIn extends AppCompatActivity {
 
-    Button signUp, submit;
-    EditText emailText, passwordText;
 
+    /**
+     * The SignUp button that submits when the user would like to sign up
+     */
+    Button signUp;
+    /**
+     * The submit button that initiates running {@Link #createAccount(String email, String password)}
+     */
+    Button submit;
+    /**
+     * where user enters the email
+     */
+    EditText emailText;
+
+    /**
+     * where user enters the password
+     */
+    EditText passwordText;
+
+    /**
+     * Database information in a variable
+     */
     FirebaseFirestore db;
+    /**
+     * The TAG used in Error Reporting for this section
+     */
     String TAG = "EmailandPassword";
+    /**
+     * holds the instance of the user information
+     */
     private FirebaseAuth mAuth;
+
+    /**
+     * holds the user ID returned from getUID()
+     */
     String USERID;
 
 
+    /**
+     * When the activity is loaded add listeners and functions to buttons, if user submits we check signIn()
+     * @param savedInstanceState the instance of the user variable used for access
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +109,9 @@ public class SignIn extends AppCompatActivity {
 
     }
 
+    /**
+     * on the start of the activity check if there is a user instance and updateUI(currentUser)
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -84,11 +123,18 @@ public class SignIn extends AppCompatActivity {
         updateUI(currentUser);
     }
 
+    /**
+     *Send the user to the SignUpPage activity
+     */
     private void SignUpPage(){
         Intent intent = new Intent(this, SignUp.class);
         this.startActivity(intent);
     }
 
+    /**
+     * updates the UI if the user can be found in the database, send to appropriate page
+     * @param currentUser the FirebaseUser that is currently using the program
+     */
     private void updateUI(FirebaseUser currentUser) {
         if(currentUser != null){
             DocumentReference docRef = db.collection("Users").document(currentUser.getUid());
@@ -120,21 +166,35 @@ public class SignIn extends AppCompatActivity {
         }
     }
 
+    /**
+     *Send user to athlete page
+     */
     private void athletePage() {
         Intent intent = new Intent(this, AthletePage.class);
         this.startActivity(intent);
     }
 
+    /**
+     *Send user to coach page
+     */
     private void coachPage() {
         Intent intent = new Intent(this, CoachPage.class);
         this.startActivity(intent);
     }
 
+    /**
+     *send user to profile setup if they don't have a userType
+     */
     private void profileSetup() {
         Intent intent = new Intent(this, ProfileSetUp.class);
         this.startActivity(intent);
     }
 
+    /**
+     * Verifies the user using signInWithEmailAndPassword() and connects to the DB
+     * @param email the email that the user has entered
+     * @param password the password that the user has entered
+     */
     public void signIn(String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -160,6 +220,9 @@ public class SignIn extends AppCompatActivity {
                 });
     }
 
+    /**
+     *Signs the user out and redirects them to the SignIn page
+     */
     private void SignOut() {
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(this, SignIn.class);

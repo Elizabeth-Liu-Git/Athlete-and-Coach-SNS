@@ -15,12 +15,40 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * Sets up the user profile after the user has been authorized by the DB
+ */
 public class ProfileSetUp extends AppCompatActivity {
-    private static String USERID = "";
+    /**
+     * holds the user ID returned from getUID()
+     */
+    String USERID;
+    /**
+     * Database information in a variable
+     */
     FirebaseFirestore db;
-    EditText first, last;
-    String firstString, lastString;
 
+    /**
+     * where the user enters their first name
+     */
+    EditText first;
+    /**
+     * where the user enters their last name
+     */
+    EditText last;
+    /**
+     * holds firstname information
+     */
+    String firstString;
+    /**
+     * holds lastname information
+     */
+    String lastString;
+
+    /**
+     * When the activity is loaded add listeners and functions to buttons, if user submits we check setup information
+     * @param savedInstanceState the instance of the user variable used for access
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +88,18 @@ public class ProfileSetUp extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * send user to the athlete page
+     */
     private void athletePage() {
         Intent intent = new Intent(this, AthletePage.class);
         this.startActivity(intent);
     }
 
+    /**
+     * send user to the coach page
+     */
     private void coachPage() {
         Intent intent = new Intent(this, CoachPage.class);
         this.startActivity(intent);

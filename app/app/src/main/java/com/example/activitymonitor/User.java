@@ -6,6 +6,9 @@ import com.google.firebase.firestore.Exclude;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Placeholder for User information, currently not fully implemented
+ */
 public class User {
 
     // Auto-generated ID for each User

@@ -19,17 +19,47 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * Class that controls the Sign-Up of a user and when finished directs to ProfileSetUp
+ */
 public class SignUp extends AppCompatActivity {
 
+    /**
+     * The submit button that initiates running {@Link #createAccount(String email, String password)}
+     */
     Button submit;
-    EditText emailText, passwordText;
+    /**
+     * where user enters the email
+     */
+    EditText emailText;
 
+    /**
+     * where user enters the password
+     */
+    EditText passwordText;
+
+    /**
+     * Database information in a variable
+     */
     FirebaseFirestore db;
+    /**
+     * The TAG used in Error Reporting for this section
+     */
     String TAG = "EmailandPassword";
+    /**
+     * holds the instance of the user information
+     */
     private FirebaseAuth mAuth;
+
+    /**
+     * holds the user ID returned from getUID()
+     */
     String USERID;
 
-
+    /**
+     *
+     * @param savedInstanceState the instance of the android application
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +72,10 @@ public class SignUp extends AppCompatActivity {
 
         submit = findViewById(R.id.buttonSubmit);
         submit.setOnClickListener(new View.OnClickListener() {
+            /**
+             * onClick for submitButton that validates the user input
+             * @param v View information
+             */
             @Override
             public void onClick(View v) {
                 String email = emailText.getText().toString();
@@ -58,6 +92,11 @@ public class SignUp extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param email the email taken from emailText
+     * @param password the password taken from passwordText
+     */
     public void createAccount(String email, String password){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -100,6 +139,9 @@ public class SignUp extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Initiates switching the current Activity to the ProfileSetup activity
+     * */
     private void profileSetup() {
         Intent intent = new Intent(this, ProfileSetUp.class);
         this.startActivity(intent);
