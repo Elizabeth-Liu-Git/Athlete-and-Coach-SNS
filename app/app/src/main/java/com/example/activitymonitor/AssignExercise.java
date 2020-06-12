@@ -7,6 +7,8 @@ package com.example.activitymonitor;
  * Time : June 11, 2020
  */
 
+
+
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,7 +40,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 public class AssignExercise extends AppCompatActivity {
@@ -73,20 +74,16 @@ public class AssignExercise extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .whereEqualTo("userType", 2)
+                .whereEqualTo("User Type", "2")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                                Log.d("Success", documentSnapshot.getId() + " -> " + documentSnapshot.getData());
-                                String name = documentSnapshot.get("First Name") + " " + documentSnapshot.get("Last Name");
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String name = document.get("First Name").toString() + " " + document.get("Last Name").toString();
                                 atheletes.add(name);
                             }
-                        }
-                        else{
-                            Log.d("Error" , String.valueOf(task.getException()));
                         }
                     }
                 });
@@ -96,8 +93,8 @@ public class AssignExercise extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                String name = Objects.requireNonNull(document.get("ActivityName")).toString();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String name = document.get("ActivityName").toString();
                                 exercises.add(name);
                             }
                         }
@@ -127,7 +124,7 @@ public class AssignExercise extends AppCompatActivity {
         });
 
 
-        final Spinner atheleteDropDown = findViewById(R.id.athlete);
+                final Spinner atheleteDropDown = findViewById(R.id.athlete);
 //create a list of items for the spinner.
 //
 //create an adapter to describe how the items are displayed, adapters are used in several places in android.
@@ -217,4 +214,4 @@ public class AssignExercise extends AppCompatActivity {
         Intent intent = new Intent (this, CoachPage.class);
         startActivity(intent);
     }
-}
+        }
