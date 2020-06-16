@@ -1,6 +1,7 @@
 package com.example.activitymonitor;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,17 +101,22 @@ public class tab_0_upcoming extends Fragment {
      */
     public static class ActivityViewHolder extends RecyclerView.ViewHolder{
 
+        View individualActivityView;
+
         //Initializing textview objects to be edited
         TextView exercise_name, exercise_reps,exercise_sets,exercise_notes;
 
         public ActivityViewHolder(@NonNull View itemView){
+            //View Operations
             super(itemView);
+            individualActivityView = itemView;
 
             //Retreiving each item to be populated by id
             exercise_name = itemView.findViewById(R.id.exercise_name);
             exercise_reps = itemView.findViewById(R.id.exercise_reps);
             exercise_sets = itemView.findViewById(R.id.exercise_sets);
             exercise_notes = itemView.findViewById(R.id.exercise_notes);
+            
         }
 
     }
