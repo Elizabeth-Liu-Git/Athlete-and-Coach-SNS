@@ -1,5 +1,6 @@
 package com.example.activitymonitor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,14 @@ public class tab_0_upcoming extends Fragment {
      */
     public tab_0_upcoming() {
         // Required empty public constructor
+    }
+
+    /**
+     *Start the exercise
+     */
+    private void startEx() {
+        Intent intent = new Intent(this, StartExercise.class);
+        this.startActivity(intent);
     }
 
     @Override
