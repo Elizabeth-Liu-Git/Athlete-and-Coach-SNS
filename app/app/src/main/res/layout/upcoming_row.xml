@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+upcoming_row.xml
+XML Layout file for each invidivual Activity instance
+(in the upcoming activities recycleview on tab_0_upcoming)
+-->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,33 +20,56 @@
         android:background="#547980"
         >
 
+        <!--Exercise Title Field-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/exercise_name"
             android:text="Exercise Title"
-            android:textColor="#594F4F" />
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#594F4F"
+            />
 
+
+        <!--Reps Field-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/exercise_reps"
             android:text="Reps"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:textColor="#594F4F" />
 
+        <!--Sets Field-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/exercise_sets"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:text="Sets"
             android:textColor="#594F4F" />
 
+        <!--Notes field (for notes from coach)-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:id="@+id/exercise_notes"
             android:text="Notes"
             android:textColor="#594F4F" />
+
+        <!--Button to start exercise-->
+        <Button
+            android:id="@+id/start_exercise_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="Start This Exercise" />
 
     </LinearLayout>
 

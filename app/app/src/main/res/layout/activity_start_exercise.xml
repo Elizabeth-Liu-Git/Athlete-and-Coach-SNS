@@ -8,24 +8,27 @@
     android:gravity="center"
     tools:context=".StartExercise">
 
+    <!--Chronometer (timer) object-->
     <Chronometer
         android:id="@+id/exercise_chrono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="35sp"/>
-
+    <!--Button that starts the exercise-->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
         android:onClick="startExercise"
         />
+    <!--Button that pauses exercise-->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pause"
         android:onClick="pauseExercise"
         />
+    <!--Button that completes/submits exercise-->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,12 +36,14 @@
         android:onClick="finishExercise"
         />
 
+    <!--Exercise name display-->
     <TextView
         android:id="@+id/in_progress_exercise_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ExerciseName" />
 
+    <!--Field to input text-->
     <EditText
         android:id="@+id/in_progress_exercise_athlete_notes"
         android:layout_width="match_parent"

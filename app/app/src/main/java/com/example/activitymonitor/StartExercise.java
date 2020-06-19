@@ -7,12 +7,17 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.Chronometer;
 
+/**
+ * StartExercise()
+ * Contains the screen which displays the timer and allows an athlete to start a particular exercise and record data
+ */
 public class StartExercise extends AppCompatActivity {
 
-    private Chronometer exerciseChrono;
-    private boolean chronoRunning;
-    private long offSet;
-    private boolean doneExercise = false;
+    private Chronometer exerciseChrono; //Chronometer object (stopwatch)
+    private long offSet;//Offset used to calculate duration of the exercise
+
+    protected static boolean currentlyExercising = false;//Boolean that indicates whether the exercise is currently occurring
+    protected static boolean doneExercise = false; //Boolean that indicates whether the exercise is done
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,27 +42,43 @@ public class StartExercise extends AppCompatActivity {
         });
     }
 
+    /**
+     * startExercise()
+     * Method used to start the exercise, including the stopwatch
+     * @param v View needed for chronometer
+     */
     public void startExercise(View v){
         //When Chronometer not running
-        if(!chronoRunning){
+        if(!currentlyExercising){
             exerciseChrono.setBase(SystemClock.elapsedRealtime() - offSet);
             exerciseChrono.start();
-            chronoRunning=true;
+            currentlyExercising =true;
         }
-
-    }
-    public void finishExercise(View v){
-        //Method for button that submits exercise
-
     }
 
+    /**
+     * finishExercise()
+     * Method used once exercise is completed
+     * @param v View needed for chronometer
+     */
+    public static void finishExercise(View v){
+        doneExercise=true;
+        //TODO implement functionality to store collected data in FireStore
+
+    }
+
+    /**
+     * pauseExercise()
+     * Method used to pause the chronometer and data collection
+     * @param v View needed for chronometer
+     */
     public void pauseExercise(View v){
 
-        if(chronoRunning){
+        if(currentlyExercising){
             exerciseChrono.stop();
             offSet = SystemClock.elapsedRealtime()- exerciseChrono.getBase();
-
-            chronoRunning=false;
+            currentlyExercising =false;
         }
+
     }
 }

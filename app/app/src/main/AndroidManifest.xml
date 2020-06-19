@@ -11,10 +11,12 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".StartExercise"></activity>
         <activity android:name=".ProfilePage"></activity>
-        <activity android:name=".CoachPage"/>
+        <activity android:name=".AssignExercise"></activity>
+        <activity android:name=".CoachPage" />
+        <activity android:name=".ProfileSetUp" />
+        <activity android:name=".SignUp" />
         <activity android:name=".AthletePage"/>
         <activity android:name=".CreateExercise"/>
-        <activity android:name=".UpcomingActivities" />
         <activity android:name=".SignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

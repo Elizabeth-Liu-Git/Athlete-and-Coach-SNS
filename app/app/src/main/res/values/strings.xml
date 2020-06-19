@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Activity Monitor</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notes">Notes</string>
+    <string name="assign_exercise">Assign Exercise</string>
+    <string name="test" />
     <string name="athlete_tab_history_text">Exercise History</string>
     <string name="athlete_tab_upcoming_text">Upcoming Exercises</string>
     <string name="submenu_title">Submenu</string>

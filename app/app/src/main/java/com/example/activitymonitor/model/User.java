@@ -21,9 +21,7 @@ public class User {
     private int UserType;
     private double Weight;
 
-    public User() {
-        keys = new HashMap<>();
-    }
+    public User() {}
 
     public User(int age, String firstName, String lastName, String phoneNumber, int userType, double weight) {
         Age = age;
@@ -103,9 +101,5 @@ public class User {
 
     public void setKeys(Map<String, Boolean> keys) {
         this.keys = keys;
-    }
-
-    public void addKeys(String key) {
-        keys.put(key, Boolean.TRUE);
     }
 }

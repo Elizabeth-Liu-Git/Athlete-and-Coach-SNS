@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,9 +20,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * Coaches page, this allows the coach to create a new exercise
  */
 
-public class CoachPage extends AppCompatActivity {
+public class CoachPage extends AppCompatActivity implements OnClickListener {
 
     Button buttonCreateExercise;
+    Button buttonAssignExercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,22 +38,24 @@ public class CoachPage extends AppCompatActivity {
         db.collection("Users").document(fUser.getUid()).update("userType",1);
 
         buttonCreateExercise = findViewById(R.id.buttonNewExercise);
-        buttonCreateExercise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openNewExercise();
-            }
-        });
+        buttonCreateExercise.setOnClickListener(this);
+        buttonAssignExercise = findViewById(R.id.buttonAssignExercise);
+        buttonAssignExercise.setOnClickListener(this);
+    }
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonNewExercise:
+                Intent createIntent = new Intent(this, CreateExercise.class);
+                startActivity(createIntent);
+                break;
+            case R.id.buttonAssignExercise:
+                Intent assignIntent = new Intent(this, AssignExercise.class);
+                startActivity(assignIntent);
+                break;
+        }
     }
 
-    /**
-     * Takes the user to a new activity (CreateExercise) when clicked
-     */
-    public void openNewExercise(){
-        Intent intent = new Intent (this, CreateExercise.class);
-        startActivity(intent);
-    }
-    // Menu icons are inflated just as they were with actionbar
+        // Menu icons are inflated just as they were with actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu
@@ -69,6 +73,7 @@ public class CoachPage extends AppCompatActivity {
                 break;
             default:
                 break;
+
         }
         return true;
     }

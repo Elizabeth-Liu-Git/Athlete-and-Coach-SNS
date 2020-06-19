@@ -18,21 +18,20 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
 
-
+    <!--Tab Layout containing each tab-->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/athlete_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         >
-
+        <!--Tab containing upcoming exercises-->
         <com.google.android.material.tabs.TabItem
             android:id="@+id/athlete_tab_upcoming"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/athlete_tab_upcoming_text"
             />
-
+        <!--Tab containing history-->
         <com.google.android.material.tabs.TabItem
             android:id="@+id/athlete_tab_history"
             android:layout_width="wrap_content"
@@ -41,14 +40,13 @@
             />
     </com.google.android.material.tabs.TabLayout>
 
+    <!--Viewpager (for navigating between tabs (fragments))-->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/athlete_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
     </androidx.viewpager.widget.ViewPager>
-
-
-
 
 </LinearLayout>
