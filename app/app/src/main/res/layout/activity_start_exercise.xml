@@ -37,6 +37,7 @@
         />
 
     <!--Exercise name display-->
+
     <TextView
         android:id="@+id/in_progress_exercise_name"
         android:layout_width="match_parent"
@@ -44,6 +45,12 @@
         android:text="ExerciseName" />
 
     <!--Field to input text-->
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Here is your biomettric data " />
+
     <EditText
         android:id="@+id/in_progress_exercise_athlete_notes"
         android:layout_width="match_parent"

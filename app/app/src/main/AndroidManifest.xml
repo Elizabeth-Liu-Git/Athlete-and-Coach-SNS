@@ -12,6 +12,7 @@
         <activity android:name=".StartExercise"></activity>
         <activity android:name=".ProfilePage"></activity>
         <activity android:name=".AssignExercise"></activity>
+        <activity android:name=".US6"></activity>
         <activity android:name=".CoachPage" />
         <activity android:name=".AthletePage"/>
         <activity android:name=".CreateExercise"/>
