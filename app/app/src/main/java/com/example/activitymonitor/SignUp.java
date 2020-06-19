@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.activitymonitor.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -138,6 +139,7 @@ public class SignUp extends AppCompatActivity {
                     }
                 });
     }
+
 
     /**
      * Initiates switching the current Activity to the ProfileSetup activity

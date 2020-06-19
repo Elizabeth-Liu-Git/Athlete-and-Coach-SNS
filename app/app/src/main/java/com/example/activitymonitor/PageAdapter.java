@@ -62,4 +62,3 @@ public class PageAdapter extends FragmentPagerAdapter {
         return POSITION_NONE;
     }
 }
-

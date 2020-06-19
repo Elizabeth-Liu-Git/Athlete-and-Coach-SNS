@@ -1,34 +1,37 @@
 package com.example.activitymonitor.model;
 
 import com.google.common.collect.Sets;
-import com.google.firebase.firestore.DocumentId;
-import com.google.firebase.firestore.Exclude;
 
+/**
+ * Activity() class which is used to store Activity objects retreived from the firebase cloud storage
+ */
 public class Activity {
+    private String ActivityName; //Name of Activity
+    private String Creator;//Coach who created activity
+    private String InstructionalNotes;//Notes for particular Activity
+    private String Reps;//Amount of repetitions for particular activity
+    private String Sets;//Amount of sets for particular activity
 
-    // Auto-generated ID for each Activity
-    @DocumentId
-    private String ActivityID;
 
-    private String ActivityName;
-    private String Creator;
-    private String InstructionalNotes;
-    private String Reps;
-    private String Sets;
-
+    /**
+     * Activity() empty constructor for FireStore
+     */
     public Activity() {}
 
+
+    /**
+     * @param activityName Name of Activity
+     * @param creator Coach who created activity
+     * @param instructionalNotes Notes for particular Activity
+     * @param reps Amount of repetitions for particular activity
+     * @param sets Amount of sets for particular activity
+     */
     public Activity(String activityName, String creator, String instructionalNotes, String reps, String sets) {
         ActivityName = activityName;
         Creator = creator;
         InstructionalNotes = instructionalNotes;
         Reps = reps;
         Sets = sets;
-    }
-
-    @Exclude
-    public String getActivityID() {
-        return ActivityID;
     }
 
     public String getActivityName() {

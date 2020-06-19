@@ -11,12 +11,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.activitymonitor.model.User;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
+
+/**
+ * AthletePage class which contains the activity that is accessed by an athlete user
+ */
 
 public class AthletePage extends AppCompatActivity {
 
@@ -32,28 +33,31 @@ public class AthletePage extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        // Update UserType parameter to 2
-        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users").document(fUser.getUid()).update("userType",2);
-        
         //Instantiating Tab Items
         tabLayoutAthletePage = (TabLayout) findViewById(R.id.athlete_layout);
         tabUpcoming = (TabItem) findViewById(R.id.athlete_tab_upcoming);
         tabHistory = (TabItem) findViewById(R.id.athlete_tab_history);
         viewPagerAthletePage = findViewById(R.id.athlete_viewpager);
 
+
         pagerAdapterAthletePage = new PageAdapter(getSupportFragmentManager(), tabLayoutAthletePage.getTabCount());
         viewPagerAthletePage.setAdapter(pagerAdapterAthletePage);
 
+        /**
+         * Tab Layout for the Athlete Page
+         */
         tabLayoutAthletePage.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            /**
+             * Listener to load information when a tab is selected (position is changed)
+             */
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
                 viewPagerAthletePage.setCurrentItem(tab.getPosition());
                 //First Tab
                 if(tab.getPosition() == 0){
-
+                    pagerAdapterAthletePage.notifyDataSetChanged();
                 }
                 //Second Tab
                 else if(tab.getPosition() == 1){
@@ -62,25 +66,33 @@ public class AthletePage extends AppCompatActivity {
 
             }
 
+            /**
+             * Listener for when tab is unselected
+             */
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
                 if(tab.getPosition() == 0){
 
                 }
             }
 
+            /**
+             * Listener for when tab is reselected
+             */
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
 
+        //Adding onpagechangelistener which detects when tab index changes
         viewPagerAthletePage.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayoutAthletePage));
 
     }
 
-    // Menu icons are inflated just as they were with actionbar
+    /**
+     * Menu Icons inflated (as they were with actionbar)
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -88,6 +100,9 @@ public class AthletePage extends AppCompatActivity {
         return true;
     }
 
+    /**
+     *
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
