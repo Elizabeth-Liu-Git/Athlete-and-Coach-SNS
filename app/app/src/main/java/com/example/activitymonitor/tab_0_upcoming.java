@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +42,7 @@ public class tab_0_upcoming extends Fragment {
      *Start the exercise
      */
     private void startEx() {
-        Intent intent = new Intent(this, StartExercise.class);
+        Intent intent = new Intent(getContext(), StartExercise.class);
         this.startActivity(intent);
     }
 
@@ -86,6 +87,12 @@ public class tab_0_upcoming extends Fragment {
                 holder.exercise_notes.setText(model.getInstructionalNotes());
                 holder.exercise_reps.setText(model.getReps());
                 holder.exercise_sets.setText(model.getSets());
+
+                holder.start_exercise_button.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        startEx();
+                    }
+                });
             }
             @NonNull
             @Override
@@ -114,6 +121,7 @@ public class tab_0_upcoming extends Fragment {
 
         //Initializing textview objects to be edited
         TextView exercise_name, exercise_reps,exercise_sets,exercise_notes;
+        Button start_exercise_button;
 
         public ActivityViewHolder(@NonNull View itemView){
             //View Operations
@@ -125,6 +133,7 @@ public class tab_0_upcoming extends Fragment {
             exercise_reps = itemView.findViewById(R.id.exercise_reps);
             exercise_sets = itemView.findViewById(R.id.exercise_sets);
             exercise_notes = itemView.findViewById(R.id.exercise_notes);
+            start_exercise_button = itemView.findViewById(R.id.start_exercise_button);
             
         }
 
