@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Chronometer;
+import android.widget.TextView;
+
+import java.io.Serializable;
 
 /**
  * StartExercise()
  * Contains the screen which displays the timer and allows an athlete to start a particular exercise and record data
  */
-public class StartExercise extends AppCompatActivity {
+public class StartExercise extends AppCompatActivity{
 
     private Chronometer exerciseChrono; //Chronometer object (stopwatch)
     private long offSet;//Offset used to calculate duration of the exercise
@@ -19,10 +22,29 @@ public class StartExercise extends AppCompatActivity {
     protected static boolean currentlyExercising = false;//Boolean that indicates whether the exercise is currently occurring
     protected static boolean doneExercise = false; //Boolean that indicates whether the exercise is done
 
+    private TextView exercise_name, reps, sets, notes_from_coach;
+    private Activity currentActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_exercise);
+
+
+
+        //Setting the text fields
+        exercise_name = findViewById(R.id.ip_exercise_name);
+        reps = findViewById(R.id.ip_exercise_reps);
+        sets = findViewById(R.id.ip_exercise_sets);
+        notes_from_coach = findViewById(R.id.ip_exercise_notes);
+
+        //Getting Activity Object that was Clicked on
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            currentActivity = (Activity) getIntent().getSerializableExtra("ACTIVITY"); //Obtaining data
+
+
+        }
 
         //Initializing the timer
         exerciseChrono = findViewById(R.id.exercise_chrono);

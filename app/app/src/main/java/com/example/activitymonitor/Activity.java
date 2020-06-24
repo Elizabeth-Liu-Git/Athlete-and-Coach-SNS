@@ -1,11 +1,18 @@
 package com.example.activitymonitor;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.common.collect.Sets;
+
+import java.io.Serializable;
 
 /**
  * Activity() class which is used to store Activity objects retreived from the firebase cloud storage
  */
-public class Activity {
+public class Activity implements Serializable{
     private String ActivityName; //Name of Activity
     private String Creator;//Coach who created activity
     private String InstructionalNotes;//Notes for particular Activity
@@ -73,4 +80,6 @@ public class Activity {
     public void setSets(String sets) {
         Sets = sets;
     }
+
+
 }

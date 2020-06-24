@@ -41,9 +41,13 @@ public class tab_0_upcoming extends Fragment {
     /**
      *Start the exercise
      */
-    private void startEx() {
+    private void startEx(Activity activity) {
         Intent intent = new Intent(getContext(), StartExercise.class);
-        this.startActivity(intent);
+        intent.putExtra("ACTIVITY", activity);
+
+
+
+        startActivity(intent);
     }
 
     @Override
@@ -88,9 +92,11 @@ public class tab_0_upcoming extends Fragment {
                 holder.exercise_reps.setText(model.getReps());
                 holder.exercise_sets.setText(model.getSets());
 
+                final Activity[] current_activity_to_pass ={model};
+
                 holder.start_exercise_button.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        startEx();
+                        startEx(current_activity_to_pass[0]);
                     }
                 });
             }
