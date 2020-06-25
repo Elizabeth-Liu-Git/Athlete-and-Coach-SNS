@@ -25,9 +25,8 @@
         android:id="@+id/buttonNewExercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="278dp"
+        android:layout_marginTop="400dp"
         android:text="Create New Exercise" />
     <Button
         android:id="@+id/buttonAssignExercise"
@@ -35,7 +34,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="259dp"
+        android:layout_marginTop="260dp"
         android:text="Assign Exercise to an athlete" />
+
+    <Button
+        android:id="@+id/viewCalender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="330dp"
+        android:text="View Past Activities" />
 
 </RelativeLayout>

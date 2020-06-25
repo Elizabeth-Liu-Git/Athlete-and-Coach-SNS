@@ -22,18 +22,21 @@ public class CoachPage extends AppCompatActivity implements OnClickListener {
 
     Button buttonCreateExercise;
     Button buttonAssignExercise;
+    Button buttonViewCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_page);
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+//        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+//        setSupportActionBar(myToolbar);
 
         buttonCreateExercise = findViewById(R.id.buttonNewExercise);
         buttonCreateExercise.setOnClickListener(this);
         buttonAssignExercise = findViewById(R.id.buttonAssignExercise);
         buttonAssignExercise.setOnClickListener(this);
+        buttonViewCalendar = findViewById(R.id.viewCalender);
+        buttonViewCalendar.setOnClickListener(this);
     }
     public void onClick(View v) {
         switch (v.getId()) {
@@ -44,6 +47,10 @@ public class CoachPage extends AppCompatActivity implements OnClickListener {
             case R.id.buttonAssignExercise:
                 Intent assignIntent = new Intent(this, AssignExercise.class);
                 startActivity(assignIntent);
+                break;
+            case R.id.viewCalender:
+                Intent calendarIntent = new Intent(this, CoachCalendar.class);
+                startActivity(calendarIntent);
                 break;
         }
     }
