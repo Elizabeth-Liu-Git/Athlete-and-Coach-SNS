@@ -62,6 +62,7 @@ public class AssignExercise extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assign_exercise);
         final Spinner exerciseDropDown = findViewById(R.id.exercisedropdown);
+        final Spinner atheleteDropDown = findViewById(R.id.athlete);
 //a list of scanner needs to be implemented
 
         String element1 = "choose an athlete";
@@ -74,14 +75,14 @@ public class AssignExercise extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .whereEqualTo("User Type", "2")
+                .whereEqualTo("userType", 2)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                String name = document.get("First Name").toString() + " " + document.get("Last Name").toString();
+                                String name = document.get("firstName").toString() + " " + document.get("lastName").toString();
                                 atheletes.add(name);
                             }
                         }
@@ -124,7 +125,7 @@ public class AssignExercise extends AppCompatActivity {
         });
 
 
-                final Spinner atheleteDropDown = findViewById(R.id.athlete);
+
 //create a list of items for the spinner.
 //
 //create an adapter to describe how the items are displayed, adapters are used in several places in android.
