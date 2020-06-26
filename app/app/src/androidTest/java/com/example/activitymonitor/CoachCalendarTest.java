@@ -48,7 +48,8 @@ public class CoachCalendarTest {
                         isDisplayed()));
         appCompatImageButton.perform(click());
 
-        assert(CoachCalendar.getDate().equals("06/06/2020"));
+        assert(mActivityTestRule.getActivity().date.equals("06/7/2020"));
+
     }
 
 
