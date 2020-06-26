@@ -43,6 +43,10 @@ public class StartExercise extends AppCompatActivity{
         if (extras != null) {
             currentActivity = (Activity) getIntent().getSerializableExtra("ACTIVITY"); //Obtaining data
 
+            exercise_name.setText(currentActivity.getActivityName());
+            reps.setText(currentActivity.getReps() );
+            sets.setText(currentActivity.getSets() );
+            notes_from_coach.setText(currentActivity.getInstructionalNotes() );
 
         }
 
