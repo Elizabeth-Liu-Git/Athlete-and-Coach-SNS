@@ -40,12 +40,11 @@ public class tab_0_upcoming extends Fragment {
 
     /**
      *Start the exercise
+     * @param activity, activity object to be passed through to start exercise
      */
     private void startEx(Activity activity) {
         Intent intent = new Intent(getContext(), StartExercise.class);
         intent.putExtra("ACTIVITY", activity);
-
-
 
         startActivity(intent);
     }
@@ -86,14 +85,20 @@ public class tab_0_upcoming extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull ActivityViewHolder holder, int position, @NonNull Activity model) {
 
+                model.setDocumentId( this.getSnapshots().getSnapshot(position).getId() );
                 //Setting the text for each field in the upcoming_row (holder)
                 holder.exercise_name.setText(model.getActivityName());
                 holder.exercise_notes.setText(model.getInstructionalNotes());
                 holder.exercise_reps.setText(model.getReps());
                 holder.exercise_sets.setText(model.getSets());
 
+
+
+
+                //Activity Object passed through to the start exercise page
                 final Activity[] current_activity_to_pass ={model};
 
+                //Listener for the individual start exercise buttons
                 holder.start_exercise_button.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         startEx(current_activity_to_pass[0]);

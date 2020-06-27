@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.common.collect.Sets;
+import com.google.firebase.firestore.DocumentId;
+import com.google.firebase.firestore.Exclude;
 
 import java.io.Serializable;
 
@@ -18,6 +20,8 @@ public class Activity implements Serializable{
     private String InstructionalNotes;//Notes for particular Activity
     private String Reps;//Amount of repetitions for particular activity
     private String Sets;//Amount of sets for particular activity
+    @DocumentId
+    private String documentId; //FireStore generated id that corresponds to particular activity
 
 
     /**
@@ -79,6 +83,15 @@ public class Activity implements Serializable{
 
     public void setSets(String sets) {
         Sets = sets;
+    }
+
+    @Exclude
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 
 
