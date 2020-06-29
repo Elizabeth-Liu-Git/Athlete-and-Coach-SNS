@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.Serializable;
 
 /**
@@ -16,6 +18,7 @@ import java.io.Serializable;
  */
 public class StartExercise extends AppCompatActivity{
 
+    private FirebaseFirestore db;
     private Chronometer exerciseChrono; //Chronometer object (stopwatch)
     private long offSet;//Offset used to calculate duration of the exercise
 
@@ -75,7 +78,7 @@ public class StartExercise extends AppCompatActivity{
      */
     public void startExercise(View v){
         //When Chronometer not running
-        if(!currentlyExercising){
+        if(!currentlyExercising && !doneExercise){
             exerciseChrono.setBase(SystemClock.elapsedRealtime() - offSet);
             exerciseChrono.start();
             currentlyExercising =true;
@@ -87,9 +90,10 @@ public class StartExercise extends AppCompatActivity{
      * Method used once exercise is completed
      * @param v View needed for chronometer
      */
-    public static void finishExercise(View v){
+    public void finishExercise(View v){
         doneExercise=true;
-        //TODO implement functionality to store collected data in FireStore
+        long exerciseTime = SystemClock.elapsedRealtime()- exerciseChrono.getBase();
+
 
     }
 
@@ -100,7 +104,7 @@ public class StartExercise extends AppCompatActivity{
      */
     public void pauseExercise(View v){
 
-        if(currentlyExercising){
+        if(currentlyExercising && !doneExercise){
             exerciseChrono.stop();
             offSet = SystemClock.elapsedRealtime()- exerciseChrono.getBase();
             currentlyExercising =false;

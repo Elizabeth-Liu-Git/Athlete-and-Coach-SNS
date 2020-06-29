@@ -28,6 +28,7 @@ public class tab_0_upcoming extends Fragment {
     private View upcomingView;//View that contains upcoming exercises
     private RecyclerView myActivityList; //recyclerview that is populated with upcoming exercises from firebase
     private FirebaseFirestore db; //Reference to Firestore cloud storage
+    private String current_user_id = SignIn.USERID; //Current user's ID
     Query query_activities; //Query that will find Activities that are assigned to user
 
     /**
