@@ -9,6 +9,7 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.io.Serializable;
 
@@ -91,10 +92,15 @@ public class StartExercise extends AppCompatActivity{
      * @param v View needed for chronometer
      */
     public void finishExercise(View v){
-        doneExercise=true;
         long exerciseTime = SystemClock.elapsedRealtime()- exerciseChrono.getBase();
+        String activity_id_to_be_saved_to = currentActivity.getDocumentId();
+        doneExercise=true;
+        saveExerciseData(activity_id_to_be_saved_to, exerciseTime);
 
+    }
 
+    public void saveExerciseData(String id, long time){
+        Query save_activity_instance;
     }
 
     /**
