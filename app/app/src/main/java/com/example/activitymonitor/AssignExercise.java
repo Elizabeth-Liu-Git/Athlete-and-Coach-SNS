@@ -24,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -114,7 +115,7 @@ public class AssignExercise extends AppCompatActivity {
                 switch(item) {
                     case "create a new exercise":
                         Intent newExercise = new Intent(AssignExercise.this, CreateExercise.class);
-                        startActivity(newExercise);
+                        startActivityForResult(newExercise,1);
                         break;
                 }
             }
@@ -171,6 +172,16 @@ public class AssignExercise extends AppCompatActivity {
 
 
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                finish();
+                startActivity(getIntent());
+            }
+        }
     }
 
     public void showDialog() {
