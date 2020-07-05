@@ -1,9 +1,13 @@
 package com.example.activitymonitor.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.Exclude;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class User {
@@ -12,7 +16,8 @@ public class User {
     private String UserID;
 
     // Set of keys which are the IDs of MessageCollection objects
-    Map<String, Boolean> keys;
+    //Map<String, Boolean> keys;
+    ArrayList<String> keys = new ArrayList<>();
 
     private int Age;
     private String FirstName;
@@ -30,13 +35,13 @@ public class User {
         PhoneNumber = phoneNumber;
         UserType = userType;
         Weight = weight;
-        keys = new HashMap<>();
+        //keys = new HashMap<>();
     }
 
-    // TODO: 2020-06-10 toString set to ID for testing
     @Override
+    @NonNull
     public String toString() {
-        return UserID;
+        return FirstName + " " + LastName;
     }
 
     public String getUserID() {
@@ -95,11 +100,23 @@ public class User {
         Weight = weight;
     }
 
-    public Map<String, Boolean> getKeys() {
+    /*public Map<String, Boolean> getKeys() {
         return keys;
     }
 
     public void setKeys(Map<String, Boolean> keys) {
         this.keys = keys;
+    }*/
+
+    public ArrayList<String> getKeys() {
+        return keys;
+    }
+
+    public void setKeys(ArrayList<String> keys) {
+        this.keys = keys;
+    }
+
+    public void addKey(String key) {
+        keys.add(key);
     }
 }

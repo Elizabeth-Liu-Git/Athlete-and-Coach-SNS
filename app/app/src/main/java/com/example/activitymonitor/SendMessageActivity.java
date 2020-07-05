@@ -4,9 +4,12 @@ package com.example.activitymonitor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,12 +26,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -53,25 +59,23 @@ public class SendMessageActivity extends AppCompatActivity {
     private Spinner contactSpinner;
     private List<User> userList;
 
+    private boolean userIsInteracting;
+
     private RecyclerView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
 
     // Retrieve CollectionReference of Users collection in Firebase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference UsersRef = db.collection("Users");
+    FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        this.contactSpinner = (Spinner) findViewById(R.id.contacts_spinner);
+        contactSpinner = (Spinner) findViewById(R.id.contacts_spinner);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // Populate userList with users to display in spinner
         readData(new FirestoreCallback() {
@@ -83,25 +87,70 @@ public class SendMessageActivity extends AppCompatActivity {
 
                 // Set these users to be displayed in the spinner
                 ArrayAdapter<User> adapter = new ArrayAdapter<>(SendMessageActivity.this,
-                        android.R.layout.simple_spinner_dropdown_item, userList);
-                adapter.notifyDataSetChanged();
+                        android.R.layout.simple_list_item_1, userList);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
                 contactSpinner.setAdapter(adapter);
+
+                contactSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        // Assigns the selected user in the drop-down menu
+                        User selectedUser = (User) parent.getItemAtPosition(position);
+
+                        // Get the ID of this user and the selected user
+                        String currentUserID = currentUser.getUid();
+                        String selectedUserID = selectedUser.getUserID();
+
+                        // Identify if the currentUserID is in the selected user's keys list
+                        ArrayList<String> listIDs = selectedUser.getKeys();
+
+                        // If no conversation exists between users, create one
+                        if (!listIDs.contains(currentUserID)) {
+                            // Create a new message collection between the two users
+                            createMessageCollection(currentUserID, selectedUserID);
+
+                        }
+
+                        // Display conversation
+                        
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {}
+                });
             }
         });
 
-        contactSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*contactSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                User user = (User) parent.getSelectedItem();
+                // Assigns the selected user in the drop-down menu
+                User selectedUser = (User) parent.getSelectedItem();
+
+                // Get the ID of this user and the selected user
+                String currentUserID = currentUser.getUid();
+                String selectedUserID = selectedUser.getUserID();
+
+                // Identify if the currentUserID is in the selected user's keys list
+                List<String> listIDs = selectedUser.getKeys();
+
+                if (!listIDs.contains(selectedUserID)) {
+                    // Create a new message collection between the two users
+                    createMessageCollection(currentUserID, selectedUserID);
+
+                } else {
+
+                }
+
 
                 //Toast.makeText(SendMessageActivity.this,"User: " + user.getUserID(), Toast.LENGTH_SHORT).show();
 
                 // Create a MessageCollection when the user makes an actual selection
-                if (((User) parent.getSelectedItem()).getUserID() != null) {
+                *//*if (((User) parent.getSelectedItem()).getUserID() != null) {
                     displayContactData(user);
                     createMessageCollection(user);
 
@@ -109,14 +158,14 @@ public class SendMessageActivity extends AppCompatActivity {
 
 
                     // TODO: 2020-06-10 Need to be sure about data model structure. This is for testing:
-                    /*Message testMessage = new Message("sender info","receiver info","test content");
+                    *//**//*Message testMessage = new Message("sender info","receiver info","test content");
                     List<Message> testMsgList = new ArrayList<>();
                     testMsgList.add(testMessage);
 
                     mMessageRecycler = findViewById(R.id.recycler_view_messagelist);
                     mMessageAdapter = new MessageListAdapter(SendMessageActivity.this, testMsgList);
-                    mMessageRecycler.setLayoutManager(new LinearLayoutManager(SendMessageActivity.this));*/
-                }
+                    mMessageRecycler.setLayoutManager(new LinearLayoutManager(SendMessageActivity.this));*//**//*
+                }*//*
 
             }
 
@@ -124,19 +173,23 @@ public class SendMessageActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
     }
 
+    private void createMessageCollection(final String sendID, final String receiveID) {
 
-    private void createMessageCollection(User receiver) {
-
-        // When a contact is selected, generate a new MessageCollection
-        String sendID = FirebaseAuth.getInstance().getUid();
-        String receiveID = receiver.getUserID();
-
+        // Create new MessageCollection object
         MessageCollection msgCo = new MessageCollection(sendID, receiveID);
 
-        // TODO: 2020-06-11 Check for duplicate MessageCollection objects
+        // Add the opposite party's UID to the keys list for both users
+        CollectionReference usersRef = db.collection("Users");
+
+        DocumentReference senderRef = usersRef.document(sendID);
+        senderRef.update("keys", FieldValue.arrayUnion(receiveID));
+
+        DocumentReference receiverRef = usersRef.document(receiveID);
+        receiverRef.update("keys", FieldValue.arrayUnion(sendID));
+
         // Add MessageCollection to Firebase
         final String msgCoID = db.collection("Communications").document().getId();
         msgCo.setCollectionID(msgCoID);
@@ -155,9 +208,6 @@ public class SendMessageActivity extends AppCompatActivity {
                         Log.d(TAG, e.toString());
                     }
                 });
-
-        // Add MessageCollection key to both users
-
     }
 
     public void readData(final FirestoreCallback callback) {
