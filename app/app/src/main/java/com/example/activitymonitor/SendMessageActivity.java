@@ -39,8 +39,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,8 +60,6 @@ public class SendMessageActivity extends AppCompatActivity {
     public static final String TAG = "SendMessageActivity";
     private Spinner contactSpinner;
     private List<User> userList;
-
-    private boolean userIsInteracting;
 
     private RecyclerView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
@@ -104,10 +104,10 @@ public class SendMessageActivity extends AppCompatActivity {
                         String selectedUserID = selectedUser.getUserID();
 
                         // Identify if the currentUserID is in the selected user's keys list
-                        ArrayList<String> listIDs = selectedUser.getKeys();
+                        HashMap<String, String> keys = selectedUser.getKeys();
 
                         // If no conversation exists between users, create one
-                        if (!listIDs.contains(currentUserID)) {
+                        if (!keys.containsKey(currentUserID)) {
                             // Create a new message collection between the two users
                             createMessageCollection(currentUserID, selectedUserID);
 
@@ -181,18 +181,34 @@ public class SendMessageActivity extends AppCompatActivity {
         // Create new MessageCollection object
         MessageCollection msgCo = new MessageCollection(sendID, receiveID);
 
-        // Add the opposite party's UID to the keys list for both users
-        CollectionReference usersRef = db.collection("Users");
-
-        DocumentReference senderRef = usersRef.document(sendID);
-        senderRef.update("keys", FieldValue.arrayUnion(receiveID));
-
-        DocumentReference receiverRef = usersRef.document(receiveID);
-        receiverRef.update("keys", FieldValue.arrayUnion(sendID));
-
         // Add MessageCollection to Firebase
         final String msgCoID = db.collection("Communications").document().getId();
         msgCo.setCollectionID(msgCoID);
+
+        // Add the opposite party's UID to the keys list for both users
+        CollectionReference usersRef = db.collection("Users");
+        final DocumentReference senderRef = usersRef.document(sendID);
+        final DocumentReference receiverRef = usersRef.document(receiveID);
+
+        senderRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        HashMap<String, String> keys = documentSnapshot.toObject(User.class).getKeys();
+                        keys.put(receiveID, msgCoID);
+                        senderRef.update("keys", keys);
+                    }
+                });
+
+        receiverRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        HashMap<String, String> keys = documentSnapshot.toObject(User.class).getKeys();
+                        keys.put(sendID, msgCoID);
+                        receiverRef.update("keys", keys);
+                    }
+                });
 
         db.collection("Communications").document(msgCoID)
                 .set(msgCo)

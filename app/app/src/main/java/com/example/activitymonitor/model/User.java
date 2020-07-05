@@ -15,9 +15,8 @@ public class User {
     // Auto-generated ID for each User
     private String UserID;
 
-    // Set of keys which are the IDs of MessageCollection objects
-    //Map<String, Boolean> keys;
-    ArrayList<String> keys = new ArrayList<>();
+    // Set of keys: UserID of the other user and the CollectionID of the MessageCollection
+    HashMap<String, String> keys = new HashMap<>();
 
     private int Age;
     private String FirstName;
@@ -35,7 +34,6 @@ public class User {
         PhoneNumber = phoneNumber;
         UserType = userType;
         Weight = weight;
-        //keys = new HashMap<>();
     }
 
     @Override
@@ -100,23 +98,11 @@ public class User {
         Weight = weight;
     }
 
-    /*public Map<String, Boolean> getKeys() {
+    public HashMap<String, String> getKeys() {
         return keys;
     }
 
-    public void setKeys(Map<String, Boolean> keys) {
+    public void setKeys(HashMap<String, String> keys) {
         this.keys = keys;
-    }*/
-
-    public ArrayList<String> getKeys() {
-        return keys;
-    }
-
-    public void setKeys(ArrayList<String> keys) {
-        this.keys = keys;
-    }
-
-    public void addKey(String key) {
-        keys.add(key);
     }
 }
