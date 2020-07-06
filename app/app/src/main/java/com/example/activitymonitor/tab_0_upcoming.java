@@ -34,6 +34,7 @@ import java.util.Map;
  */
 public class tab_0_upcoming extends Fragment {
 
+    private static final String TAG = "tab_0_upcoming";
     private View upcomingView;//View that contains upcoming exercises
     private RecyclerView myActivityList; //recyclerview that is populated with upcoming exercises from firebase
     private FirebaseFirestore db; //Reference to Firestore cloud storage
@@ -76,11 +77,12 @@ public class tab_0_upcoming extends Fragment {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         relevant_activity_ids.add(document.get("Activity ID").toString());
+
                     }
+                    Log.d(TAG, relevant_activity_ids.toString());
                 }
             }
         });
-
 
         query_activities = activities_collection.whereEqualTo("actId", relevant_activity_ids);
 
@@ -102,7 +104,10 @@ public class tab_0_upcoming extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        //query_activities = db.collection("Activities");
+
+
+        query_activities = activities_collection.whereEqualTo("actId", relevant_activity_ids);
+
 
         //Firestore RecyclerOptions Object with query of Activity objects
         FirestoreRecyclerOptions<Activity> options = new FirestoreRecyclerOptions.Builder<Activity>().setQuery(query_activities, Activity.class).build();
