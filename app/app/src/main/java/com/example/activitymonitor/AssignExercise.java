@@ -171,7 +171,7 @@ public class AssignExercise extends AppCompatActivity {
                 exerciseNameString = exerciseDropDown.getSelectedItem().toString();
                 atheleteNameString = atheleteDropDown.getSelectedItem().toString();
                 // String to be scanned to find the pattern.
-                String regex = "^(1[0-2]|[1-9])/(3[01]|[12][0-9]|[1-9])/[0-9]{4}$";
+                String regex = "^(3[01]|[12][0-9]|[1-9])/(1[0-2]|[1-9])/[0-9]{4}$";
                 Pattern pattern = Pattern.compile(regex);
                 Matcher matcher = pattern.matcher(getDateString);
                 boolean ifDateValidate =  matcher.matches();
