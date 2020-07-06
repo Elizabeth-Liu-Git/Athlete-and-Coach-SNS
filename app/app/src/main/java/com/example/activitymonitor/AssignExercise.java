@@ -61,6 +61,7 @@ public class AssignExercise extends AppCompatActivity {
     ArrayList <String> userIDs = new ArrayList<>();
     ArrayList <String> exercises = new ArrayList<>();
     String theUserID = "";
+    String theActivityID = "";
 
 
     @Override
@@ -90,7 +91,7 @@ public class AssignExercise extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String name = document.get("firstName").toString() + " " + document.get("lastName").toString();
-                                String userID = document.get("userID").toString();
+                                String userID = document.getId();
                                 userIDs.add(userID);
                                 atheletes.add(name);
                             }
@@ -105,6 +106,7 @@ public class AssignExercise extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String name = document.get("ActivityName").toString();
+                                theActivityID = document.getId();
                                 exercises.add(name);
                             }
                         }
@@ -235,7 +237,7 @@ public class AssignExercise extends AppCompatActivity {
         AssignedExercise.put("Coach notes", noteString);
         AssignedExercise.put("Date", getDateString);
         AssignedExercise.put("Athlete name", atheleteNameString);
-        AssignedExercise.put("userID", theUserID);
+        AssignedExercise.put("Activity ID", theActivityID);
 
 
 
