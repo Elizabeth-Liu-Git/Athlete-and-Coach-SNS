@@ -17,15 +17,15 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         tools:layout_editor_absoluteX="123dp"
-        tools:layout_editor_absoluteY="160dp" />
+        tools:layout_editor_absoluteY="160dp"
+        android:hint="Email"/>
 
     <Button
         android:id="@+id/buttonSubmit"
         android:layout_width="339dp"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="193dp"
+        android:layout_marginTop="450dp"
         android:background="#E66666"
         android:fontFamily="sans-serif-condensed"
         android:text="Sign Up"
@@ -34,31 +34,6 @@
         android:textSize="18sp"
         tools:layout_editor_absoluteX="144dp"
         tools:layout_editor_absoluteY="212dp" />
-
-    <TextView
-        android:id="@+id/textViewEmail"
-        android:layout_width="49dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="232dp"
-        android:text="Email"
-        android:textColor="#3C3F41"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/textViewPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="53dp"
-        android:layout_marginTop="334dp"
-        android:text="Password"
-        android:textColor="#817676"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteY="655dp" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
@@ -72,6 +47,7 @@
         android:autofillHints="false"
         android:ems="10"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteY="21dp" />
+        tools:layout_editor_absoluteY="21dp"
+        android:hint="Password"/>
 
 </RelativeLayout>

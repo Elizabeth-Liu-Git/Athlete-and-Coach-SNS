@@ -1,9 +1,12 @@
 package com.example.activitymonitor;
 
+
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -107,6 +110,8 @@ public class CreateExercise extends AppCompatActivity {
      * Takes user back a page
      */
     private void goBack(){
+        Intent resultIntent = new Intent();
+        setResult(RESULT_OK,resultIntent);
         finish();
     }
 }
