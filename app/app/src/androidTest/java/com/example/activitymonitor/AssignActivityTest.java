@@ -159,6 +159,7 @@ public class AssignActivityTest {
                                                 0)),
                                 5),
                         isDisplayed()));
+
         appCompatEditText5.perform(replaceText("abc"), closeSoftKeyboard());
 
         ViewInteraction appCompatSpinner2 = onView(

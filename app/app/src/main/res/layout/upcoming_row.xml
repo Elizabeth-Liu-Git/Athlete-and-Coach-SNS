@@ -8,10 +8,12 @@ XML Layout file for each invidivual Activity instance
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     app:cardCornerRadius="12dp"
     android:layout_margin="5dp"
-    android:elevation="90dp">
+    android:elevation="90dp"
+    tools:context=".upcomingrow">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,6 +72,13 @@ XML Layout file for each invidivual Activity instance
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:text="Start This Exercise" />
+
+        <Button
+            android:id="@+id/Detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="detail"
+            android:text="Details" />
 
     </LinearLayout>
 

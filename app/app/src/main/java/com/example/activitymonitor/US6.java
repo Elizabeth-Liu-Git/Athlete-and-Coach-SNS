@@ -19,7 +19,7 @@ public class US6 extends AppCompatActivity implements SensorEventListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_US6);
+        setContentView(R.layout.activity_us6);
     }
 
     @Override

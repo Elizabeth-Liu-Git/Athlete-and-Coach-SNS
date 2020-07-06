@@ -66,6 +66,16 @@
                 android:inputType="textMultiLine"
                 android:hint="Notes"/>
 
+            <EditText
+                android:id="@+id/Detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:inputType="textMultiLine"
+                android:hint="Detail information"/>
+
             <Button
                 android:id="@+id/button"
                 android:layout_width="300dp"
