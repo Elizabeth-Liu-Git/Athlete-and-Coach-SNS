@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.activitymonitor.model.Message;
 import com.example.activitymonitor.model.MessageCollection;
 import com.example.activitymonitor.model.User;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,6 +41,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +61,13 @@ public class SendMessageActivity extends AppCompatActivity {
 
     public static final String TAG = "SendMessageActivity";
     private Spinner contactSpinner;
-    private List<User> userList;
+    private Button select;
+    boolean isSpinnerInitial = true;
+
+    private ArrayList<User> userList;
+    private String currentUserID, selectedUserID, messageCollectionID;
+    private MessageCollection messageList;
+    private HashMap<String, String> senderKeys, receiverKeys;
 
     private RecyclerView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
@@ -76,13 +84,13 @@ public class SendMessageActivity extends AppCompatActivity {
 
         contactSpinner = (Spinner) findViewById(R.id.contacts_spinner);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUserID = currentUser.getUid();
 
         // Populate userList with users to display in spinner
         readData(new FirestoreCallback() {
             @Override
             public void onCallback(ArrayList<User> list) {
                 Log.d(TAG, list.toString());
-
                 userList = list;
 
                 // Set these users to be displayed in the spinner
@@ -90,140 +98,192 @@ public class SendMessageActivity extends AppCompatActivity {
                         android.R.layout.simple_list_item_1, userList);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 contactSpinner.setAdapter(adapter);
-
-                contactSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                        // Assigns the selected user in the drop-down menu
-                        User selectedUser = (User) parent.getItemAtPosition(position);
-
-                        // Get the ID of this user and the selected user
-                        String currentUserID = currentUser.getUid();
-                        String selectedUserID = selectedUser.getUserID();
-
-                        // Identify if the currentUserID is in the selected user's keys list
-                        HashMap<String, String> keys = selectedUser.getKeys();
-
-                        // If no conversation exists between users, create one
-                        if (!keys.containsKey(currentUserID)) {
-                            // Create a new message collection between the two users
-                            createMessageCollection(currentUserID, selectedUserID);
-
-                        }
-
-                        // Display conversation
-                        
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {}
-                });
             }
         });
 
-        /*contactSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // When a contact is selected retrieve the conversation between the two users
+        contactSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                // Assigns the selected user in the drop-down menu
-                User selectedUser = (User) parent.getSelectedItem();
-
-                // Get the ID of this user and the selected user
-                String currentUserID = currentUser.getUid();
-                String selectedUserID = selectedUser.getUserID();
-
-                // Identify if the currentUserID is in the selected user's keys list
-                List<String> listIDs = selectedUser.getKeys();
-
-                if (!listIDs.contains(selectedUserID)) {
-                    // Create a new message collection between the two users
-                    createMessageCollection(currentUserID, selectedUserID);
-
+                // Prevent automatic selection of the first item in the spinner
+                if (isSpinnerInitial) {
+                    isSpinnerInitial = false;
                 } else {
+                    // Assigns the selected user in the drop-down menu
+                    User selectedUser = userList.get(position);
+                    selectedUserID = selectedUser.getUserID();
 
+                    // Identify if the currentUserID is in the selected user's keys list
+                    HashMap<String, String> keys = selectedUser.getKeys();
+
+                    // If no conversation exists between users, create one
+                    assert keys != null;
+                    if (!keys.containsKey(currentUserID)) {
+
+                        // Create a new message collection between the two users
+                        createMessageCollection(currentUserID, selectedUserID);
+                    }
+
+                    /*// Retrieve messageCollectionID
+                    readString(new FirestoreStringCallback() {
+                        @Override
+                        public void onCallback(String value) {
+                            messageCollectionID = value;
+                        }
+                    });*/
+
+                    // Retrieve the MessageCollection
+                    readMessageCollection(new FirestoreMessageCollectionCallback() {
+                        @Override
+                        public void onCallback(MessageCollection messages) {
+                            messageList = messages;
+                        }
+                    });
+
+                    // Display conversation
+                    mMessageRecycler = (RecyclerView) findViewById(R.id.recycler_view_messagelist);
+
+                    //FOR TESTING
+                    messageList.getMsgList().add(new Message(currentUserID, selectedUserID, "TEST blahblahblah"));
+
+                    mMessageAdapter = new MessageListAdapter(SendMessageActivity.this, messageList.getMsgList());
                 }
-
-
-                //Toast.makeText(SendMessageActivity.this,"User: " + user.getUserID(), Toast.LENGTH_SHORT).show();
-
-                // Create a MessageCollection when the user makes an actual selection
-                *//*if (((User) parent.getSelectedItem()).getUserID() != null) {
-                    displayContactData(user);
-                    createMessageCollection(user);
-
-                    // Get MessageCollection relevant to these two users
-
-
-                    // TODO: 2020-06-10 Need to be sure about data model structure. This is for testing:
-                    *//**//*Message testMessage = new Message("sender info","receiver info","test content");
-                    List<Message> testMsgList = new ArrayList<>();
-                    testMsgList.add(testMessage);
-
-                    mMessageRecycler = findViewById(R.id.recycler_view_messagelist);
-                    mMessageAdapter = new MessageListAdapter(SendMessageActivity.this, testMsgList);
-                    mMessageRecycler.setLayoutManager(new LinearLayoutManager(SendMessageActivity.this));*//**//*
-                }*//*
-
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
     }
 
     private void createMessageCollection(final String sendID, final String receiveID) {
 
         // Create new MessageCollection object
-        MessageCollection msgCo = new MessageCollection(sendID, receiveID);
+        final MessageCollection msgCo = new MessageCollection(sendID, receiveID);
 
         // Add MessageCollection to Firebase
         final String msgCoID = db.collection("Communications").document().getId();
         msgCo.setCollectionID(msgCoID);
+        messageCollectionID = msgCoID;
 
-        // Add the opposite party's UID to the keys list for both users
-        CollectionReference usersRef = db.collection("Users");
-        final DocumentReference senderRef = usersRef.document(sendID);
-        final DocumentReference receiverRef = usersRef.document(receiveID);
+        Log.d(TAG, "Adding MessageCollection to Communications.");
+        final DocumentReference msgCoRef = db.collection("Communications").document(msgCoID);
 
-        senderRef.get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        HashMap<String, String> keys = documentSnapshot.toObject(User.class).getKeys();
-                        keys.put(receiveID, msgCoID);
-                        senderRef.update("keys", keys);
-                    }
-                });
-
-        receiverRef.get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        HashMap<String, String> keys = documentSnapshot.toObject(User.class).getKeys();
-                        keys.put(sendID, msgCoID);
-                        receiverRef.update("keys", keys);
-                    }
-                });
-
-        db.collection("Communications").document(msgCoID)
-                .set(msgCo)
+        msgCoRef.set(msgCo)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "onSuccess: " + msgCoID);
+                        
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, e.toString());
+
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
                     }
                 });
+
+        Task<Void> task = db.runTransaction(new Transaction.Function<Void>() {
+            @Nullable
+            @Override
+            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+
+                transaction.set(msgCoRef, msgCo);
+                System.out.println("Transaction entered");
+                return null;
+            }
+        });
+
+        task.addOnCompleteListener(new OnCompleteListener<Void>() {
+                 @Override
+                 public void onComplete(@NonNull Task<Void> task) {
+                     System.out.println("Task result - " + task.getResult());
+                     System.out.println("Task success - " + task.isSuccessful());
+                 }
+             }
+        );
+        task.addOnCanceledListener(new OnCanceledListener() {
+            @Override
+            public void onCanceled() {
+                System.out.println("Cancelled");
+            }
+        });
+//        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Log.d(TAG, "MessageCollection added.");
+//            }
+//        })
+//        .addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d(TAG, "Failure: " + e.toString());
+//            }
+//        });
+
+        // Add the opposite party's UID to the keys list for both users
+        CollectionReference usersRef = db.collection("Users");
+
+        Log.d(TAG, "Adding receiveID to sender keys.");
+        final DocumentReference senderRef = usersRef.document(sendID);
+        db.runTransaction(new Transaction.Function<Void>() {
+            @Nullable
+            @Override
+            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+
+                DocumentSnapshot snapshot = transaction.get(senderRef);
+                HashMap<String, String> keys = snapshot.toObject(User.class).getKeys();
+                keys.put(receiveID, msgCoID);
+                transaction.update(senderRef, "keys", keys);
+                return null;
+            }
+        })
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "sender keys updated.");
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "Failure: " + e.toString());
+            }
+        });
+
+        Log.d(TAG, "Adding sendID to receiver keys.");
+        final DocumentReference receiverRef = usersRef.document(receiveID);
+        db.runTransaction(new Transaction.Function<Void>() {
+            @Nullable
+            @Override
+            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+
+                DocumentSnapshot snapshot = transaction.get(receiverRef);
+                HashMap<String, String> keys = snapshot.toObject(User.class).getKeys();
+                keys.put(sendID, msgCoID);
+                transaction.update(receiverRef, "keys", keys);
+                return null;
+            }
+        })
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "receiver keys updated.");
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "Failure: " + e.toString());
+            }
+        });
     }
 
     public void readData(final FirestoreCallback callback) {
@@ -256,9 +316,47 @@ public class SendMessageActivity extends AppCompatActivity {
 
     }
 
-    // Custom callback to get data
+    public void readMessageCollection(final FirestoreMessageCollectionCallback callback) {
+
+        // Get the MessageCollection object
+        CollectionReference communicationsRef = db.collection("Communications");
+        DocumentReference conversationRef = communicationsRef.document(messageCollectionID);
+        conversationRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            callback.onCallback(documentSnapshot.toObject(MessageCollection.class));
+                        }
+                    }
+                });
+    }
+
+    public void readSendKeysCollection(final FirestoreKeysCallback callback) {
+
+        DocumentReference userRef = db.collection("Users").document(currentUserID);
+        userRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        callback.onCallback(documentSnapshot.toObject(User.class).getKeys());
+                    }
+                });
+    }
+
+    // Custom callback to get users
     interface FirestoreCallback {
         void onCallback(ArrayList<User> list);
+    }
+
+    // Custom callback to get keys Hashmap
+    interface FirestoreKeysCallback {
+        void onCallback(HashMap<String, String> keys);
+    }
+
+    // Custom callback to get the MessageCollection object
+    interface FirestoreMessageCollectionCallback {
+        void onCallback(MessageCollection messages);
     }
 
     public void getSelectedContact(View v) {
