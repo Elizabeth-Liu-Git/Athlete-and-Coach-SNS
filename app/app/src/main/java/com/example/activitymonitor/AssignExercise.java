@@ -22,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,6 +42,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class AssignExercise extends AppCompatActivity {
@@ -53,9 +56,11 @@ public class AssignExercise extends AppCompatActivity {
     DatePickerDialog picker;
     EditText eText;
     TextView tvw;
-    String getDateString;
+    String getDateString = "";
     ArrayList <String> atheletes = new ArrayList<>();
+    ArrayList <String> userIDs = new ArrayList<>();
     ArrayList <String> exercises = new ArrayList<>();
+    String theUserID = "";
 
 
     @Override
@@ -67,6 +72,7 @@ public class AssignExercise extends AppCompatActivity {
 //a list of scanner needs to be implemented
 
         String element1 = "choose an athlete";
+        userIDs.add("No athlete on select");
         atheletes.add(element1);
 
         String element2 = "choose an exercise";
@@ -84,6 +90,8 @@ public class AssignExercise extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String name = document.get("firstName").toString() + " " + document.get("lastName").toString();
+                                String userID = document.get("userID").toString();
+                                userIDs.add(userID);
                                 atheletes.add(name);
                             }
                         }
@@ -162,9 +170,46 @@ public class AssignExercise extends AppCompatActivity {
             public void onClick(View v) {
                 exerciseNameString = exerciseDropDown.getSelectedItem().toString();
                 atheleteNameString = atheleteDropDown.getSelectedItem().toString();
-                note = findViewById(R.id.NoteBox);
-                noteString = note.getText().toString();
-                showDialog();
+                // String to be scanned to find the pattern.
+                String regex = "^(1[0-2]|[1-9])/(3[01]|[12][0-9]|[1-9])/[0-9]{4}$";
+                Pattern pattern = Pattern.compile(regex);
+                Matcher matcher = pattern.matcher(getDateString);
+                boolean ifDateValidate =  matcher.matches();
+
+                if(atheleteNameString.equals("choose an athlete") && (exerciseNameString.equals("choose an exercise") || exerciseNameString.equals("create a new exercise")) && !ifDateValidate){
+                    Toast.makeText(AssignExercise.this, "Please select an exercise, an athlete, and a validate date",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if(atheleteNameString.equals("choose an athlete") && (exerciseNameString.equals("choose an exercise") || exerciseNameString.equals("create a new exercise"))){
+                    Toast.makeText(AssignExercise.this, "Please select an exercise, and an athlete",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if(atheleteNameString.equals("choose an athlete") && !ifDateValidate){
+                    Toast.makeText(AssignExercise.this, "Please select an athlete, and a validate date",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if((exerciseNameString.equals("choose an exercise") || exerciseNameString.equals("create a new exercise")) && !ifDateValidate){
+                    Toast.makeText(AssignExercise.this, "Please select an exercise, and a validate date",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if((exerciseNameString.equals("choose an exercise") || exerciseNameString.equals("create a new exercise")) ){
+                    Toast.makeText(AssignExercise.this, "Please select an exercise",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if(atheleteNameString.equals("choose an athlete")){
+                    Toast.makeText(AssignExercise.this, "Please select an athlete",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if(!ifDateValidate){
+                    Toast.makeText(AssignExercise.this, "Please select a validate date",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    theUserID = userIDs.get(atheletes.indexOf(atheleteNameString));
+                    note = findViewById(R.id.NoteBox);
+                    noteString = note.getText().toString();
+                    showDialog();
+                }
             }
         });
 
@@ -185,27 +230,16 @@ public class AssignExercise extends AppCompatActivity {
     }
 
     public void showDialog() {
-        Map<String, Object> AssignedExercise = new HashMap<>();
+        final Map<String, Object> AssignedExercise = new HashMap<>();
         AssignedExercise.put("Exercise name", exerciseNameString);
         AssignedExercise.put("Coach notes", noteString);
         AssignedExercise.put("Date", getDateString);
         AssignedExercise.put("Athlete name", atheleteNameString);
+        AssignedExercise.put("userID", theUserID);
+
+
 
 // Add a new document with a generated ID
-        db.collection("Assigned Exercise")
-                .add(AssignedExercise)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
         AlertDialog.Builder window = new AlertDialog.Builder(AssignExercise.this);
         window.setTitle("Please Confirm Exercise Below")
                 .setMessage("Exercise name: " + exerciseNameString + '\n' + "Coach notes: " + noteString+
@@ -213,6 +247,22 @@ public class AssignExercise extends AppCompatActivity {
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        db.collection("Users")
+                                .document(theUserID)
+                                .collection("AssignedExercise")
+                                .add(AssignedExercise)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error adding document", e);
+                                    }
+                                });
                         goBack();
                     }
                 })
