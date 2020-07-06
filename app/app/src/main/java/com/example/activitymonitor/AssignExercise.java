@@ -236,7 +236,6 @@ public class AssignExercise extends AppCompatActivity {
         AssignedExercise.put("Exercise name", exerciseNameString);
         AssignedExercise.put("Coach notes", noteString);
         AssignedExercise.put("Date", getDateString);
-        AssignedExercise.put("Athlete name", atheleteNameString);
         AssignedExercise.put("Activity ID", theActivityID);
 
 
