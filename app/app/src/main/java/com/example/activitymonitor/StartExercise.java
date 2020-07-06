@@ -100,6 +100,7 @@ public class StartExercise extends AppCompatActivity{
     }
 
     public void saveExerciseData(String id, long time){
+
         Query save_activity_instance;
     }
 
