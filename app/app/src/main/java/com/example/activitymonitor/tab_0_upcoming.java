@@ -16,8 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * tab_0_upcoming()
@@ -29,7 +38,9 @@ public class tab_0_upcoming extends Fragment {
     private RecyclerView myActivityList; //recyclerview that is populated with upcoming exercises from firebase
     private FirebaseFirestore db; //Reference to Firestore cloud storage
     private String current_user_id = SignIn.USERID; //Current user's ID
-    Query query_activities; //Query that will find Activities that are assigned to user
+    Query query_activities, query_relevant_activities; //Query that will find Activities that are assigned to user
+    CollectionReference activities_collection;
+    ArrayList<String> relevant_activity_ids = new ArrayList<String>();
 
     /**
      * tab_0_upcoming()
@@ -56,7 +67,23 @@ public class tab_0_upcoming extends Fragment {
 
         //Reference to Firestore Cloud storage and query for activities
         db = FirebaseFirestore.getInstance();
-        query_activities = db.collection("Activities");//TODO make query specific to users
+        activities_collection = db.collection("Activities");
+        query_relevant_activities = db.collection("Users").document(SignIn.USERID).collection("AssignedExercise");
+
+        query_relevant_activities.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        relevant_activity_ids.add(document.get("Activity ID").toString());
+                    }
+                }
+            }
+        });
+
+
+        query_activities = activities_collection.whereEqualTo("actId", relevant_activity_ids);
+
 
         // Inflate the layout for this fragment
         upcomingView = inflater.inflate(R.layout.fragment_tab_0_upcoming, container, false);
@@ -75,7 +102,7 @@ public class tab_0_upcoming extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        query_activities = db.collection("Activities");
+        //query_activities = db.collection("Activities");
 
         //Firestore RecyclerOptions Object with query of Activity objects
         FirestoreRecyclerOptions<Activity> options = new FirestoreRecyclerOptions.Builder<Activity>().setQuery(query_activities, Activity.class).build();
