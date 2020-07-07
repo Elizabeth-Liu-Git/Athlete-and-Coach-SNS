@@ -39,7 +39,9 @@ public class tab_0_upcoming extends Fragment {
     private RecyclerView myActivityList; //recyclerview that is populated with upcoming exercises from firebase
     private FirebaseFirestore db; //Reference to Firestore cloud storage
     private String current_user_id = SignIn.USERID; //Current user's ID
-    Query query_activities, query_relevant_activities; //Query that will find Activities that are assigned to user
+    private databaseInteraction dataB = new databaseInteraction();
+
+    Query query_activities; //Query that will find Activities that are assigned to user
     CollectionReference activities_collection;
     ArrayList<String> relevant_activity_ids = new ArrayList<String>();
 
@@ -69,23 +71,7 @@ public class tab_0_upcoming extends Fragment {
         //Reference to Firestore Cloud storage and query for activities
         db = FirebaseFirestore.getInstance();
         activities_collection = db.collection("Activities");
-        query_relevant_activities = db.collection("Users").document(SignIn.USERID).collection("AssignedExercise");
 
-        query_relevant_activities.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    ArrayList<String> empty = new ArrayList<String>();
-                    relevant_activity_ids=empty;
-                    //Adding to the newly cleared arraylist of activity ids relevant to the athlete
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        relevant_activity_ids.add(document.get("Activity ID").toString());
-
-                    }
-                    Log.d(TAG, relevant_activity_ids.toString());
-                }
-            }
-        });
 
         // Inflate the layout for this fragment
         upcomingView = inflater.inflate(R.layout.fragment_tab_0_upcoming, container, false);
@@ -93,6 +79,7 @@ public class tab_0_upcoming extends Fragment {
         //View and Layout Manager
         myActivityList = (RecyclerView) upcomingView.findViewById(R.id.upcoming_recycleview);
         myActivityList.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         //Return view
         return upcomingView;
@@ -104,13 +91,15 @@ public class tab_0_upcoming extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
-        //Query funtion that selects the relevant ids to a user
+        //Query that selects the relevant ids to a user
+        relevant_activity_ids = dataB.getRelevantActivityIds(SignIn.USERID, db);
         relevant_activity_ids.add("");
 
-        if(!relevant_activity_ids.isEmpty()){
-            query_activities = activities_collection.whereIn("actId", relevant_activity_ids);
-        }
+        Log.d(TAG, relevant_activity_ids.toString());
+
+        query_activities = activities_collection.whereIn("actId", relevant_activity_ids);
+
+
 
         //Firestore RecyclerOptions Object with query of Activity objects
         FirestoreRecyclerOptions<Activity> options = new FirestoreRecyclerOptions.Builder<Activity>().setQuery(query_activities, Activity.class).build();

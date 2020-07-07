@@ -38,6 +38,9 @@ public class StartExercise extends AppCompatActivity{
 
     private static final String TAG = "StartExercise";
 
+
+    private databaseInteraction dataB= new databaseInteraction();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +107,7 @@ public class StartExercise extends AppCompatActivity{
         long exerciseTime = SystemClock.elapsedRealtime()- exerciseChrono.getBase();
         String activity_id_to_be_saved_to = currentActivity.getDocumentId();
         doneExercise=true;
-        databaseInteraction.saveExerciseData(SignIn.USERID, activity_id_to_be_saved_to, exerciseTime, doneExercise);
+        dataB.saveExerciseData(SignIn.USERID, activity_id_to_be_saved_to, exerciseTime, doneExercise, db);
 
     }
 
