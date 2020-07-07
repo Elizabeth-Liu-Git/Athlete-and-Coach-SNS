@@ -121,34 +121,11 @@ public class SendMessageActivity extends AppCompatActivity {
                     // If no conversation exists between users, create one
                     assert keys != null;
                     if (!keys.containsKey(currentUserID)) {
-
                         // Create a new message collection between the two users
                         createMessageCollection(currentUserID, selectedUserID);
+                    } else {
+                        readMessages();
                     }
-
-                    /*// Retrieve messageCollectionID
-                    readString(new FirestoreStringCallback() {
-                        @Override
-                        public void onCallback(String value) {
-                            messageCollectionID = value;
-                        }
-                    });*/
-
-                    // Retrieve the MessageCollection
-                    readMessageCollection(new FirestoreMessageCollectionCallback() {
-                        @Override
-                        public void onCallback(MessageCollection messages) {
-                            messageList = messages;
-                        }
-                    });
-
-                    // Display conversation
-                    mMessageRecycler = (RecyclerView) findViewById(R.id.recycler_view_messagelist);
-
-                    //FOR TESTING
-                    messageList.getMsgList().add(new Message(currentUserID, selectedUserID, "TEST blahblahblah"));
-
-                    mMessageAdapter = new MessageListAdapter(SendMessageActivity.this, messageList.getMsgList());
                 }
             }
 
@@ -174,7 +151,7 @@ public class SendMessageActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        
+                        readMessages();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -215,18 +192,6 @@ public class SendMessageActivity extends AppCompatActivity {
                 System.out.println("Cancelled");
             }
         });
-//        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void aVoid) {
-//                Log.d(TAG, "MessageCollection added.");
-//            }
-//        })
-//        .addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.d(TAG, "Failure: " + e.toString());
-//            }
-//        });
 
         // Add the opposite party's UID to the keys list for both users
         CollectionReference usersRef = db.collection("Users");
@@ -286,7 +251,7 @@ public class SendMessageActivity extends AppCompatActivity {
         });
     }
 
-    public void readData(final FirestoreCallback callback) {
+    private void readData(final FirestoreCallback callback) {
 
         // Add users from Firebase to arraylist
         final ArrayList<User> uList = new ArrayList<>();
@@ -316,47 +281,38 @@ public class SendMessageActivity extends AppCompatActivity {
 
     }
 
-    public void readMessageCollection(final FirestoreMessageCollectionCallback callback) {
+    private void readMessages() {
 
         // Get the MessageCollection object
         CollectionReference communicationsRef = db.collection("Communications");
+
         DocumentReference conversationRef = communicationsRef.document(messageCollectionID);
+
         conversationRef.get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            callback.onCallback(documentSnapshot.toObject(MessageCollection.class));
+                            //callback.onCallback(documentSnapshot.toObject(MessageCollection.class));
+
+                            loadMessages(documentSnapshot.toObject(MessageCollection.class));
                         }
                     }
                 });
     }
 
-    public void readSendKeysCollection(final FirestoreKeysCallback callback) {
+    private void loadMessages(MessageCollection messages) {
 
-        DocumentReference userRef = db.collection("Users").document(currentUserID);
-        userRef.get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        callback.onCallback(documentSnapshot.toObject(User.class).getKeys());
-                    }
-                });
+        mMessageRecycler = (RecyclerView) findViewById(R.id.recycler_view_messagelist);
+
+        messages.getMsgList().add(new Message(currentUserID, selectedUserID, "TEST blahblahblah"));
+
+        mMessageAdapter = new MessageListAdapter(SendMessageActivity.this, messages.getMsgList());
+        mMessageRecycler.setLayoutManager(new LinearLayoutManager(SendMessageActivity.this));
     }
 
-    // Custom callback to get users
     interface FirestoreCallback {
         void onCallback(ArrayList<User> list);
-    }
-
-    // Custom callback to get keys Hashmap
-    interface FirestoreKeysCallback {
-        void onCallback(HashMap<String, String> keys);
-    }
-
-    // Custom callback to get the MessageCollection object
-    interface FirestoreMessageCollectionCallback {
-        void onCallback(MessageCollection messages);
     }
 
     public void getSelectedContact(View v) {
