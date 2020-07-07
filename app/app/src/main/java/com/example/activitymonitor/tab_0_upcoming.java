@@ -87,8 +87,6 @@ public class tab_0_upcoming extends Fragment {
             }
         });
 
-
-
         // Inflate the layout for this fragment
         upcomingView = inflater.inflate(R.layout.fragment_tab_0_upcoming, container, false);
 

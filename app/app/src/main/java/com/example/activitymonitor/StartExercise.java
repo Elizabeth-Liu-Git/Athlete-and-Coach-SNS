@@ -1,17 +1,24 @@
 package com.example.activitymonitor;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * StartExercise()
@@ -28,6 +35,8 @@ public class StartExercise extends AppCompatActivity{
 
     private TextView exercise_name, reps, sets, notes_from_coach;
     private Activity currentActivity;
+
+    private static final String TAG = "StartExercise";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,13 +104,43 @@ public class StartExercise extends AppCompatActivity{
         long exerciseTime = SystemClock.elapsedRealtime()- exerciseChrono.getBase();
         String activity_id_to_be_saved_to = currentActivity.getDocumentId();
         doneExercise=true;
-        saveExerciseData(activity_id_to_be_saved_to, exerciseTime);
+        saveExerciseData(activity_id_to_be_saved_to, exerciseTime, doneExercise);
 
     }
 
-    public void saveExerciseData(String id, long time){
+    /**
+     * @param id the id of the document under which a collection of exercise instances will be saved
+     * @param time length of exercise as a long
+     * @param done whether the exercise is complete
+     */
+    public void saveExerciseData(String id, long time, boolean done){
+        //Instance where completed exercise data is to be stored
+        final Map<String, Object> CompletedExerciseInstance = new HashMap<>();
 
-        Query save_activity_instance;
+        CompletedExerciseInstance.put("ExerciseTimeLength", time);
+        CompletedExerciseInstance.put("ExerciseDone", done);
+
+
+        //Database interaction to save data
+        db.collection("Users")
+                .document(SignIn.USERID)
+                .collection("AssignedExercise")
+                .document(id)
+                .collection("ExerciseSessions")
+                .add(CompletedExerciseInstance)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document for exercise session instance", e);
+                    }
+                });
+
     }
 
     /**
