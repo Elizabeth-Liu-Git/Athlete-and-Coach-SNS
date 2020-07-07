@@ -75,6 +75,9 @@ public class tab_0_upcoming extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    ArrayList<String> empty = new ArrayList<String>();
+                    relevant_activity_ids=empty;
+                    //Adding to the newly cleared arraylist of activity ids relevant to the athlete
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         relevant_activity_ids.add(document.get("Activity ID").toString());
 
@@ -84,7 +87,6 @@ public class tab_0_upcoming extends Fragment {
             }
         });
 
-        query_activities = activities_collection.whereEqualTo("actId", relevant_activity_ids);
 
 
         // Inflate the layout for this fragment
@@ -105,9 +107,12 @@ public class tab_0_upcoming extends Fragment {
     public void onStart() {
         super.onStart();
 
+        //Query funtion that selects the relevant ids to a user
+        relevant_activity_ids.add("");
 
-        query_activities = activities_collection.whereEqualTo("actId", relevant_activity_ids);
-
+        if(!relevant_activity_ids.isEmpty()){
+            query_activities = activities_collection.whereIn("actId", relevant_activity_ids);
+        }
 
         //Firestore RecyclerOptions Object with query of Activity objects
         FirestoreRecyclerOptions<Activity> options = new FirestoreRecyclerOptions.Builder<Activity>().setQuery(query_activities, Activity.class).build();
