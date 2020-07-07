@@ -271,6 +271,8 @@ public class AssignExercise extends AppCompatActivity {
                                         Log.w(TAG, "Error adding document", e);
                                     }
                                 });
+                        Toast.makeText(AssignExercise.this, "You have successfully assigned an exercise to an athlete",
+                                Toast.LENGTH_SHORT).show();
                         goBack();
                     }
                 })
