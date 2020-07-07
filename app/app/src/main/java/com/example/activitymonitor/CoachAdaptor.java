@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * This allows for the CoachCalender and PastActivity to allow for RecycleView
  */
 public class CoachAdaptor extends RecyclerView.Adapter<CoachAdaptor.ViewHolder> {
-    private ArrayList<Activity> activityArrayList;
+    private ArrayList<HistoricalActivity> activityArrayList;
 
     @NonNull
     @Override
@@ -31,12 +31,13 @@ public class CoachAdaptor extends RecyclerView.Adapter<CoachAdaptor.ViewHolder> 
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Activity activity = activityArrayList.get(position);
+        HistoricalActivity activity = activityArrayList.get(position);
 
         holder.exerciseName.setText("Exercise Name: " + activity.getActivityName());
         holder.coachNotes.setText("Coach Notes: " + activity.getInstructionalNotes());
-        holder.assignedAthlete.setText("Assigned Athlete: " + activity.getCreator());
-        holder.completed.setText("Completed: False"); // change later
+        holder.assignedAthlete.setText("Assigned Athlete: " + activity.getAthleteName());
+        holder.completed.setText("Completed: " + activity.isComplete());
+        holder.timer.setText("Time Elapsed: " + activity.getTimer());
     }
 
     @Override
@@ -48,6 +49,7 @@ public class CoachAdaptor extends RecyclerView.Adapter<CoachAdaptor.ViewHolder> 
         public TextView exerciseName;
         public TextView coachNotes;
         public TextView assignedAthlete;
+        public TextView timer;
         public TextView completed;
 
         public ViewHolder(@NonNull View itemView) {
@@ -56,10 +58,11 @@ public class CoachAdaptor extends RecyclerView.Adapter<CoachAdaptor.ViewHolder> 
             coachNotes = itemView.findViewById(R.id.Notes);
             assignedAthlete = itemView.findViewById(R.id.assignedAthlete);
             completed = itemView.findViewById(R.id.completed);
+            timer = itemView.findViewById(R.id.timer);
 
         }
     }
-    public CoachAdaptor (ArrayList<Activity> arrayList){
+    public CoachAdaptor (ArrayList<HistoricalActivity> arrayList){
         activityArrayList = arrayList;
     }
 }

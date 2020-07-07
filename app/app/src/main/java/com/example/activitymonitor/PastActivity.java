@@ -18,11 +18,11 @@ public class PastActivity extends CoachCalendar {
 
 
         //In this case im setting creator as athlete
-        ArrayList<Activity> activityArrayList = new ArrayList<>();
+        ArrayList<HistoricalActivity> activityArrayList = new ArrayList<>();
 
         for (int i = 0; i < exerciseNameArray.size(); i++) {
-            activityArrayList.add(new Activity(exerciseNameArray.get(i), athleteNameArray.get(i),
-                    noteArray.get(i), "1", "1"));
+            activityArrayList.add(new HistoricalActivity(exerciseNameArray.get(i), athleteNameArray.get(i),
+                    noteArray.get(i), "1", "1", false, 25200));
         }
 
 
