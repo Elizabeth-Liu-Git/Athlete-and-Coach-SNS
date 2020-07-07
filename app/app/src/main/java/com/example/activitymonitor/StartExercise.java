@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class StartExercise extends AppCompatActivity{
 
-    private FirebaseFirestore db;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Chronometer exerciseChrono; //Chronometer object (stopwatch)
     private long offSet;//Offset used to calculate duration of the exercise
 
@@ -39,7 +39,7 @@ public class StartExercise extends AppCompatActivity{
     private static final String TAG = "StartExercise";
 
 
-    private databaseInteraction dataB= new databaseInteraction();
+    private databaseInteraction dataB= new databaseInteraction(db);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +107,7 @@ public class StartExercise extends AppCompatActivity{
         long exerciseTime = SystemClock.elapsedRealtime()- exerciseChrono.getBase();
         String activity_id_to_be_saved_to = currentActivity.getDocumentId();
         doneExercise=true;
-        dataB.saveExerciseData(SignIn.USERID, activity_id_to_be_saved_to, exerciseTime, doneExercise, db);
+        dataB.saveExerciseData(SignIn.USERID, activity_id_to_be_saved_to, exerciseTime, doneExercise);
 
     }
 

@@ -37,9 +37,9 @@ public class tab_0_upcoming extends Fragment {
     private static final String TAG = "tab_0_upcoming";
     private View upcomingView;//View that contains upcoming exercises
     private RecyclerView myActivityList; //recyclerview that is populated with upcoming exercises from firebase
-    private FirebaseFirestore db; //Reference to Firestore cloud storage
+    private FirebaseFirestore db = FirebaseFirestore.getInstance(); //Reference to Firestore cloud storage
     private String current_user_id = SignIn.USERID; //Current user's ID
-    private databaseInteraction dataB = new databaseInteraction();
+    private databaseInteraction dataB = new databaseInteraction(db);
 
     Query query_activities; //Query that will find Activities that are assigned to user
     CollectionReference activities_collection;
@@ -69,7 +69,6 @@ public class tab_0_upcoming extends Fragment {
                              Bundle savedInstanceState) {
 
         //Reference to Firestore Cloud storage and query for activities
-        db = FirebaseFirestore.getInstance();
         activities_collection = db.collection("Activities");
 
 
@@ -92,10 +91,12 @@ public class tab_0_upcoming extends Fragment {
     public void onStart() {
         super.onStart();
         //Query that selects the relevant ids to a user
-        relevant_activity_ids = dataB.getRelevantActivityIds(SignIn.USERID, db);
+        relevant_activity_ids = dataB.getRelevantActivityIds(SignIn.USERID);
         relevant_activity_ids.add("");
 
         Log.d(TAG, relevant_activity_ids.toString());
+
+        ArrayList<String> one = new ArrayList<String>();
 
         query_activities = activities_collection.whereIn("actId", relevant_activity_ids);
 

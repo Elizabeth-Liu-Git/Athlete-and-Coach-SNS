@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface databaseLayer {
 
-    public  void saveExerciseData(String uid, String id, long time, boolean done, FirebaseFirestore db);
+    public  void saveExerciseData(String uid, String id, long time, boolean done);
 
-    public  ArrayList<String> getRelevantActivityIds(String uid, FirebaseFirestore db);
+    public  ArrayList<String> getRelevantActivityIds(String uid);
 }

@@ -20,8 +20,11 @@ import java.util.Map;
 
 public class databaseInteraction implements databaseLayer{
     private static final String TAG = "database";
+    public FirebaseFirestore db;
 
-    public databaseInteraction(){}
+    public databaseInteraction(FirebaseFirestore inDb){
+        db = inDb;
+    }
 
     /**
      * saveExerciseData()
@@ -29,7 +32,7 @@ public class databaseInteraction implements databaseLayer{
      * @param time length of exercise as a long
      * @param done whether the exercise is complete
      */
-    public  void saveExerciseData(String uid, String id, long time, boolean done, FirebaseFirestore db){
+    public  void saveExerciseData(String uid, String id, long time, boolean done){
         //Instance where completed exercise data is to be stored
         final Map<String, Object> CompletedExerciseInstance = new HashMap<>();
 
@@ -60,7 +63,7 @@ public class databaseInteraction implements databaseLayer{
     }
 
     @Override
-    public  ArrayList<String> getRelevantActivityIds(String uid, FirebaseFirestore db) {
+    public  ArrayList<String> getRelevantActivityIds(String uid) {
         ArrayList<String> relevant_activity_ids = new ArrayList<String>();
 
 
