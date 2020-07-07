@@ -60,6 +60,7 @@ public class AssignExercise extends AppCompatActivity {
     ArrayList <String> atheletes = new ArrayList<>();
     ArrayList <String> userIDs = new ArrayList<>();
     ArrayList <String> exercises = new ArrayList<>();
+    ArrayList <String> exerciseIDs = new ArrayList<>();
     String theUserID = "";
     String theActivityID = "";
 
@@ -80,6 +81,10 @@ public class AssignExercise extends AppCompatActivity {
         String newExercise = "create a new exercise";
         exercises.add(element2);
         exercises.add(newExercise);
+        exerciseIDs.add(element2);
+        exerciseIDs.add(newExercise);
+
+
 
         db = FirebaseFirestore.getInstance();
         db.collection("Users")
@@ -106,8 +111,9 @@ public class AssignExercise extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String name = document.get("ActivityName").toString();
-                                theActivityID = document.getId();
+                                String activityID = document.getId();
                                 exercises.add(name);
+                                exerciseIDs.add(activityID);
                             }
                         }
                     }
@@ -171,6 +177,7 @@ public class AssignExercise extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 exerciseNameString = exerciseDropDown.getSelectedItem().toString();
+
                 atheleteNameString = atheleteDropDown.getSelectedItem().toString();
                 // String to be scanned to find the pattern.
                 String regex = "^(3[01]|[12][0-9]|[1-9])/(1[0-2]|[1-9])/[0-9]{4}$";
@@ -208,6 +215,7 @@ public class AssignExercise extends AppCompatActivity {
                 }
                 else{
                     theUserID = userIDs.get(atheletes.indexOf(atheleteNameString));
+                    theActivityID = exerciseIDs.get(exercises.indexOf(exerciseNameString));
                     note = findViewById(R.id.NoteBox);
                     noteString = note.getText().toString();
                     showDialog();
