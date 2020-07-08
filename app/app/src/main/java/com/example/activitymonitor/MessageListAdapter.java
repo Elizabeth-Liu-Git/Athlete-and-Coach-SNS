@@ -52,7 +52,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         void bind(Message message) {
 
             messageText.setText(message.getContent());
-            timeText.setText(message.getTime().toString());
+            timeText.setText(message.getTime());
             nameText.setText(message.getSender());
             // TODO: 2020-06-10 Set profile image
         }
@@ -71,7 +71,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         void bind(Message message) {
 
             messageText.setText(message.getContent());
-            timeText.setText(message.getTime().toString());
+            timeText.setText(message.getTime());
         }
     }
 

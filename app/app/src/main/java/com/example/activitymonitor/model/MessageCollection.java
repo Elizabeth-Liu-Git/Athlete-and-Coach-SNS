@@ -31,6 +31,10 @@ public class MessageCollection {
         msgList = new ArrayList<>();
     }
 
+    public void addMessage(String content, String currentUserID, String selectedUserID) {
+        msgList.add(new Message(currentUserID, selectedUserID, content));
+    }
+
     public String getCollectionID() {
         return CollectionID;
     }

@@ -20,12 +20,12 @@ public class Message {
 
     private String Sender, Receiver;
     private String Content;
-    private LocalTime Time;
+    private String Time;
 
     public Message() {}
 
     public Message(String Sender, String Receiver, String Content) {
-        this.Time = LocalTime.now();
+        this.Time = LocalTime.now().toString();
         this.Sender = Sender;
         this.Receiver = Receiver;
         this.Content = Content;
@@ -64,11 +64,7 @@ public class Message {
         this.Content = Content;
     }
 
-    public LocalTime getTime() {
+    public String getTime() {
         return Time;
-    }
-
-    public void setTime(LocalTime Time) {
-        this.Time = Time;
     }
 }

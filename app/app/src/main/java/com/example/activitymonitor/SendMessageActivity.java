@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,21 +62,19 @@ public class SendMessageActivity extends AppCompatActivity {
 
     public static final String TAG = "SendMessageActivity";
     private Spinner contactSpinner;
-    private Button select;
+    private Button send;
+    private EditText messageText;
     boolean isSpinnerInitial = true;
 
     private ArrayList<User> userList;
     private String currentUserID, selectedUserID, messageCollectionID;
-    private MessageCollection messageList;
-    private HashMap<String, String> senderKeys, receiverKeys;
 
     private RecyclerView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
 
-    // Retrieve CollectionReference of Users collection in Firebase
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    CollectionReference UsersRef = db.collection("Users");
-    FirebaseUser currentUser;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference UsersRef = db.collection("Users");
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -277,41 +276,65 @@ public class SendMessageActivity extends AppCompatActivity {
                         if (documentSnapshot.exists()) {
                             //callback.onCallback(documentSnapshot.toObject(MessageCollection.class));
 
-                            loadMessages(documentSnapshot.toObject(MessageCollection.class));
+                            MessageCollection messages = documentSnapshot.toObject(MessageCollection.class);
+                            loadMessages(messages);
                         }
                     }
                 });
     }
 
-    private void loadMessages(MessageCollection messages) {
+    private void loadMessages(final MessageCollection messages) {
 
         mMessageRecycler = findViewById(R.id.recycler_view_messagelist);
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        messages.getMsgList().add(new Message(currentUserID, selectedUserID, "TEST message! This message is added to the existing conversation."));
+        //messages.getMsgList().add(new Message(currentUserID, selectedUserID, "TEST message! This message is added to the existing conversation."));
 
         mMessageAdapter = new MessageListAdapter(this, messages.getMsgList());
         mMessageRecycler.setAdapter(mMessageAdapter);
 
         // Accept input text for messages
+        send = findViewById(R.id.button_chatbox_send);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage(messages);
+            }
+        });
+    }
 
+    private void sendMessage(final MessageCollection messages) {
+
+        // Get the message content
+        messageText = findViewById(R.id.edittext_chatbox);
+        String messageContent = messageText.getText().toString();
+
+        // Add the message to the msgList of the MessageCollection
+        messages.addMessage(messageContent, currentUserID, selectedUserID);
+        messageText.getText().clear();
+
+        // Update the MessageCollection in Firestore, and refresh RecyclerView
+        final DocumentReference msgCoRef = db.collection("Communications").document(messageCollectionID);
+        Task<Void> task = db.runTransaction(new Transaction.Function<Void>() {
+            @Nullable
+            @Override
+            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+
+                transaction.set(msgCoRef, messages);
+                return null;
+            }
+        });
+
+        // When task is complete, refresh RecyclerView
+        task.addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                readMessages();
+            }
+        });
     }
 
     interface FirestoreCallback {
         void onCallback(ArrayList<User> list);
-    }
-
-    public void getSelectedContact(View v) {
-
-        User user = (User) contactSpinner.getSelectedItem();
-        displayContactData(user);
-    }
-
-    private void displayContactData(User user) {
-
-        String UID = user.getUserID();
-        String userData = "UID: " + UID;
-
-        Toast.makeText(this, userData, Toast.LENGTH_LONG).show();
     }
 }
