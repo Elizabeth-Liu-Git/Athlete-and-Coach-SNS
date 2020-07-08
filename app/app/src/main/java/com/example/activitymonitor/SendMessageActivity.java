@@ -124,6 +124,7 @@ public class SendMessageActivity extends AppCompatActivity {
                         // Create a new message collection between the two users
                         createMessageCollection(currentUserID, selectedUserID);
                     } else {
+                        messageCollectionID = keys.get(currentUserID);
                         readMessages();
                     }
                 }
@@ -147,26 +148,6 @@ public class SendMessageActivity extends AppCompatActivity {
         Log.d(TAG, "Adding MessageCollection to Communications.");
         final DocumentReference msgCoRef = db.collection("Communications").document(msgCoID);
 
-        msgCoRef.set(msgCo)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        readMessages();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                })
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                    }
-                });
-
         Task<Void> task = db.runTransaction(new Transaction.Function<Void>() {
             @Nullable
             @Override
@@ -183,6 +164,9 @@ public class SendMessageActivity extends AppCompatActivity {
                  public void onComplete(@NonNull Task<Void> task) {
                      System.out.println("Task result - " + task.getResult());
                      System.out.println("Task success - " + task.isSuccessful());
+
+                     // Display messages in message collection
+                     readMessages();
                  }
              }
         );
@@ -284,9 +268,7 @@ public class SendMessageActivity extends AppCompatActivity {
     private void readMessages() {
 
         // Get the MessageCollection object
-        CollectionReference communicationsRef = db.collection("Communications");
-
-        DocumentReference conversationRef = communicationsRef.document(messageCollectionID);
+        DocumentReference conversationRef = db.collection("Communications").document(messageCollectionID);
 
         conversationRef.get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -303,12 +285,16 @@ public class SendMessageActivity extends AppCompatActivity {
 
     private void loadMessages(MessageCollection messages) {
 
-        mMessageRecycler = (RecyclerView) findViewById(R.id.recycler_view_messagelist);
+        mMessageRecycler = findViewById(R.id.recycler_view_messagelist);
+        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        messages.getMsgList().add(new Message(currentUserID, selectedUserID, "TEST blahblahblah"));
+        messages.getMsgList().add(new Message(currentUserID, selectedUserID, "TEST message! This message is added to the existing conversation."));
 
-        mMessageAdapter = new MessageListAdapter(SendMessageActivity.this, messages.getMsgList());
-        mMessageRecycler.setLayoutManager(new LinearLayoutManager(SendMessageActivity.this));
+        mMessageAdapter = new MessageListAdapter(this, messages.getMsgList());
+        mMessageRecycler.setAdapter(mMessageAdapter);
+
+        // Accept input text for messages
+
     }
 
     interface FirestoreCallback {

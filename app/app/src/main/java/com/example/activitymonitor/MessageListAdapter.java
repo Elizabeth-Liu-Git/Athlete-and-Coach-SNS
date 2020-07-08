@@ -39,14 +39,14 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
 
         TextView messageText, timeText, nameText;
-        ImageView profileImage;
+        //ImageView profileImage;
 
         ReceivedMessageHolder(View view) {
             super(view);
             messageText = itemView.findViewById(R.id.text_message_body);
             timeText = itemView.findViewById(R.id.text_message_time);
             nameText = itemView.findViewById(R.id.text_message_name);
-            profileImage = itemView.findViewById(R.id.image_message_profile);
+            //profileImage = itemView.findViewById(R.id.image_message_profile);
         }
 
         void bind(Message message) {
