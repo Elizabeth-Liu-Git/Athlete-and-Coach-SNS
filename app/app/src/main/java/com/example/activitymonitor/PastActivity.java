@@ -25,7 +25,7 @@ public class PastActivity extends CoachCalendar {
                     noteArray.get(i), "1", "1", false, 25200));
         }
 
-
+        //creates/calls the recycle view and passes the arrayList
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
