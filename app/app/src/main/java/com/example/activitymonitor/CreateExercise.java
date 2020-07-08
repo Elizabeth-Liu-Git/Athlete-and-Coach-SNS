@@ -87,7 +87,6 @@ public class CreateExercise extends AppCompatActivity {
      * @param note - any notes that the coach may have
      */
     private void uploadData(String name, String rep, String set, String note,String detail){
-    private void uploadData(String name, String rep, String set, String note){
         DocumentReference ref = db.collection("Activities").document();
         String id = ref.getId();
 
