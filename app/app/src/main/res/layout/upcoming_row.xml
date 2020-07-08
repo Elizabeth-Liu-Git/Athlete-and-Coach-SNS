@@ -62,6 +62,13 @@ XML Layout file for each invidivual Activity instance
             android:text="Notes"
             android:textColor="#594F4F" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:hint="Enter message"/>
+
         <!--Button to start exercise-->
         <Button
             android:id="@+id/start_exercise_button"

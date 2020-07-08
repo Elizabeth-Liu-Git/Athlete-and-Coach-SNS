@@ -52,10 +52,9 @@ import java.util.Map;
 /**
  * @author Will Robbins
  *
- * CommentsPage: This page will allow athletes and coaches to create, view, and reply to comments
+ * SendMessageActivity: This page will allow athletes and coaches to create, view, and reply to comments
  * with respect to individual activities. The page will only display comments that are within a
- * coach-athlete relationship. Users can choose to create or reply to a comment within this page,
- * and will be redirected to the CreateComment page.
+ * coach-athlete relationship. Users can choose to create or reply to a comment within this page.
  */
 
 public class SendMessageActivity extends AppCompatActivity {
@@ -274,7 +273,6 @@ public class SendMessageActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            //callback.onCallback(documentSnapshot.toObject(MessageCollection.class));
 
                             MessageCollection messages = documentSnapshot.toObject(MessageCollection.class);
                             loadMessages(messages);
@@ -287,8 +285,6 @@ public class SendMessageActivity extends AppCompatActivity {
 
         mMessageRecycler = findViewById(R.id.recycler_view_messagelist);
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
-
-        //messages.getMsgList().add(new Message(currentUserID, selectedUserID, "TEST message! This message is added to the existing conversation."));
 
         mMessageAdapter = new MessageListAdapter(this, messages.getMsgList());
         mMessageRecycler.setAdapter(mMessageAdapter);
