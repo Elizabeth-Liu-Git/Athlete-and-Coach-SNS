@@ -1,6 +1,5 @@
 package com.example.activitymonitor;
 
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -84,7 +83,10 @@ public class SendMessageActivity extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserID = currentUser.getUid();
 
-        // Populate userList with users to display in spinner
+        /*
+         * Populates ArrayList userList with User objects, then connects them to an ArrayAdapter
+         * to be displayed in a Spinner
+         */
         readData(new FirestoreCallback() {
             @Override
             public void onCallback(ArrayList<User> list) {
@@ -133,6 +135,14 @@ public class SendMessageActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Creates a MessageCollection object to store Message objects. Stores the object in Firebase
+     * in the "Communications" collection. Stores the User ID and the MessageCollection ID in each
+     * of the two User's "keys" field as a key:value pair.
+     * Once the MessageCollection object has been created, calls the ReadMessages() method.
+     * @param sendID ID of User the starts the conversation.
+     * @param receiveID ID of the recipient.
+     */
     private void createMessageCollection(final String sendID, final String receiveID) {
 
         // Create new MessageCollection object
@@ -233,6 +243,10 @@ public class SendMessageActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Custom callback to populate userList ArrayList with User objects from Firebase.
+     * @param callback FirestoreCallback to be overridden when implemented.
+     */
     private void readData(final FirestoreCallback callback) {
 
         // Add users from Firebase to arraylist
@@ -263,6 +277,10 @@ public class SendMessageActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Retrieves the MessageCollection object between two users using the messageCollectionID.
+     * Passes the object into the loadMessages() method.
+     */
     private void readMessages() {
 
         // Get the MessageCollection object
@@ -281,6 +299,14 @@ public class SendMessageActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Takes the messages from a MessageCollection object and sets them to a RecyclerView.
+     * The adapter is an instance of the MessageListAdapter class. The messages are then displayed
+     * in descending order (from the most-recent message in the list to the first).
+     * When the "SEND" button is clicked, the MessageCollection object is passed into the
+     * sendMessage() method.
+     * @param messages MessageCollection object received from the readMessages() method.
+     */
     private void loadMessages(final MessageCollection messages) {
 
         mMessageRecycler = findViewById(R.id.recycler_view_messagelist);
@@ -299,6 +325,13 @@ public class SendMessageActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Called when the "SEND" button is clicked. Retrieves the text from the "Enter message" box, and
+     * then adds the text as a String to the MessageCollection using the addMessage() method. The input
+     * box is then cleared. The MessageCollection is then updated in Firebase, and when the task is
+     * complete the readMessages() method is called to display the sent message as the most recent message.
+     * @param messages MessageCollection received from loadMessages() method.
+     */
     private void sendMessage(final MessageCollection messages) {
 
         // Get the message content
@@ -330,6 +363,10 @@ public class SendMessageActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Interface implemented by readData method. Contains onCallback() method to be overridden
+     * by the implementation.
+     */
     interface FirestoreCallback {
         void onCallback(ArrayList<User> list);
     }
