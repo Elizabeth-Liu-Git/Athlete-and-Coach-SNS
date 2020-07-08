@@ -62,7 +62,7 @@ public class databaseInteraction implements databaseLayer{
     }
 
 
-    public void readData(AsynchCallback asynchCallback){
+    public void readRelevantActivityIds(AsynchCallback asynchCallback){
 
         db.collection("Users").document(SignIn.USERID).collection("AssignedExercise")
                 .get()

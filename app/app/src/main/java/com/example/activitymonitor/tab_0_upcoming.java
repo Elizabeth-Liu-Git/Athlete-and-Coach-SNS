@@ -86,7 +86,7 @@ public class tab_0_upcoming extends Fragment {
 
         ArrayList<String> one = new ArrayList<String>();
 
-        dataB.readData(new AsynchCallback() {
+        dataB.readRelevantActivityIds(new AsynchCallback() {
             @Override
             public void onCallback(ArrayList<String> idList) {
                 query_activities = activities_collection.whereIn("actId", idList);

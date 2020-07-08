@@ -4,5 +4,5 @@ public interface databaseLayer {
 
     public  void saveExerciseData(String uid, String id, long time, boolean done);
 
-    public void readData(AsynchCallback asynchCallback);
+    public void readRelevantActivityIds(AsynchCallback asynchCallback);
 }
