@@ -66,7 +66,7 @@ public class SignIn extends AppCompatActivity {
     /**
      * holds the user ID returned from getUID()
      */
-    String USERID;
+    public static String USERID;
 
 
     /**

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,18 +85,24 @@ public class CreateExercise extends AppCompatActivity {
      * @param note - any notes that the coach may have
      */
     private void uploadData(String name, String rep, String set, String note){
+        DocumentReference ref = db.collection("Activities").document();
+        String id = ref.getId();
+
         Map<String, Object> activity = new HashMap<>();
         activity.put("ActivityName", name);
         activity.put("Creator", ""); // Creator ID is left empty for now
         activity.put("Instructional Notes", note);
         activity.put("Reps", rep);
         activity.put("Sets", set);
+        activity.put("actId",id);//Redundant id field to allow for querying
 
-        db.collection("Activities").document().set(activity)
+
+        ref.set(activity)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(CreateExercise.this, "Uploaded", Toast.LENGTH_SHORT).show();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -104,6 +111,8 @@ public class CreateExercise extends AppCompatActivity {
                         Toast.makeText(CreateExercise.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+
     }
 
     /**

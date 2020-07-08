@@ -5,6 +5,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "com.example.activitymonitor"
         minSdkVersion 29
@@ -71,6 +76,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     //noinspection GradleCompatible
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
 
 
 }

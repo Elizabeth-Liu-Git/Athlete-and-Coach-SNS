@@ -1,16 +1,27 @@
 package com.example.activitymonitor;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.common.collect.Sets;
+import com.google.firebase.firestore.DocumentId;
+import com.google.firebase.firestore.Exclude;
+
+import java.io.Serializable;
 
 /**
  * Activity() class which is used to store Activity objects retreived from the firebase cloud storage
  */
-public class Activity {
+public class Activity implements Serializable{
     private String ActivityName; //Name of Activity
     private String Creator;//Coach who created activity
     private String InstructionalNotes;//Notes for particular Activity
     private String Reps;//Amount of repetitions for particular activity
     private String Sets;//Amount of sets for particular activity
+    @DocumentId
+    private String documentId; //FireStore generated id that corresponds to particular activity
 
 
     /**
@@ -73,4 +84,15 @@ public class Activity {
     public void setSets(String sets) {
         Sets = sets;
     }
+
+    @Exclude
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
+
+
 }
