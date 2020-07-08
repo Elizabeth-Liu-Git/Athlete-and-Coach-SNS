@@ -22,7 +22,6 @@ public class Detail extends AppCompatActivity {
     FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Intent intent=getIntent();
@@ -43,9 +42,5 @@ public class Detail extends AppCompatActivity {
                         }
                     }
                 });
-    }
-    public void back(View view){
-        Intent intent=new Intent();
-        intent.setClass(this, upcomingrow.class);
     }
 }
