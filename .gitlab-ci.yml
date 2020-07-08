@@ -19,7 +19,7 @@ before_script:
   - echo y | android-sdk-linux/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null
   - export ANDROID_HOME=$PWD/android-sdk-linux
   - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
-  #- chmod +x ./gradle wrapper
+  - chmod +x ./gradlew
   # temporarily disable checking for EPIPE error and use yes to accept all licenses
   - set +o pipefail
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
@@ -42,6 +42,18 @@ assembleDebug:
   tags:
       - ugrad
       
+unit_tests:
+  stage: test
+  script:
+    - ./gradlew test
+  artifacts:
+    when: always
+    expire_in: 4 days
+    path:
+      - app/app/src/androidTest/java/com/example/activitymonitor
+  tags:
+    - ugrad
+    
 debugTests:
   stage: test
   script:
