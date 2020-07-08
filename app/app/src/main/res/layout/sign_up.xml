@@ -18,7 +18,7 @@
         android:inputType="textEmailAddress"
         tools:layout_editor_absoluteX="123dp"
         tools:layout_editor_absoluteY="160dp"
-        android:hint="Email" />
+        android:hint="Email"/>
 
     <Button
         android:id="@+id/buttonSubmit"
@@ -28,29 +28,12 @@
         android:layout_marginTop="450dp"
         android:background="#E66666"
         android:fontFamily="sans-serif-condensed"
-        android:text="Sign In"
+        android:text="Sign Up"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         tools:layout_editor_absoluteX="144dp"
         tools:layout_editor_absoluteY="212dp" />
-
-
-    <Button
-        android:id="@+id/buttonSignUp"
-        style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
-        android:layout_width="77dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="272dp"
-        android:layout_marginTop="579dp"
-        android:text="Sign Up"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textStyle="italic"
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="506dp" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
@@ -63,16 +46,8 @@
         android:layout_marginTop="356dp"
         android:autofillHints="false"
         android:ems="10"
-        android:hint="Password"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteY="21dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="590dp"
-        android:text="Don't have an account?" />
+        tools:layout_editor_absoluteY="21dp"
+        android:hint="Password"/>
 
 </RelativeLayout>

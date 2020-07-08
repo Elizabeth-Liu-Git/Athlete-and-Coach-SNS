@@ -42,6 +42,13 @@ assembleDebug:
   tags:
       - ugrad
       
+unit_tests:
+  stage: test
+  script:
+    - ./gradlew test
+  tags:
+    - ugrad
+    
 debugTests:
   stage: test
   script:

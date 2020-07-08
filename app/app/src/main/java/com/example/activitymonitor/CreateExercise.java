@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,6 +87,10 @@ public class CreateExercise extends AppCompatActivity {
      * @param note - any notes that the coach may have
      */
     private void uploadData(String name, String rep, String set, String note,String detail){
+    private void uploadData(String name, String rep, String set, String note){
+        DocumentReference ref = db.collection("Activities").document();
+        String id = ref.getId();
+
         Map<String, Object> activity = new HashMap<>();
         activity.put("ActivityName", name);
         activity.put("Creator", ""); // Creator ID is left empty for now
@@ -92,12 +98,15 @@ public class CreateExercise extends AppCompatActivity {
         activity.put("Reps", rep);
         activity.put("Sets", set);
         activity.put("Detail",detail);
+        activity.put("actId",id);//Redundant id field to allow for querying
 
-        db.collection("Activities").document().set(activity)
+
+        ref.set(activity)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(CreateExercise.this, "Uploaded", Toast.LENGTH_SHORT).show();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -106,12 +115,16 @@ public class CreateExercise extends AppCompatActivity {
                         Toast.makeText(CreateExercise.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+
     }
 
     /**
      * Takes user back a page
      */
     private void goBack(){
+        Intent resultIntent = new Intent();
+        setResult(RESULT_OK,resultIntent);
         finish();
     }
 }

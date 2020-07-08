@@ -8,6 +8,50 @@
     android:gravity="center"
     tools:context=".StartExercise">
 
+    <!--Exercise Title Field-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ip_exercise_name"
+        android:text="Exercise Title"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="#594F4F"
+        />
+
+
+    <!--Reps Field-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ip_exercise_reps"
+        android:text="Reps"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="#594F4F" />
+
+    <!--Sets Field-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ip_exercise_sets"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="Sets"
+        android:textColor="#594F4F" />
+
+    <!--Notes field (for notes from coach)-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/ip_exercise_notes"
+        android:text="Notes"
+        android:textColor="#594F4F" />
+
+
+
     <!--Chronometer (timer) object-->
     <Chronometer
         android:id="@+id/exercise_chrono"
@@ -38,18 +82,8 @@
 
     <!--Exercise name display-->
 
-    <TextView
-        android:id="@+id/in_progress_exercise_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ExerciseName" />
-
     <!--Field to input text-->
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Here is your biomettric data " />
+
 
     <EditText
         android:id="@+id/in_progress_exercise_athlete_notes"
