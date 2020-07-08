@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * dataBaseInteraction class is used for various database interactions as defined by the dataBase layer interface
+ */
 public class databaseInteraction implements databaseLayer{
     private static final String TAG = "database";
     public FirebaseFirestore db;
@@ -62,6 +65,10 @@ public class databaseInteraction implements databaseLayer{
     }
 
 
+    /**
+     * readRelevantActivityIds() serves to get an arraylist of activity ids tgar are relevant (assigned) to the signed in athlete
+     * @param asynchCallback pass through an asynch callback object so the data can be used once retreived frm firebase
+     */
     public void readRelevantActivityIds(AsynchCallback asynchCallback){
 
         db.collection("Users").document(SignIn.USERID).collection("AssignedExercise")
