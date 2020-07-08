@@ -99,6 +99,7 @@ public class AssignExercise extends AppCompatActivity {
                                 String userID = document.getId();
                                 userIDs.add(userID);
                                 atheletes.add(name);
+                                System.out.println(name);
                             }
                         }
                     }
@@ -142,7 +143,7 @@ public class AssignExercise extends AppCompatActivity {
         });
 
 
-
+                final Spinner atheleteDropDown = findViewById(R.id.athlete);
 //create a list of items for the spinner.
 //
 //create an adapter to describe how the items are displayed, adapters are used in several places in android.
@@ -177,7 +178,6 @@ public class AssignExercise extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 exerciseNameString = exerciseDropDown.getSelectedItem().toString();
-
                 atheleteNameString = atheleteDropDown.getSelectedItem().toString();
                 // String to be scanned to find the pattern.
                 String regex = "^(3[01]|[12][0-9]|[1-9])/(1[0-2]|[1-9])/[0-9]{4}$";
