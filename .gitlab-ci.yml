@@ -46,11 +46,6 @@ unit_tests:
   stage: test
   script:
     - ./gradlew test
-  artifacts:
-    when: always
-    expire_in: 4 days
-    path:
-      - app/app/src/androidTest/java/com/example/activitymonitor
   tags:
     - ugrad
     
