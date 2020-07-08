@@ -2,6 +2,7 @@ package com.example.activitymonitor;
 
 /**
  * @author Will Robbins
+ * Espresso tests for the SendMessageActivity.java class.
  */
 
 import android.content.Intent;
@@ -24,10 +25,11 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4ClassRunner.class)
-public class SendMessageActivityTest {
+public class SendMessageActivity_EspressoTest {
 
     @Test
     public void test_activity_inView() {
@@ -61,6 +63,15 @@ public class SendMessageActivityTest {
         String uid = intent.getStringExtra("TEST_UID");
 
         assertEquals(uid, "0123456789");
+    }
+
+    @Test
+    public void sent_message_displays() {
+        ActivityScenario<SendMessageActivity> activity = ActivityScenario.launch(SendMessageActivity.class);
+
+        onView(withId(R.id.edittext_chatbox)).perform(typeText("bonjour"));
+        onView(withId(R.id.button_chatbox_send)).perform(click());
+
     }
     
 }
