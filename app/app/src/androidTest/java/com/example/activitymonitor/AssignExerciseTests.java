@@ -28,11 +28,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.containsString;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.Matchers.not;
 public class AssignExerciseTests {
     @Test
     public void test_selectExercise() {
@@ -141,7 +136,6 @@ public class AssignExerciseTests {
 
         ActivityScenario<AssignExercise> activity = ActivityScenario.launch(AssignExercise.class);
         SystemClock.sleep(1500);
-
         onView(withId(R.id.exercisedropdown)).perform(click());
         onData(anything()).atPosition(0).perform(click());
         onView(withId(R.id.athlete)).perform(click());
@@ -160,7 +154,6 @@ public class AssignExerciseTests {
 
         ActivityScenario<AssignExercise> activity = ActivityScenario.launch(AssignExercise.class);
         SystemClock.sleep(1500);
-
         onView(withId(R.id.exercisedropdown)).perform(click());
         onData(anything()).atPosition(3).perform(click());
         onView(withId(R.id.athlete)).perform(click());
@@ -177,8 +170,6 @@ public class AssignExerciseTests {
     public void test_dateFormat() {
         ActivityScenario<AssignExercise> activity = ActivityScenario.launch(AssignExercise.class);
         SystemClock.sleep(1500);
-//        onView(withId(R.id.editText1)).perform(click());
-        onView(withId(R.id.editText1)).perform(click());
         onView(withId(R.id.editText1)).perform(click());
         onView(withText("OK")).perform(click());
     }
