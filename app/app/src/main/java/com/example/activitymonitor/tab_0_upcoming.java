@@ -89,6 +89,7 @@ public class tab_0_upcoming extends Fragment {
         dataB.readRelevantActivityIds(new AsynchCallback() {
             @Override
             public void onCallback(ArrayList<String> idList) {
+                idList.add("");
                 query_activities = activities_collection.whereIn("actId", idList);
 
                 //Firestore RecyclerOptions Object with query of Activity objects
