@@ -32,7 +32,7 @@ public class AssignExerciseTests {
     @Test
     public void test_selectExercise() {
         ActivityScenario<AssignExercise> activity = ActivityScenario.launch(AssignExercise.class);
-        SystemClock.sleep(1500);
+        SystemClock.sleep(3000);
         final ArrayList<String> exercises = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String element2 = "choose an exercise";
@@ -93,8 +93,6 @@ public class AssignExerciseTests {
            onView(withId(R.id.athlete)).check(matches(withSpinnerText(containsString(athletes.get(i)))));
        }
     }
-
-
 
     @Test
     public void test_note_acceptsInput() {
@@ -163,6 +161,7 @@ public class AssignExerciseTests {
         onView(withId(R.id.editText1)).perform(click());
         onView(withText("OK")).perform(click());
         onView(withId(R.id.button2)).perform(click());
+        SystemClock.sleep(3000);
         onView(withText("Confirm"))
                 .check(doesNotExist());
     }
