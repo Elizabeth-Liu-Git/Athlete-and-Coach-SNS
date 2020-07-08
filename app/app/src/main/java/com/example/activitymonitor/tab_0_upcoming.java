@@ -2,7 +2,6 @@ package com.example.activitymonitor;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * tab_0_upcoming()
@@ -90,60 +83,66 @@ public class tab_0_upcoming extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        //Query that selects the relevant ids to a user
-        relevant_activity_ids = dataB.getRelevantActivityIds(SignIn.USERID);
-        relevant_activity_ids.add("");
-
-        Log.d(TAG, relevant_activity_ids.toString());
 
         ArrayList<String> one = new ArrayList<String>();
 
-        query_activities = activities_collection.whereIn("actId", relevant_activity_ids);
-
-
-
-        //Firestore RecyclerOptions Object with query of Activity objects
-        FirestoreRecyclerOptions<Activity> options = new FirestoreRecyclerOptions.Builder<Activity>().setQuery(query_activities, Activity.class).build();
-
-        //RecyclerAdapter that displays the Activities as specified
-        FirestoreRecyclerAdapter<Activity,ActivityViewHolder> adapter
-                = new FirestoreRecyclerAdapter<Activity, ActivityViewHolder>(options) {
+        dataB.readData(new AsynchCallback() {
             @Override
-            protected void onBindViewHolder(@NonNull ActivityViewHolder holder, int position, @NonNull Activity model) {
+            public void onCallback(ArrayList<String> idList) {
+                query_activities = activities_collection.whereIn("actId", idList);
 
-                model.setDocumentId( this.getSnapshots().getSnapshot(position).getId() );
-                //Setting the text for each field in the upcoming_row (holder)
-                holder.exercise_name.setText(model.getActivityName());
-                holder.exercise_notes.setText(model.getInstructionalNotes());
-                holder.exercise_reps.setText(model.getReps());
-                holder.exercise_sets.setText(model.getSets());
+                //Firestore RecyclerOptions Object with query of Activity objects
+                FirestoreRecyclerOptions<Activity> options = new FirestoreRecyclerOptions.Builder<Activity>().setQuery(query_activities, Activity.class).build();
+
+                //RecyclerAdapter that displays the Activities as specified
+                FirestoreRecyclerAdapter<Activity,ActivityViewHolder> adapter
+                        = new FirestoreRecyclerAdapter<Activity, ActivityViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull ActivityViewHolder holder, int position, @NonNull Activity model) {
+
+                        model.setDocumentId( this.getSnapshots().getSnapshot(position).getId() );
+                        //Setting the text for each field in the upcoming_row (holder)
+                        holder.exercise_name.setText(model.getActivityName());
+                        holder.exercise_notes.setText(model.getInstructionalNotes());
+                        holder.exercise_reps.setText(model.getReps());
+                        holder.exercise_sets.setText(model.getSets());
 
 
 
 
-                //Activity Object passed through to the start exercise page
-                final Activity[] current_activity_to_pass ={model};
+                        //Activity Object passed through to the start exercise page
+                        final Activity[] current_activity_to_pass ={model};
 
-                //Listener for the individual start exercise buttons
-                holder.start_exercise_button.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        startEx(current_activity_to_pass[0]);
+                        //Listener for the individual start exercise buttons
+                        holder.start_exercise_button.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                startEx(current_activity_to_pass[0]);
+                            }
+                        });
                     }
-                });
-            }
-            @NonNull
-            @Override
-            public ActivityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                    @NonNull
+                    @Override
+                    public ActivityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-                //Layoutinflater and viewholder that are dynamically populated from FireStore
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_row, parent, false);
-                ActivityViewHolder viewHolder = new ActivityViewHolder(view);
-                return viewHolder;
+                        //Layoutinflater and viewholder that are dynamically populated from FireStore
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_row, parent, false);
+                        ActivityViewHolder viewHolder = new ActivityViewHolder(view);
+                        return viewHolder;
+                    }
+                };
+
+
+                //Setting adapter for list and start listening
+                adapter.startListening();
+                myActivityList.setAdapter(adapter);
+
+
+
             }
-        };
-        //Setting adapter for list and start listening
-        adapter.startListening();
-        myActivityList.setAdapter(adapter);
+        });
+
+
+
     }
 
 

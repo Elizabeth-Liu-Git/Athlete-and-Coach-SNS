@@ -10,7 +10,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -62,30 +61,32 @@ public class databaseInteraction implements databaseLayer{
 
     }
 
-    @Override
-    public  ArrayList<String> getRelevantActivityIds(String uid) {
-        ArrayList<String> relevant_activity_ids = new ArrayList<String>();
 
+    public void readData(AsynchCallback asynchCallback){
 
-        Query query_relevant_activities = db.collection("Users").document(uid).collection("AssignedExercise");
-        query_relevant_activities.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
+        db.collection("Users").document(SignIn.USERID).collection("AssignedExercise")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            //Collecting the data from the db
+                            ArrayList<String> idList = new ArrayList<>();
 
-                    //Adding to the newly cleared arraylist of activity ids relevant to the athlete
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        relevant_activity_ids.add(document.get("Activity ID").toString());
+                            //Adding to the newly cleared arraylist of activity ids relevant to the athlete
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                idList.add(document.get("Activity ID").toString());
 
+                            }
+                            asynchCallback.onCallback(idList);
+                            Log.d(TAG+" idList", idList.toString());
+                        }
                     }
-                    Log.d(TAG, relevant_activity_ids.toString());
-                }
-            }
-        });
-
-        return relevant_activity_ids;
+                });
 
 
     }
+
+
 
 }
