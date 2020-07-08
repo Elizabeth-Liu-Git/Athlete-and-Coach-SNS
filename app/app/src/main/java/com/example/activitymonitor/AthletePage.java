@@ -30,8 +30,7 @@ public class AthletePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_athlete_page);
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+
 
         //Instantiating Tab Items
         tabLayoutAthletePage = (TabLayout) findViewById(R.id.athlete_layout);

@@ -143,7 +143,7 @@ public class AssignExercise extends AppCompatActivity {
         });
 
 
-                final Spinner atheleteDropDown = findViewById(R.id.athlete);
+
 //create a list of items for the spinner.
 //
 //create an adapter to describe how the items are displayed, adapters are used in several places in android.
