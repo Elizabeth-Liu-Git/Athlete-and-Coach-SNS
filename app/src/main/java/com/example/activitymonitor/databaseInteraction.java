@@ -24,6 +24,9 @@ public class databaseInteraction implements databaseLayer{
     private static final String TAG = "database";
     public FirebaseFirestore db;
 
+    /**
+     * @param inDb
+     */
     public databaseInteraction(FirebaseFirestore inDb){
         db = inDb;
     }
@@ -93,6 +96,9 @@ public class databaseInteraction implements databaseLayer{
 
 
     }
+
+
+
 
 
 
