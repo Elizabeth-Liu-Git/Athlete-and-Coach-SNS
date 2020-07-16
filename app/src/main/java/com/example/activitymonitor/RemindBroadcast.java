@@ -10,11 +10,13 @@ import android.os.Handler;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-public class Notifications extends BroadcastReceiver {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-    public static void setNotification(String time){
+public class RemindBroadcast extends BroadcastReceiver {
 
-    }
+
 
     /**
      * This method is called when the BroadcastReceiver is receiving an Intent
@@ -63,6 +65,14 @@ public class Notifications extends BroadcastReceiver {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         notificationManager.notify(200, builder.build());
+
+    }
+
+    public static long stringTimeToLong(String time) throws ParseException {
+        Date date1= new SimpleDateFormat("dd/MM/yyyy").parse(time);
+        long ms = date1.getTime();
+
+        return ms;
 
     }
 }

@@ -1,5 +1,8 @@
 package com.example.activitymonitor;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +17,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.text.ParseException;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 /**
  * AthletePage class which contains the activity that is accessed by an athlete user
@@ -114,5 +121,24 @@ public class AthletePage extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    public static void createAlarm(String t, int req, Context c) throws ParseException {
+        AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(c, RemindBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(c, req, intent, 0);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, RemindBroadcast.stringTimeToLong(t), pendingIntent);
+    }
+
+    public static void cancelAlarm(int req, Context c){
+        AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(c, RemindBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(c, req, intent, 0);
+
+        alarmManager.cancel(pendingIntent);
+
     }
 }
