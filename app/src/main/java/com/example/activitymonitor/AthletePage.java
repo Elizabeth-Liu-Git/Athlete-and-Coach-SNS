@@ -49,6 +49,13 @@ public class AthletePage extends AppCompatActivity {
         pagerAdapterAthletePage = new PageAdapter(getSupportFragmentManager(), tabLayoutAthletePage.getTabCount());
         viewPagerAthletePage.setAdapter(pagerAdapterAthletePage);
 
+        //TODO
+        try {
+            createAlarm(System.currentTimeMillis()+10, 69, this);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         /**
          * Tab Layout for the Athlete Page
          */
@@ -123,13 +130,18 @@ public class AthletePage extends AppCompatActivity {
         return true;
     }
 
-    public static void createAlarm(String t, int req, Context c) throws ParseException {
+    public static void createAlarm(long t, int req, Context c) throws ParseException {
         AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(c, RemindBroadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(c, req, intent, 0);
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, RemindBroadcast.stringTimeToLong(t), pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,t, pendingIntent);
+    }
+
+    public static void createAlarm(String t, int req, Context c) throws ParseException {
+
+        createAlarm( RemindBroadcast.stringTimeToLong(t), req, c);
     }
 
     public static void cancelAlarm(int req, Context c){
