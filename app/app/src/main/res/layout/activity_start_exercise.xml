@@ -64,6 +64,7 @@
         android:layout_height="wrap_content"
         android:text="Start"
         android:onClick="startExercise"
+        android:id="@+id/start_btn_startexercise"
         />
     <!--Button that pauses exercise-->
     <Button
@@ -71,6 +72,7 @@
         android:layout_height="wrap_content"
         android:text="Pause"
         android:onClick="pauseExercise"
+        android:id="@+id/pause_btn_startexercise"
         />
     <!--Button that completes/submits exercise-->
     <Button
@@ -78,6 +80,7 @@
         android:layout_height="wrap_content"
         android:text="Finish!"
         android:onClick="finishExercise"
+        android:id="@+id/submit_btn_startexercise"
         />
 
     <!--Exercise name display-->
