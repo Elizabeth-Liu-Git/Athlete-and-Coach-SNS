@@ -256,6 +256,7 @@ public class AssignExercise extends AppCompatActivity {
         // Add the coach userID and athlete userID
         AssignedExercise.put("CoachID", coachID);
         AssignedExercise.put("UserID", theUserID);
+        AssignedExercise.put("Complete",false);//indicates whether activity is complete
 
 
 // Add a new document with a generated ID

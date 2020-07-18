@@ -17,6 +17,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.ParseException;
 
@@ -32,6 +34,9 @@ public class AthletePage extends AppCompatActivity {
     private ViewPager viewPagerAthletePage;
     private TabItem tabUpcoming, tabHistory;
     public PageAdapter pagerAdapterAthletePage;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private databaseInteraction dataB = new databaseInteraction(db);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +135,13 @@ public class AthletePage extends AppCompatActivity {
         return true;
     }
 
-    public static void createAlarm(long t, int req, Context c) throws ParseException {
+    /**
+     * @param t
+     * @param req
+     * @param c
+     * @throws ParseException
+     */
+    public  void createAlarm(long t, int req, Context c) throws ParseException {
         AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(c, RemindBroadcast.class);
@@ -139,12 +150,23 @@ public class AthletePage extends AppCompatActivity {
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,t, pendingIntent);
     }
 
-    public static void createAlarm(String t, int req, Context c) throws ParseException {
+    /**
+     * @param t
+     * @param req
+     * @param c
+     * @throws ParseException
+     */
+    public  void createAlarm(String t, int req, Context c) throws ParseException {
 
         createAlarm( RemindBroadcast.stringTimeToLong(t), req, c);
     }
 
-    public static void cancelAlarm(int req, Context c){
+
+    /**
+     * @param req Integer value to specify requestCode value
+     * @param c Context variable to pass through current context of application
+     */
+    public void cancelAlarm(int req, Context c){
         AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(c, RemindBroadcast.class);
@@ -153,4 +175,6 @@ public class AthletePage extends AppCompatActivity {
         alarmManager.cancel(pendingIntent);
 
     }
+
+
 }

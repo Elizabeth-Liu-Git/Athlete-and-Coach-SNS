@@ -100,6 +100,7 @@ public class CreateExercise extends AppCompatActivity {
         activity.put("actId",id);//Redundant id field to allow for querying
 
 
+
         ref.set(activity)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
