@@ -1,21 +1,22 @@
-package com.example.activitymonitor;
+package com.example.activitymonitor.model;
+
+import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.Exclude;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-/**
- * Placeholder for User information, currently not fully implemented
- */
 public class User {
 
     // Auto-generated ID for each User
     private String UserID;
 
-    // Set of keys which are the IDs of MessageCollection objects
-    Map<String, Boolean> keys;
+    // Set of keys: UserID of the other user and the CollectionID of the MessageCollection
+    HashMap<String, String> keys = new HashMap<>();
 
     private int Age;
     private String FirstName;
@@ -33,11 +34,10 @@ public class User {
         PhoneNumber = phoneNumber;
         UserType = userType;
         Weight = weight;
-        keys = new HashMap<>();
     }
 
-    // TODO: 2020-06-10 toString set to ID for testing
     @Override
+    @NonNull
     public String toString() {
         return FirstName + " " + LastName;
     }
@@ -98,11 +98,11 @@ public class User {
         Weight = weight;
     }
 
-    public Map<String, Boolean> getKeys() {
+    public HashMap<String, String> getKeys() {
         return keys;
     }
 
-    public void setKeys(Map<String, Boolean> keys) {
+    public void setKeys(HashMap<String, String> keys) {
         this.keys = keys;
     }
 }
