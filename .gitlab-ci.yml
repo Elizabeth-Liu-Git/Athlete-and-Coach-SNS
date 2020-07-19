@@ -53,3 +53,5 @@ debugTests:
   stage: test
   script:
     - ./gradlew -Pci --console=plain :app:testDebug
+  tags:
+    - ugrad
