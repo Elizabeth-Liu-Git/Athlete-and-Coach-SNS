@@ -6,17 +6,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Placeholder Activity that allows the user to sign out, will show user info later
  */
 public class ProfilePage extends AppCompatActivity {
 
+    LinearLayout sendMessageButton;
 
     /**
      * When the activity is loaded add listeners and functions to buttons, if user submits we sign them out
@@ -27,8 +30,8 @@ public class ProfilePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
-        TextView newName = (TextView) findViewById(R.id.name);
-        newName.setText("Default Name");
+        /*TextView newName = (TextView) findViewById(R.id.name);
+        newName.setText("Default Name");*/
 
         Button confirmExerciseButton = findViewById(R.id.buttonSignOut);
         confirmExerciseButton.setOnClickListener(new View.OnClickListener() {
@@ -36,6 +39,23 @@ public class ProfilePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SignOut();
+            }
+        });
+
+        /*
+        If user clicks on "Send a message" button, redirect to CommentsPage
+        (Will)
+         */
+        sendMessageButton = findViewById(R.id.send_message_button);
+        sendMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent msgIntent = new Intent(ProfilePage.this, SendMessageActivity.class);
+
+                // Get user profile to pass to CommentsPage
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                msgIntent.putExtra("USERID", currentUser.getUid());
+                startActivity(msgIntent);
             }
         });
     }
