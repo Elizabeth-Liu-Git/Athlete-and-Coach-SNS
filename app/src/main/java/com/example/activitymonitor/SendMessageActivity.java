@@ -245,6 +245,11 @@ public class SendMessageActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Reads user IDs from the AssignedExercise subcollection and adds the other party's ID
+     * to an ArrayList. This ID is the ID of the other User we wish to message
+     * @param callback Custom callback from FirestoreUserCallback interface
+     */
     private void readUserIDs(final FirestoreUserCallback callback) {
 
         ArrayList<String> userIDs = new ArrayList<>();
@@ -272,6 +277,11 @@ public class SendMessageActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Using the IDs retrieved from the readUserIDs method, adds the User objects to an ArrayList
+     * of type User then sends this list to the userList global variable in the onCreate method.
+     * @param callback Custom callback from FirestoreCallback interface
+     */
     private void getUsers(final FirestoreCallback callback) {
 
         readUserIDs(new FirestoreUserCallback() {
@@ -288,8 +298,7 @@ public class SendMessageActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
-                                        System.out.println("******************TEST******************* task results");
-                                        System.out.println(task.getResult().toObject(User.class).getUserID());
+
                                         uList.add(task.getResult().toObject(User.class));
                                     }
                                     callback.onCallback(uList);
@@ -388,13 +397,17 @@ public class SendMessageActivity extends AppCompatActivity {
     }
 
     /**
-     * Interface implemented by readData method. Contains onCallback() method to be overridden
+     * Interface implemented by getUsers method. Contains onCallback() method to be overridden
      * by the implementation.
      */
     interface FirestoreCallback {
         void onCallback(ArrayList<User> list);
     }
 
+    /**
+     * Interface implemented by readUserIDs method. Contains onCallback() method to be overridden
+     * by the implementation.
+     */
     interface FirestoreUserCallback {
         void onCallback(ArrayList<String> list);
     }
