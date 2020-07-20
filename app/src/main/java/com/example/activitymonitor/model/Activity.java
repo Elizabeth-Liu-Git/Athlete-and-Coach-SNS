@@ -1,4 +1,4 @@
-package com.example.activitymonitor;
+package com.example.activitymonitor.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

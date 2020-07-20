@@ -33,6 +33,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -64,6 +65,8 @@ public class AssignExercise extends AppCompatActivity {
     String theUserID = "";
     String theActivityID = "";
 
+    String userID, coachID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public class AssignExercise extends AppCompatActivity {
         final Spinner exerciseDropDown = findViewById(R.id.exercisedropdown);
         final Spinner atheleteDropDown = findViewById(R.id.athlete);
 //a list of scanner needs to be implemented
+
+        coachID = FirebaseAuth.getInstance().getUid();
 
         String element1 = "choose an athlete";
         userIDs.add("No athlete on select");
@@ -179,6 +184,8 @@ public class AssignExercise extends AppCompatActivity {
             public void onClick(View v) {
                 exerciseNameString = exerciseDropDown.getSelectedItem().toString();
                 atheleteNameString = atheleteDropDown.getSelectedItem().toString();
+
+
                 // String to be scanned to find the pattern.
                 String regex = "^(3[01]|[12][0-9]|[1-9])/(1[0-2]|[1-9])/[0-9]{4}$";
                 Pattern pattern = Pattern.compile(regex);
@@ -246,6 +253,9 @@ public class AssignExercise extends AppCompatActivity {
         AssignedExercise.put("Date", getDateString);
         AssignedExercise.put("Activity ID", theActivityID);
 
+        // Add the coach userID and athlete userID
+        AssignedExercise.put("CoachID", coachID);
+        AssignedExercise.put("UserID", theUserID);
 
 
 // Add a new document with a generated ID
@@ -256,8 +266,30 @@ public class AssignExercise extends AppCompatActivity {
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        // Add the assigned activity to the athlete document
                         db.collection("Users")
                                 .document(theUserID)
+                                .collection("AssignedExercise")
+                                .add(AssignedExercise)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error adding document", e);
+                                    }
+                                });
+                        Toast.makeText(AssignExercise.this, "You have successfully assigned an exercise to an athlete",
+                                Toast.LENGTH_SHORT).show();
+
+                        // Add the assigned activity to the coach document
+                        db.collection("Users")
+                                .document(coachID)
                                 .collection("AssignedExercise")
                                 .add(AssignedExercise)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
