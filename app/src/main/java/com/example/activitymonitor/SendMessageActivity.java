@@ -84,13 +84,12 @@ public class SendMessageActivity extends AppCompatActivity {
         currentUserID = currentUser.getUid();
 
         /*
-         * Populates ArrayList userList with User objects, then connects them to an ArrayAdapter
-         * to be displayed in a Spinner
+         * Populates ArrayList with User objects who have assigned us an activity, or who we have
+         * assigned an activity to.
          */
-        readData(new FirestoreCallback() {
+        getUsers(new FirestoreCallback() {
             @Override
             public void onCallback(ArrayList<User> list) {
-                Log.d(TAG, list.toString());
                 userList = list;
 
                 // Set these users to be displayed in the spinner
@@ -108,25 +107,28 @@ public class SendMessageActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 // Prevent automatic selection of the first item in the spinner
-                if (isSpinnerInitial) {
+                /*if (isSpinnerInitial) {
                     isSpinnerInitial = false;
                 } else {
-                    // Assigns the selected user in the drop-down menu
-                    User selectedUser = userList.get(position);
-                    selectedUserID = selectedUser.getUserID();
 
-                    // Identify if the currentUserID is in the selected user's keys list
-                    HashMap<String, String> keys = selectedUser.getKeys();
+                }
+*/
+                // Assigns the selected user in the drop-down menu
+                User selectedUser = userList.get(position);
+                System.out.println("POSITION: " + position);
+                selectedUserID = selectedUser.getUserID();
 
-                    // If no conversation exists between users, create one
-                    assert keys != null;
-                    if (!keys.containsKey(currentUserID)) {
-                        // Create a new message collection between the two users
-                        createMessageCollection(currentUserID, selectedUserID);
-                    } else {
-                        messageCollectionID = keys.get(currentUserID);
-                        readMessages();
-                    }
+                // Identify if the currentUserID is in the selected user's keys list
+                HashMap<String, String> keys = selectedUser.getKeys();
+
+                // If no conversation exists between users, create one
+                assert keys != null;
+                if (!keys.containsKey(currentUserID)) {
+                    // Create a new message collection between the two users
+                    createMessageCollection(currentUserID, selectedUserID);
+                } else {
+                    messageCollectionID = keys.get(currentUserID);
+                    readMessages();
                 }
             }
 
@@ -243,37 +245,59 @@ public class SendMessageActivity extends AppCompatActivity {
                 });
     }
 
-    /**
-     * Custom callback to populate userList ArrayList with User objects from Firebase.
-     * @param callback FirestoreCallback to be overridden when implemented.
-     */
-    private void readData(final FirestoreCallback callback) {
+    private void readUserIDs(final FirestoreUserCallback callback) {
 
-        // Add users from Firebase to arraylist
-        final ArrayList<User> uList = new ArrayList<>();
+        ArrayList<String> userIDs = new ArrayList<>();
 
-        UsersRef.get()
+        db.collection("Users").document(currentUserID)
+                .collection("AssignedExercise").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                uList.add(documentSnapshot.toObject(User.class));
+                                String CoachID = document.getData().get("CoachID").toString();
+                                String UserID = document.getData().get("UserID").toString();
+
+                                if (!CoachID.equals(currentUserID)) {
+                                    userIDs.add(CoachID);
+                                } else if (!UserID.equals(currentUserID)) {
+                                    userIDs.add(UserID);
+                                }
                             }
-
-                            callback.onCallback(uList);
-                        } else {
-                            Log.d(TAG, "Error retrieving users: ", task.getException());
+                            callback.onCallback(userIDs);
                         }
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, e.toString());
-                    }
                 });
+    }
+
+    private void getUsers(final FirestoreCallback callback) {
+
+        readUserIDs(new FirestoreUserCallback() {
+            @Override
+            public void onCallback(ArrayList<String> list) {
+                ArrayList<String> userIDs = list;
+
+                ArrayList<User> uList = new ArrayList<>();
+
+                for (int i = 0; i < userIDs.size(); i++) {
+
+                    db.collection("Users").document(userIDs.get(i)).get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        System.out.println("******************TEST******************* task results");
+                                        System.out.println(task.getResult().toObject(User.class).getUserID());
+                                        uList.add(task.getResult().toObject(User.class));
+                                    }
+                                    callback.onCallback(uList);
+                                }
+                            });
+                }
+            }
+        });
 
     }
 
@@ -369,5 +393,9 @@ public class SendMessageActivity extends AppCompatActivity {
      */
     interface FirestoreCallback {
         void onCallback(ArrayList<User> list);
+    }
+
+    interface FirestoreUserCallback {
+        void onCallback(ArrayList<String> list);
     }
 }
