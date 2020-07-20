@@ -84,7 +84,7 @@ public class databaseInteraction implements databaseLayer{
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             //Collecting the data from the db
-                            ArrayList<String> idList = new ArrayList<>();
+                            ArrayList<Object> idList = new ArrayList<>();
 
                             //Adding to the newly cleared arraylist of activity ids relevant to the athlete
                             for (QueryDocumentSnapshot document : task.getResult()) {
