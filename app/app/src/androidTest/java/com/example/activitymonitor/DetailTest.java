@@ -54,7 +54,7 @@ public class DetailTest {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String detail = document.getString("Detail");
                                 assert("This is the detail message of activity 1".equals(detail));
-                            }
+                        }
                         }
                     }
                 });
