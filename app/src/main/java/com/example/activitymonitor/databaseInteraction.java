@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.activitymonitor.model.AssignedActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -12,6 +13,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.model.Document;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -72,7 +74,7 @@ public class databaseInteraction implements databaseLayer{
 
 
     /**
-     * readRelevantActivityIds() serves to get an arraylist of activity ids tgar are relevant (assigned) to the signed in athlete
+     * readRelevantActivityIds() serves to get an arraylist of activity ids that are relevant (assigned) to the signed in athlete
      * @param asynchCallback pass through an asynch callback object so the data can be used once retreived frm firebase
      */
     public void readRelevantActivityIds(AsynchCallback asynchCallback){
@@ -88,7 +90,7 @@ public class databaseInteraction implements databaseLayer{
 
                             //Adding to the newly cleared arraylist of activity ids relevant to the athlete
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                idList.add(document.get("Activity ID").toString());
+                                idList.add(document.get("ActivityID").toString());
 
                             }
                             asynchCallback.onCallback(idList);
@@ -99,6 +101,36 @@ public class databaseInteraction implements databaseLayer{
 
 
     }
+
+    /**
+     * readRelevantAssignedActivities() serves to get an arraylist of assigned activities to enable for activity based functionality
+     * @param asynchCallback pass through an asynch callback object so the data can be used once retreived frm firebase
+     */
+    public void readRelevantAssignedActivities(AsynchCallback asynchCallback){
+
+        db.collection("Users").document(SignIn.USERID).collection("AssignedExercise")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            //Collecting the data from the db
+                            ArrayList<Object> itemList = new ArrayList<>();
+
+                            //Adding to the newly cleared arraylist of activity ids relevant to the athlete
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                itemList.add(document.toObject(AssignedActivity.class));
+
+                            }
+                            asynchCallback.onCallback(itemList);
+                            Log.d(TAG+" itemList", itemList.toString());
+                        }
+                    }
+                });
+
+
+    }
+
 
 
 

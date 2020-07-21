@@ -19,8 +19,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.model.Document;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
@@ -173,6 +175,11 @@ public class AthletePage extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(c, req, intent, 0);
 
         alarmManager.cancel(pendingIntent);
+
+    }
+
+    public void checkAlarms(){
+
 
     }
 

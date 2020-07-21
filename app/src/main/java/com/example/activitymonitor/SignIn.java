@@ -236,6 +236,9 @@ public class SignIn extends AppCompatActivity {
         this.finishAffinity();
     }
 
+    /**
+     *Used to initialize notification channel on application start
+     */
     private void createNotificationChannel(){
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
             //channel properties for notification
