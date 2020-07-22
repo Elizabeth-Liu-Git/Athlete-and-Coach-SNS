@@ -179,6 +179,12 @@ public class AthletePage extends AppCompatActivity {
     }
 
     public void checkAlarms(){
+        dataB.readRelevantAssignedActivities(new AsynchCallback() {
+            @Override
+            public void onCallback(ArrayList<Object> resultList) {
+
+            }
+        });
 
 
     }
