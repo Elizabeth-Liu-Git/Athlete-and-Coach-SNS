@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ public class AthletePage extends AppCompatActivity {
         //TODO
         try {
             createAlarm(System.currentTimeMillis()+10, 69, this);
+            checkAlarms();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -182,7 +184,7 @@ public class AthletePage extends AppCompatActivity {
         dataB.readRelevantAssignedActivities(new AsynchCallback() {
             @Override
             public void onCallback(ArrayList<Object> resultList) {
-
+                Log.d("activitiesretreived", resultList.toString());
             }
         });
 
