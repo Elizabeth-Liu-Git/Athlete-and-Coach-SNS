@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.activitymonitor.model.AssignedActivity;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -184,7 +185,10 @@ public class AthletePage extends AppCompatActivity {
         dataB.readRelevantAssignedActivities(new AsynchCallback() {
             @Override
             public void onCallback(ArrayList<Object> resultList) {
-                Log.d("activitiesretreived", resultList.toString());
+                for(Object a : resultList){
+                    AssignedActivity act = (AssignedActivity) a;
+
+                }
             }
         });
 
