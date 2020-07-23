@@ -28,12 +28,29 @@ public class databaseInteractionTest {
 
     }
 
+    @Test
+    public void readRelevantAssignedActivities() {
+        databaseLayer d = new databaseLayerMock();
+
+        d.readRelevantActivityIds(new AsynchCallback() {
+            @Override
+            public void onCallback(ArrayList<String> idList) {
+
+            }
+        });
+
+    }
+
     class databaseLayerMock implements databaseLayer{
         public void saveExerciseData(String uid, String id, long time, boolean done) {
             return;
         }
 
         public void readRelevantActivityIds(AsynchCallback a){
+            return;
+        }
+
+        public void readRelevantAssignedActivities(AsynchCallback a){
             return;
         }
     }

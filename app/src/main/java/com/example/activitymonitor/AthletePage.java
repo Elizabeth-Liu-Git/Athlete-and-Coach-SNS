@@ -185,6 +185,7 @@ public class AthletePage extends AppCompatActivity {
         dataB.readRelevantAssignedActivities(new AsynchCallback() {
             @Override
             public void onCallback(ArrayList<Object> resultList) {
+                //Looping through retreived assigned activities
                 for(Object a : resultList){
                     AssignedActivity act = (AssignedActivity) a;
 
