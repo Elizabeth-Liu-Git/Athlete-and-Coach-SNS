@@ -161,9 +161,13 @@ public class AthletePage extends AppCompatActivity {
      * @param c
      * @throws ParseException
      */
-    public  void createAlarm(String t, int req, Context c) throws ParseException {
+    public  void createAlarm(String t, int req, Context c) {
 
-        createAlarm( RemindBroadcast.stringTimeToLong(t), req, c);
+        try {
+            createAlarm( RemindBroadcast.stringTimeToLong(t), req, c);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -191,6 +195,10 @@ public class AthletePage extends AppCompatActivity {
                 //Looping through retreived assigned activities
                 for(Object a : resultList){
                     AssignedActivity act = (AssignedActivity) a;
+
+                    Log.d("ALARMCREATED: DATE--", act.getDate());
+                    Log.d("ALARMCREATED: REQ--", ""+databaseInteraction.getUniqueInteger(act.getActivityID()));
+                    createAlarm( act.getDate(),databaseInteraction.getUniqueInteger(act.getActivityID()), AthletePage.this);
                 }
             }
         });
