@@ -181,6 +181,9 @@ public class AthletePage extends AppCompatActivity {
 
     }
 
+    /**
+     * checkAlarms() serves to check assigned activities for an athlete and then set or unset alarms for each dependent on completion
+     * */
     public void checkAlarms(){
         dataB.readRelevantAssignedActivities(new AsynchCallback() {
             @Override
@@ -188,7 +191,6 @@ public class AthletePage extends AppCompatActivity {
                 //Looping through retreived assigned activities
                 for(Object a : resultList){
                     AssignedActivity act = (AssignedActivity) a;
-
                 }
             }
         });
