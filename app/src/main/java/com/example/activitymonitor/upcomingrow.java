@@ -28,7 +28,7 @@ public class upcomingrow extends AppCompatActivity {
         TextView namebox = (TextView) findViewById(R.id.exercise_name);
         String name = namebox.getText().toString();
         intent.putExtra("name", name);
-        intent.setClass(this, Detail.class);
+        intent.setClass(this, com.example.activitymonitor.Detail.class);
         startActivityForResult(intent, 0x002);
     }
 }
