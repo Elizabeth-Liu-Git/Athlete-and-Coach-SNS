@@ -196,14 +196,16 @@ public class AthletePage extends AppCompatActivity {
                 for(Object a : resultList){
                     AssignedActivity act = (AssignedActivity) a;
 
+                    int req = databaseInteraction.getUniqueInteger(act.getActivityID()); //Alarm req # (int)
+
                     if(!act.getComplete()){
                         Log.d("ALARMCREATED: DATE--", act.getDate());
                         Log.d("ALARMCREATED: REQ--", ""+databaseInteraction.getUniqueInteger(act.getActivityID()));
-                        createAlarm( act.getDate(),databaseInteraction.getUniqueInteger(act.getActivityID()), AthletePage.this);
+                        createAlarm( act.getDate(),req, AthletePage.this);
                     }
                     else{
                         Log.d("ALARMTODELETE: REQ--", ""+databaseInteraction.getUniqueInteger(act.getActivityID()));
-
+                        cancelAlarm(req, AthletePage.this);
 
                     }
 
