@@ -141,10 +141,10 @@ public class AthletePage extends AppCompatActivity {
     }
 
     /**
-     * @param t
-     * @param req
-     * @param c
-     * @throws ParseException
+     * @param t long value in ms when alarm is to go off
+     * @param req req # is a unique integer value that corresponds to the alarm pendingintent
+     * @param c c is the context for the intent actions
+     * @throws ParseException for parsing the date which is stored as a string in firestore
      */
     public  void createAlarm(long t, int req, Context c) throws ParseException {
         AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
@@ -156,11 +156,10 @@ public class AthletePage extends AppCompatActivity {
     }
 
     /**
-     * @param t
-     * @param req
-     * @param c
-     * @throws ParseException
-     */
+     * @param t String value for the date which will be parsed into a long (ms)
+     * @param req req # is a unique integer value that corresponds to the alarm pendingintent
+     * @param c c is the context for the intent actions
+     * */
     public  void createAlarm(String t, int req, Context c) {
 
         try {
