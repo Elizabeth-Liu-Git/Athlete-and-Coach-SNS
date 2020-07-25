@@ -145,7 +145,7 @@ public class AthletePage extends AppCompatActivity {
      * @param c c is the context for the intent actions
      * @throws ParseException for parsing the date which is stored as a string in firestore
      */
-    public  void createAlarm(long t, int req, Context c) throws ParseException {
+    public  void createAlarm(long t, int req, Context c, String exName) throws ParseException {
         AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(c, RemindBroadcast.class);
@@ -159,10 +159,10 @@ public class AthletePage extends AppCompatActivity {
      * @param req req # is a unique integer value that corresponds to the alarm pendingintent
      * @param c c is the context for the intent actions
      * */
-    public  void createAlarm(String t, int req, Context c) {
+    public  void createAlarm(String t, int req, Context c, String exName) {
 
         try {
-            createAlarm( RemindBroadcast.stringTimeToLong(t), req, c);
+            createAlarm( RemindBroadcast.stringTimeToLong(t), req, c, exName);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -186,7 +186,7 @@ public class AthletePage extends AppCompatActivity {
     /**
      * checkAlarms() serves to check assigned activities for an athlete and then set or unset alarms for each dependent on completion
      * */
-    public void checkAlarms(){
+    public void checkAlarms() throws ParseException{
         dataB.readRelevantAssignedActivities(new AsynchCallback() {
             @Override
             public void onCallback(ArrayList<Object> resultList) {
@@ -199,7 +199,7 @@ public class AthletePage extends AppCompatActivity {
                     if(!act.getComplete()){
                         Log.d("ALARMCREATED: DATE--", act.getDate());
                         Log.d("ALARMCREATED: REQ--", ""+databaseInteraction.getUniqueInteger(act.getActivityID()));
-                        createAlarm( act.getDate(),req, AthletePage.this);
+                        createAlarm( act.getDate(),req, AthletePage.this, act.getExerciseName());
                     }
                     else{
                         Log.d("ALARMTODELETE: REQ--", ""+databaseInteraction.getUniqueInteger(act.getActivityID()));
