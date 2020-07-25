@@ -58,9 +58,8 @@ public class AthletePage extends AppCompatActivity {
         pagerAdapterAthletePage = new PageAdapter(getSupportFragmentManager(), tabLayoutAthletePage.getTabCount());
         viewPagerAthletePage.setAdapter(pagerAdapterAthletePage);
 
-        //TODO
+        //Setting alarms for outstanding exercises for the athlete
         try {
-            createAlarm(System.currentTimeMillis()+10, 69, this);
             checkAlarms();
         } catch (ParseException e) {
             e.printStackTrace();
