@@ -58,7 +58,7 @@ public class RemindBroadcast extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notifyActivityMonitor")
                 .setSmallIcon(R.drawable.ic_fitness_center_black_24dp)
-                .setContentTitle("Activity Monitor Alert")
+                .setContentTitle(context.getString(R.string.AlertHeader))
                 .setContentText("Pending Exercises Remaining!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
