@@ -22,7 +22,7 @@ public class PastActivity extends CoachCalendar {
 
         for (int i = 0; i < exerciseNameArray.size(); i++) {
             activityArrayList.add(new HistoricalActivity(exerciseNameArray.get(i), athleteNameArray.get(i),
-                    noteArray.get(i), "1", "1", false, 25200));
+                    noteArray.get(i), "1", "1", false, 25200, dateArray.get(i)));
         }
 
         //creates/calls the recycle view and passes the arrayList
@@ -36,5 +36,6 @@ public class PastActivity extends CoachCalendar {
         exerciseNameArray.clear();
         athleteNameArray.clear();
         noteArray.clear();
+        dateArray.clear();
     }
 }

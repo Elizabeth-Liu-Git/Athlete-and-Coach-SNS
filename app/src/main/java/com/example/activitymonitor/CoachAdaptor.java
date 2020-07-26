@@ -38,6 +38,7 @@ public class CoachAdaptor extends RecyclerView.Adapter<CoachAdaptor.ViewHolder> 
         holder.assignedAthlete.setText("Assigned Athlete: " + activity.getAthleteName());
         holder.completed.setText("Completed: " + activity.isComplete());
         holder.timer.setText("Time Elapsed: " + activity.getTimer());
+        holder.date.setText("Date Assigned " + activity.getDate());
     }
 
     @Override
@@ -51,6 +52,7 @@ public class CoachAdaptor extends RecyclerView.Adapter<CoachAdaptor.ViewHolder> 
         public TextView assignedAthlete;
         public TextView timer;
         public TextView completed;
+        public TextView date;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +61,7 @@ public class CoachAdaptor extends RecyclerView.Adapter<CoachAdaptor.ViewHolder> 
             assignedAthlete = itemView.findViewById(R.id.assignedAthlete);
             completed = itemView.findViewById(R.id.completed);
             timer = itemView.findViewById(R.id.timer);
+            date = itemView.findViewById(R.id.date);
 
         }
     }
