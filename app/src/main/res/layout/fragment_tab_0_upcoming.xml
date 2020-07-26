@@ -21,7 +21,8 @@ XML Layout File for the Fragment that displays the athlete's upcoming exercises
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/upcoming_recycleview">
+        android:id="@+id/upcoming_recycleview"
+        android:layout_marginTop="45dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
