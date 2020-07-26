@@ -3,6 +3,7 @@ package com.example.activitymonitor;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -81,7 +82,6 @@ public class CoachCalendar extends AppCompatActivity {
                     String[] parts = selectedFullAthlete.split(" ");
                     selectedAthlete = parts[1];
                     getUID();
-                    //getExercise1();
                 }
             }
             @Override
@@ -95,8 +95,15 @@ public class CoachCalendar extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getExercise1();
-                if (noteArray.isEmpty()) showDialog();
-               else startActivity(intent);
+                //allows for delay to get info from DB
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (noteArray.isEmpty()) showDialog();
+                        else startActivity(intent);
+                    }
+                }, 500);
             }
         });
     }
@@ -124,24 +131,6 @@ public class CoachCalendar extends AppCompatActivity {
     /**
      * retrieves assignedExercise activity from firebase and saves to to arrayList
      */
-    private void getExercise(){
-        db = FirebaseFirestore.getInstance();
-        db.collection("Assigned Exercise")
-                .whereEqualTo("Athlete name", selectedAthlete)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                exerciseNameArray.add(document.get("Exercise name").toString());
-                                athleteNameArray.add(document.get("Athlete name").toString());
-                                noteArray.add(document.get("Coach notes").toString());
-                            }
-                        }
-                    }
-                });
-    }
 
     private void getExercise1(){
         db = FirebaseFirestore.getInstance();
@@ -165,6 +154,9 @@ public class CoachCalendar extends AppCompatActivity {
                 });
     }
 
+    /**
+     * gets the UID of the selected user
+     */
     private void getUID (){
         db = FirebaseFirestore.getInstance();
         db.collection("Users")
