@@ -7,16 +7,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d03950f9-09a3-4a7c-ab0e-f7a6a952688a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3a_API_30" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_R" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -25,7 +23,17 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="activityMonitor" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
   </component>
@@ -210,6 +218,10 @@
       <screen x="0" y="50" width="5120" height="2042" />
     </state>
     <state x="1738" y="292" width="1543" height="1492" key="CommitChangelistDialog2/0.50.5120.2042@0.50.5120.2042" timestamp="1595195491335" />
+    <state x="100" y="123" width="1720" height="857" key="DiffContextDialog" timestamp="1595786948908">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="100" y="123" width="1720" height="857" key="DiffContextDialog/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595786948908" />
     <state x="1182" y="361" width="846" height="1236" key="RollbackChangesDialog" timestamp="1595195237039">
       <screen x="0" y="50" width="5120" height="2042" />
     </state>
@@ -218,6 +230,14 @@
       <screen x="0" y="50" width="5120" height="2042" />
     </state>
     <state x="599" y="244" key="SettingsEditor/0.50.5120.2042@0.50.5120.2042" timestamp="1595082767223" />
+    <state x="707" y="274" key="VCS.ChangeListViewerDialog" timestamp="1595786898899">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="707" y="274" key="VCS.ChangeListViewerDialog/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595786898899" />
+    <state x="810" y="474" key="VCS.ChangelistChooser" timestamp="1595786896436">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="810" y="474" key="VCS.ChangelistChooser/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595786896436" />
     <state x="1205" y="484" width="1600" height="1066" key="Vcs.Push.Dialog.v2" timestamp="1595195531918">
       <screen x="0" y="50" width="5120" height="2042" />
     </state>
@@ -230,9 +250,18 @@
       <screen x="0" y="50" width="5120" height="2042" />
     </state>
     <state x="1486" y="585" key="com.intellij.ide.util.TipDialog/0.50.5120.2042@0.50.5120.2042" timestamp="1595194679380" />
-    <state x="1172" y="803" width="867" height="352" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595082956403">
-      <screen x="0" y="50" width="5120" height="2042" />
+    <state x="440" y="413" width="440" height="183" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595786849342">
+      <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="1172" y="803" width="867" height="352" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.50.5120.2042@0.50.5120.2042" timestamp="1595082956403" />
+    <state x="440" y="413" width="440" height="183" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595786849342" />
+    <state x="535" y="374" key="git4idea.ui.GitUnstashDialog" timestamp="1595786847120">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="535" y="374" key="git4idea.ui.GitUnstashDialog/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595786847120" />
+    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1595786940555">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595786940555" />
   </component>
 </project>
