@@ -33,5 +33,8 @@ public class PastActivity extends CoachCalendar {
 
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdaptor);
+        exerciseNameArray.clear();
+        athleteNameArray.clear();
+        noteArray.clear();
     }
 }
