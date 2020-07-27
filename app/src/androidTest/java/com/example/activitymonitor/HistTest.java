@@ -8,7 +8,7 @@ import org.junit.Test;
  */
 public class HistTest {
 
-    HistoricalActivity activity = new HistoricalActivity("Test", "Usain", "Run fast", "5", "2", true, 600);
+    HistoricalActivity activity = new HistoricalActivity("Test", "Usain", "Run fast", "5", "2", true, 600, "07/30/2020");
 
 
     @Test
@@ -33,12 +33,18 @@ public class HistTest {
     }
     @Test
     public void HistTestSets() {
-        if (!activity.getSets().equals("2H")) throw new AssertionError("Sets doesn't match");
+        if (!activity.getSets().equals("2")) throw new AssertionError("Sets doesn't match");
 
     }
     @Test
     public void HistTestReps() {
         if (!activity.getReps().equals("5")) throw new AssertionError("Reps doesn't match");
+
+    }
+
+    @Test
+    public void HistTestDate() {
+        if (!activity.getDate().equals("07/30/2020")) throw new AssertionError("Date doesn't match");
 
     }
 

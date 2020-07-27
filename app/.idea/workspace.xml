@@ -7,7 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d03950f9-09a3-4a7c-ab0e-f7a6a952688a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/androidTest/java/com/example/activitymonitor/PastActTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/androidTest/java/com/example/activitymonitor/CoachCalendarTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/androidTest/java/com/example/activitymonitor/HistTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/androidTest/java/com/example/activitymonitor/HistTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +41,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -63,7 +74,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.idesettings.quicklists" />
   </component>
-  <component name="RunManager" selected="Android App.activityMonitor-app">
+  <component name="RunManager" selected="Android Instrumented Tests.PastActTest">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -173,6 +184,255 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="HistTest" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="2" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="com.example.activitymonitor.HistTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HistTestActivity()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="3" />
+      <option name="METHOD_NAME" value="HistTestActivity" />
+      <option name="CLASS_NAME" value="com.example.activitymonitor.HistTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HistTestDate()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="3" />
+      <option name="METHOD_NAME" value="HistTestDate" />
+      <option name="CLASS_NAME" value="com.example.activitymonitor.HistTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HistTestNotes()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="3" />
+      <option name="METHOD_NAME" value="HistTestNotes" />
+      <option name="CLASS_NAME" value="com.example.activitymonitor.HistTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PastActTest" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="2" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="com.example.activitymonitor.PastActTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Android Instrumented Tests.PastActTest" />
+        <item itemvalue="Android Instrumented Tests.HistTest" />
+        <item itemvalue="Android Instrumented Tests.HistTestDate()" />
+        <item itemvalue="Android Instrumented Tests.HistTestNotes()" />
+        <item itemvalue="Android Instrumented Tests.HistTestActivity()" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -240,6 +500,10 @@
       <screen x="0" y="50" width="5120" height="2042" />
     </state>
     <state x="1032" y="264" width="1146" height="1318" key="#activityMonitor-app/0.50.5120.2042@0.50.5120.2042" timestamp="1595194746079" />
+    <state x="525" y="470" key="#com.google.gct.testrecorder.ui.TestClassNameInputDialog" timestamp="1595870568779">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="525" y="470" key="#com.google.gct.testrecorder.ui.TestClassNameInputDialog/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595870568779" />
     <state x="622" y="268" key="#com.intellij.ide.util.MemberChooser" timestamp="1595793792621">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
@@ -257,38 +521,38 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="100" y="123" width="1720" height="857" key="DiffContextDialog/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595786948908" />
-    <state width="1440" height="356" key="GridCell.Tab.0.bottom" timestamp="1595802449814">
+    <state width="1420" height="289" key="GridCell.Tab.0.bottom" timestamp="1595871125176">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1440" height="356" key="GridCell.Tab.0.bottom/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595802449814" />
-    <state width="1440" height="356" key="GridCell.Tab.0.center" timestamp="1595802449814">
+    <state width="1420" height="289" key="GridCell.Tab.0.bottom/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595871125176" />
+    <state width="1420" height="289" key="GridCell.Tab.0.center" timestamp="1595871125175">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1440" height="356" key="GridCell.Tab.0.center/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595802449814" />
-    <state width="1440" height="356" key="GridCell.Tab.0.left" timestamp="1595802449813">
+    <state width="1420" height="289" key="GridCell.Tab.0.center/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595871125175" />
+    <state width="1420" height="289" key="GridCell.Tab.0.left" timestamp="1595871125175">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1440" height="356" key="GridCell.Tab.0.left/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595802449813" />
-    <state width="1440" height="356" key="GridCell.Tab.0.right" timestamp="1595802449814">
+    <state width="1420" height="289" key="GridCell.Tab.0.left/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595871125175" />
+    <state width="1420" height="289" key="GridCell.Tab.0.right" timestamp="1595871125176">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1440" height="356" key="GridCell.Tab.0.right/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595802449814" />
-    <state width="1440" height="356" key="GridCell.Tab.1.bottom" timestamp="1595802449815">
+    <state width="1420" height="289" key="GridCell.Tab.0.right/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595871125176" />
+    <state width="1420" height="356" key="GridCell.Tab.1.bottom" timestamp="1595870571871">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1440" height="356" key="GridCell.Tab.1.bottom/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595802449815" />
-    <state width="1440" height="356" key="GridCell.Tab.1.center" timestamp="1595802449815">
+    <state width="1420" height="356" key="GridCell.Tab.1.bottom/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595870571871" />
+    <state width="1420" height="356" key="GridCell.Tab.1.center" timestamp="1595870571871">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1440" height="356" key="GridCell.Tab.1.center/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595802449815" />
-    <state width="1440" height="356" key="GridCell.Tab.1.left" timestamp="1595802449815">
+    <state width="1420" height="356" key="GridCell.Tab.1.center/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595870571871" />
+    <state width="1420" height="356" key="GridCell.Tab.1.left" timestamp="1595870571870">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1440" height="356" key="GridCell.Tab.1.left/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595802449815" />
-    <state width="1440" height="356" key="GridCell.Tab.1.right" timestamp="1595802449815">
+    <state width="1420" height="356" key="GridCell.Tab.1.left/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595870571870" />
+    <state width="1420" height="356" key="GridCell.Tab.1.right" timestamp="1595870571871">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1440" height="356" key="GridCell.Tab.1.right/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595802449815" />
+    <state width="1420" height="356" key="GridCell.Tab.1.right/1920.23.1880.1057/0.23.1920.1057@0.23.1920.1057" timestamp="1595870571871" />
     <state x="1182" y="361" width="846" height="1236" key="RollbackChangesDialog" timestamp="1595195237039">
       <screen x="0" y="50" width="5120" height="2042" />
     </state>
