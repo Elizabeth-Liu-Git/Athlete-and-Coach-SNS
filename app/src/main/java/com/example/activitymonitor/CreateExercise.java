@@ -25,8 +25,8 @@ import java.util.Map;
  */
 public class CreateExercise extends AppCompatActivity {
 
-    String exerciseNameString, repNumString, setNumString, noteString,detailString;
-    EditText exerciseName, repNum, setNum, note,detail;
+    String exerciseNameString, repNumString, setNumString, noteString;
+    EditText exerciseName, repNum, setNum, note;
     FirebaseFirestore db;
 
 
@@ -39,7 +39,6 @@ public class CreateExercise extends AppCompatActivity {
         repNum = findViewById(R.id.RepNumBox);
         setNum = findViewById(R.id.SetNumBox);
         note = findViewById(R.id.Notes);
-        detail= findViewById(R.id.Detail);
 
         db = FirebaseFirestore.getInstance();
 
@@ -51,7 +50,6 @@ public class CreateExercise extends AppCompatActivity {
                 repNumString = repNum.getText().toString();
                 setNumString = setNum.getText().toString();
                 noteString = note.getText().toString();
-                detailString = detail.getText().toString();
                 showDialog();
             }
         });
@@ -65,11 +63,11 @@ public class CreateExercise extends AppCompatActivity {
         AlertDialog.Builder window = new AlertDialog.Builder(CreateExercise.this);
         window.setTitle("Please Confirm Info Below")
                 .setMessage("Exercise name: " + exerciseNameString + '\n' + "Reps: " + repNumString+
-                        '\n' + "Sets: " + setNumString + '\n' + "Coach notes: " + noteString+"Details:"+detailString)
+                        '\n' + "Sets: " + setNumString + '\n' + "Coach notes: " + noteString)
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        uploadData(exerciseNameString, repNumString, setNumString, noteString,detailString);
+                        uploadData(exerciseNameString, repNumString, setNumString, noteString);
                         goBack();
                     }
                 })
@@ -86,7 +84,7 @@ public class CreateExercise extends AppCompatActivity {
      * @param set - number of sets
      * @param note - any notes that the coach may have
      */
-    private void uploadData(String name, String rep, String set, String note,String detail){
+    private void uploadData(String name, String rep, String set, String note){
         DocumentReference ref = db.collection("Activities").document();
         String id = ref.getId();
 
@@ -96,7 +94,6 @@ public class CreateExercise extends AppCompatActivity {
         activity.put("Instructional Notes", note);
         activity.put("Reps", rep);
         activity.put("Sets", set);
-        activity.put("Detail",detail);
         activity.put("actId",id);//Redundant id field to allow for querying
 
 
