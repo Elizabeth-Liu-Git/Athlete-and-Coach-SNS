@@ -29,8 +29,18 @@ public class databaseInteraction implements databaseLayer{
     private static final String TAG = "database";
     public FirebaseFirestore db;
 
+    public Boolean getDesiredCompleteValue() {
+        return desiredCompleteValue;
+    }
+
+    public void setDesiredCompleteValue(Boolean desiredCompleteValue) {
+        this.desiredCompleteValue = desiredCompleteValue;
+    }
+
+    public Boolean desiredCompleteValue = false; //SHow incomplete by default
+
     /**
-     * @param inDb
+     * @param inDb database instance needed for database interactions
      */
     public databaseInteraction(FirebaseFirestore inDb){
         db = inDb;
@@ -90,7 +100,10 @@ public class databaseInteraction implements databaseLayer{
 
                             //Adding to the newly cleared arraylist of activity ids relevant to the athlete
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                idList.add(document.get("ActivityID").toString());
+                                if(document.toObject(AssignedActivity.class).getComplete()== desiredCompleteValue){//If complete bool in firebase is false (i.e. outstanding exercise)
+                                    idList.add(document.get("ActivityID").toString());
+                                }
+
 
                             }
                             asynchCallback.onCallback(idList);
