@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,6 +23,8 @@ import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+
 /**
  * tab_0_upcoming()
  * Tab that contains and displays the athlete's upcoming exercises from the firebase database
@@ -33,7 +36,7 @@ public class tab_0_upcoming extends Fragment {
     private RecyclerView myActivityList; //recyclerview that is populated with upcoming exercises from firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance(); //Reference to Firestore cloud storage
     private String current_user_id = SignIn.USERID; //Current user's ID
-    private databaseInteraction dataB = new databaseInteraction(db);
+    protected databaseInteraction dataB = new databaseInteraction(db);
 
     Query query_activities; //Query that will find Activities that are assigned to user
     CollectionReference activities_collection;
@@ -48,7 +51,8 @@ public class tab_0_upcoming extends Fragment {
     }
 
     /**
-     *Start the exercise
+     * Start the exercise
+     *
      * @param activity, activity object to be passed through to start exercise
      */
     private void startEx(Activity activity) {
@@ -97,12 +101,12 @@ public class tab_0_upcoming extends Fragment {
                 FirestoreRecyclerOptions<Activity> options = new FirestoreRecyclerOptions.Builder<Activity>().setQuery(query_activities, Activity.class).build();
 
                 //RecyclerAdapter that displays the Activities as specified
-                FirestoreRecyclerAdapter<Activity,ActivityViewHolder> adapter
+                FirestoreRecyclerAdapter<Activity, ActivityViewHolder> adapter
                         = new FirestoreRecyclerAdapter<Activity, ActivityViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull ActivityViewHolder holder, int position, @NonNull Activity model) {
 
-                        model.setDocumentId( this.getSnapshots().getSnapshot(position).getId() );
+                        model.setDocumentId(this.getSnapshots().getSnapshot(position).getId());
                         //Setting the text for each field in the upcoming_row (holder)
                         holder.exercise_name.setText(model.getActivityName());
                         holder.exercise_notes.setText(model.getInstructionalNotes());
@@ -110,10 +114,8 @@ public class tab_0_upcoming extends Fragment {
                         holder.exercise_sets.setText(model.getSets());
 
 
-
-
                         //Activity Object passed through to the start exercise page
-                        final Activity[] current_activity_to_pass ={model};
+                        final Activity[] current_activity_to_pass = {model};
 
                         //Listener for the individual start exercise buttons
                         holder.start_exercise_button.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +124,7 @@ public class tab_0_upcoming extends Fragment {
                             }
                         });
                     }
+
                     @NonNull
                     @Override
                     public ActivityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -139,10 +142,8 @@ public class tab_0_upcoming extends Fragment {
                 myActivityList.setAdapter(adapter);
 
 
-
             }
         });
-
 
 
     }
@@ -153,15 +154,15 @@ public class tab_0_upcoming extends Fragment {
      * Specific viewholder that is used for the display of Activity objects in the RecyclerView
      * Allows for the recyclerview to be dynamically populated from the FireStore
      */
-    public static class ActivityViewHolder extends RecyclerView.ViewHolder{
+    public static class ActivityViewHolder extends RecyclerView.ViewHolder {
 
         View individualActivityView;
 
         //Initializing textview objects to be edited
-        TextView exercise_name, exercise_reps,exercise_sets,exercise_notes;
+        TextView exercise_name, exercise_reps, exercise_sets, exercise_notes;
         Button start_exercise_button;
 
-        public ActivityViewHolder(@NonNull View itemView){
+        public ActivityViewHolder(@NonNull View itemView) {
             //View Operations
             super(itemView);
             individualActivityView = itemView;
@@ -172,7 +173,7 @@ public class tab_0_upcoming extends Fragment {
             exercise_sets = itemView.findViewById(R.id.exercise_sets);
             exercise_notes = itemView.findViewById(R.id.exercise_notes);
             start_exercise_button = itemView.findViewById(R.id.start_exercise_button);
-            
+
         }
 
     }

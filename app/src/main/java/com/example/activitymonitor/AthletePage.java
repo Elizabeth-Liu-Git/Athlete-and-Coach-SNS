@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -27,6 +28,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import static androidx.core.content.ContextCompat.getSystemService;
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 /**
  * AthletePage class which contains the activity that is accessed by an athlete user
@@ -214,6 +216,13 @@ public class AthletePage extends AppCompatActivity {
 
 
     }
+    public void changeCompleteFilter(View view) {
+        Toast.makeText(getApplicationContext(),"Changing filter for complete",Toast.LENGTH_SHORT).show();
+
+
+    }
+
+
 
 
 }

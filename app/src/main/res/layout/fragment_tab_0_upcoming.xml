@@ -26,10 +26,16 @@ XML Layout File for the Fragment that displays the athlete's upcoming exercises
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Switch
-        android:id="@+id/completeQuery"
+    <ToggleButton
+
+        android:id="@+id/completeFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/filter_by_completed" />
+        android:text="@string/filter_by_completed"
+        android:onClick="changeCompleteFilter"
+        android:textOn="Hide Completed"
+        android:textOff="Show Completed"/>
+
+
 
 </FrameLayout>
