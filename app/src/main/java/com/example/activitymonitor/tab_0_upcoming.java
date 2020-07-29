@@ -58,6 +58,13 @@ public class tab_0_upcoming extends Fragment {
         startActivity(intent);
     }
 
+    private void startDe(Activity activity) {
+        Intent intent = new Intent(getContext(), Detail.class);
+        String name = activity.getActivityName();
+        intent.putExtra("name", name);
+
+        startActivity(intent);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -121,6 +128,11 @@ public class tab_0_upcoming extends Fragment {
                                 startEx(current_activity_to_pass[0]);
                             }
                         });
+                        holder.Detail.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                startDe(current_activity_to_pass[0]);
+                            }
+                        });
                     }
                     @NonNull
                     @Override
@@ -159,7 +171,7 @@ public class tab_0_upcoming extends Fragment {
 
         //Initializing textview objects to be edited
         TextView exercise_name, exercise_reps,exercise_sets,exercise_notes;
-        Button start_exercise_button;
+        Button start_exercise_button,Detail;
 
         public ActivityViewHolder(@NonNull View itemView){
             //View Operations
@@ -172,7 +184,7 @@ public class tab_0_upcoming extends Fragment {
             exercise_sets = itemView.findViewById(R.id.exercise_sets);
             exercise_notes = itemView.findViewById(R.id.exercise_notes);
             start_exercise_button = itemView.findViewById(R.id.start_exercise_button);
-            
+            Detail = itemView.findViewById(R.id.Detail);
         }
 
     }

@@ -25,7 +25,7 @@ XML Layout file for each invidivual Activity instance
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/exercise_name"
-            android:text="Exercise Title"
+            android:text="Push ups"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:textColor="#594F4F"
@@ -70,6 +70,13 @@ XML Layout file for each invidivual Activity instance
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:text="Start This Exercise" />
+
+        <Button
+            android:id="@+id/Detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="detail"
+            android:text="Details" />
 
     </LinearLayout>
 
