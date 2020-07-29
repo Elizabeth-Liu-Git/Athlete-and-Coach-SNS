@@ -33,8 +33,8 @@ XML Layout File for the Fragment that displays the athlete's upcoming exercises
         android:layout_height="wrap_content"
         android:text="@string/filter_by_completed"
         android:onClick="changeCompleteFilter"
-        android:textOn="Filter By Incomplete Exercises"
-        android:textOff="Filter By Completed Exercises"/>
+        android:textOn="@string/filter_by_incomplete_exercises"
+        android:textOff="@string/filter_by_completed_exercises"/>
 
 
 
