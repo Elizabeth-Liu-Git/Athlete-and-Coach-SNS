@@ -218,6 +218,7 @@ public class AthletePage extends AppCompatActivity {
     }
 
     /**
+     * handler for toggle button to filter by completed value
      * @param view view parameter required for the toggle
      */
     public void changeCompleteFilter(View view) {
@@ -229,6 +230,9 @@ public class AthletePage extends AppCompatActivity {
         else{
             databaseInteraction.desiredCompleteValue=false;
         }
+
+        Intent intent = new Intent(this, AthletePage.class);
+        this.startActivity(intent);
 
 
 
