@@ -1,5 +1,7 @@
 package com.example.activitymonitor;
 
+import com.google.firebase.firestore.model.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,8 @@ import java.util.List;
  * used to get data asynchronously for databaseinteractions
  */
 public interface AsynchCallback {
-    void onCallback(ArrayList<String> idList);
+    void onCallback(ArrayList<Object> resultList);
+
+
 
 }

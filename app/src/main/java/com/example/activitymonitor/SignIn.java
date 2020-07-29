@@ -1,7 +1,10 @@
 package com.example.activitymonitor;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -79,6 +82,9 @@ public class SignIn extends AppCompatActivity {
         setContentView(R.layout.sign_in);
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
+        //creating notification channel
+        createNotificationChannel();
 
         emailText = findViewById(R.id.editTextTextEmailAddress);
         passwordText = findViewById(R.id.editTextTextPassword);
@@ -228,5 +234,31 @@ public class SignIn extends AppCompatActivity {
         Intent intent = new Intent(this, SignIn.class);
         this.startActivity(intent);
         this.finishAffinity();
+    }
+
+    /**
+     *Used to initialize notification channel on application start
+     */
+    private void createNotificationChannel(){
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+            //channel properties for notification
+            CharSequence name = "ActivityMonitorNotificationChannel";
+            String description = "Channel for Reminders for Activity Monitor";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            //Creating and setting channel properties
+            NotificationChannel channel = new NotificationChannel("notifyActivityMonitor", name, importance);
+
+            channel.setDescription(description);
+
+            //notification manager
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+
+
+
+
+        }
     }
 }

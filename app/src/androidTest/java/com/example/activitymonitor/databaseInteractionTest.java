@@ -21,11 +21,32 @@ public class databaseInteractionTest {
 
         d.readRelevantActivityIds(new AsynchCallback() {
             @Override
-            public void onCallback(ArrayList<String> idList) {
+            public void onCallback(ArrayList<Object> idList) {
 
             }
         });
 
+    }
+
+    @Test
+    public void readRelevantAssignedActivities() {
+        databaseLayer d = new databaseLayerMock();
+
+        d.readRelevantActivityIds(new AsynchCallback() {
+            @Override
+            public void onCallback(ArrayList<Object> idList) {
+
+            }
+        });
+
+    }
+
+    @Test
+    public void uniqueIntTest(){
+        int a = databaseInteraction.getUniqueInteger("One String");
+        int b = databaseInteraction.getUniqueInteger("Other String???");
+
+        assertFalse(a==b);
     }
 
     class databaseLayerMock implements databaseLayer{
@@ -34,6 +55,10 @@ public class databaseInteractionTest {
         }
 
         public void readRelevantActivityIds(AsynchCallback a){
+            return;
+        }
+
+        public void readRelevantAssignedActivities(AsynchCallback a){
             return;
         }
     }

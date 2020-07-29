@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.activitymonitor.model.AssignedActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -12,7 +13,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.model.Document;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +29,19 @@ public class databaseInteraction implements databaseLayer{
     private static final String TAG = "database";
     public FirebaseFirestore db;
 
+    public Boolean getDesiredCompleteValue() {
+        return desiredCompleteValue;
+    }
+
+    public void setDesiredCompleteValue(Boolean desiredCompleteValue) {
+        this.desiredCompleteValue = desiredCompleteValue;
+    }
+
+    public static Boolean desiredCompleteValue = false; //SHow incomplete by default
+
+    /**
+     * @param inDb database instance needed for database interactions
+     */
     public databaseInteraction(FirebaseFirestore inDb){
         db = inDb;
     }
@@ -66,7 +84,7 @@ public class databaseInteraction implements databaseLayer{
 
 
     /**
-     * readRelevantActivityIds() serves to get an arraylist of activity ids tgar are relevant (assigned) to the signed in athlete
+     * readRelevantActivityIds() serves to get an arraylist of activity ids that are relevant (assigned) to the signed in athlete
      * @param asynchCallback pass through an asynch callback object so the data can be used once retreived frm firebase
      */
     public void readRelevantActivityIds(AsynchCallback asynchCallback){
@@ -78,11 +96,14 @@ public class databaseInteraction implements databaseLayer{
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             //Collecting the data from the db
-                            ArrayList<String> idList = new ArrayList<>();
+                            ArrayList<Object> idList = new ArrayList<>();
 
                             //Adding to the newly cleared arraylist of activity ids relevant to the athlete
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                idList.add(document.get("Activity ID").toString());
+                                if(document.toObject(AssignedActivity.class).getComplete()== desiredCompleteValue){//If complete bool in firebase is false (i.e. outstanding exercise)
+                                    idList.add(document.get("ActivityID").toString());
+                                }
+
 
                             }
                             asynchCallback.onCallback(idList);
@@ -93,6 +114,72 @@ public class databaseInteraction implements databaseLayer{
 
 
     }
+
+    /**
+     * readRelevantAssignedActivities() serves to get an arraylist of assigned activities to enable for activity based functionality
+     * @param asynchCallback pass through an asynch callback object so the data can be used once retreived frm firebase
+     */
+    public void readRelevantAssignedActivities(AsynchCallback asynchCallback){
+
+        db.collection("Users").document(SignIn.USERID).collection("AssignedExercise")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            //Collecting the data from the db
+                            ArrayList<Object> itemList = new ArrayList<>();
+
+                            //Adding to the newly cleared arraylist of activity ids relevant to the athlete
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                itemList.add(document.toObject(AssignedActivity.class));
+
+                            }
+                            asynchCallback.onCallback(itemList);
+                            Log.d(TAG+" itemList", itemList.toString());
+                        }
+                    }
+                });
+
+
+    }
+
+
+
+
+
+
+    public static int getUniqueInteger(String name){
+        //attribution: based on code retreived from https://stackoverflow.com/questions/17583565/get-unique-integer-value-from-string on jul 15 2020
+        String plaintext = name;
+        int hash = name.hashCode();
+        MessageDigest m;
+        try {
+            m = MessageDigest.getInstance("MD5");
+            m.reset();
+            m.update(plaintext.getBytes());
+            byte[] digest = m.digest();
+            BigInteger bigInt = new BigInteger(1,digest);
+            String hashtext = bigInt.toString(10);
+            // Now we need to zero pad it if you actually want the full 32 chars.
+            while(hashtext.length() < 32 ){
+                hashtext = "0"+hashtext;
+            }
+            int temp = 0;
+            for(int i =0; i<hashtext.length();i++){
+                char c = hashtext.charAt(i);
+                temp+=(int)c;
+            }
+            return hash+temp;
+        } catch (NoSuchAlgorithmException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return hash;
+    }
+
+
+
 
 
 

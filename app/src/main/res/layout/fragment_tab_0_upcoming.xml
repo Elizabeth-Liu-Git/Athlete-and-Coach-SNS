@@ -21,8 +21,21 @@ XML Layout File for the Fragment that displays the athlete's upcoming exercises
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/upcoming_recycleview">
+        android:id="@+id/upcoming_recycleview"
+        android:layout_marginTop="45dp">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ToggleButton
+
+        android:id="@+id/completeFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_by_completed"
+        android:onClick="changeCompleteFilter"
+        android:textOn="@string/filter_by_incomplete_exercises"
+        android:textOff="@string/filter_by_completed_exercises"/>
+
+
 
 </FrameLayout>

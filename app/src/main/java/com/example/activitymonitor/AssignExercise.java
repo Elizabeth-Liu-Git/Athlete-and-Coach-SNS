@@ -248,14 +248,15 @@ public class AssignExercise extends AppCompatActivity {
 
     public void showDialog() {
         final Map<String, Object> AssignedExercise = new HashMap<>();
-        AssignedExercise.put("Exercise name", exerciseNameString);
-        AssignedExercise.put("Coach notes", noteString);
+        AssignedExercise.put("ExerciseName", exerciseNameString);
+        AssignedExercise.put("CoachNotes", noteString);
         AssignedExercise.put("Date", getDateString);
-        AssignedExercise.put("Activity ID", theActivityID);
+        AssignedExercise.put("ActivityID", theActivityID);
 
         // Add the coach userID and athlete userID
         AssignedExercise.put("CoachID", coachID);
         AssignedExercise.put("UserID", theUserID);
+        AssignedExercise.put("Complete",false);//indicates whether activity is complete
 
 
 // Add a new document with a generated ID
