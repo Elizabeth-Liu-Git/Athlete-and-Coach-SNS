@@ -111,7 +111,8 @@ public class SendMessageActivity extends AppCompatActivity {
     }
 
     /**
-     * Called by
+     * Called by onCreate method when an item is selected from the spinner.
+     * @param pos the position of the item from the spinner.
      */
     private void retrieveConversation(int pos) {
 
