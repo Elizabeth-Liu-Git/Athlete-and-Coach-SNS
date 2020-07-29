@@ -62,7 +62,6 @@ public class SendMessageActivity extends AppCompatActivity {
     private Spinner contactSpinner;
     private Button send;
     private EditText messageText;
-    boolean isSpinnerInitial = true;
 
     private ArrayList<User> userList;
     private String currentUserID, selectedUserID, messageCollectionID;
@@ -71,7 +70,6 @@ public class SendMessageActivity extends AppCompatActivity {
     private MessageListAdapter mMessageAdapter;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference UsersRef = db.collection("Users");
     private FirebaseUser currentUser;
 
     @Override
@@ -100,41 +98,40 @@ public class SendMessageActivity extends AppCompatActivity {
             }
         });
 
-        // When a contact is selected retrieve the conversation between the two users
         contactSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                // Prevent automatic selection of the first item in the spinner
-                /*if (isSpinnerInitial) {
-                    isSpinnerInitial = false;
-                } else {
-
-                }
-*/
-                // Assigns the selected user in the drop-down menu
-                User selectedUser = userList.get(position);
-                System.out.println("POSITION: " + position);
-                selectedUserID = selectedUser.getUserID();
-
-                // Identify if the currentUserID is in the selected user's keys list
-                HashMap<String, String> keys = selectedUser.getKeys();
-
-                // If no conversation exists between users, create one
-                assert keys != null;
-                if (!keys.containsKey(currentUserID)) {
-                    // Create a new message collection between the two users
-                    createMessageCollection(currentUserID, selectedUserID);
-                } else {
-                    messageCollectionID = keys.get(currentUserID);
-                    readMessages();
-                }
+                retrieveConversation(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
+
         });
+    }
+
+    /**
+     * Called by
+     */
+    private void retrieveConversation(int pos) {
+
+        // Assigns the selected user in the drop-down menu
+        User selectedUser = userList.get(pos);
+        selectedUserID = selectedUser.getUserID();
+
+        // Identify if the currentUserID is in the selected user's keys list
+        HashMap<String, String> keys = selectedUser.getKeys();
+
+        // If no conversation exists between users, create one
+        assert keys != null;
+        if (!keys.containsKey(currentUserID)) {
+            // Create a new message collection between the two users
+            createMessageCollection(currentUserID, selectedUserID);
+        } else {
+            messageCollectionID = keys.get(currentUserID);
+            readMessages();
+        }
+
     }
 
     /**
