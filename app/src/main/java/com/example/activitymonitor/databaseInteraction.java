@@ -37,7 +37,7 @@ public class databaseInteraction implements databaseLayer{
         this.desiredCompleteValue = desiredCompleteValue;
     }
 
-    public Boolean desiredCompleteValue = false; //SHow incomplete by default
+    public static Boolean desiredCompleteValue = false; //SHow incomplete by default
 
     /**
      * @param inDb database instance needed for database interactions

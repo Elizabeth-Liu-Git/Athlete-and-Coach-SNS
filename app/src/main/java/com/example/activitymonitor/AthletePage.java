@@ -216,8 +216,20 @@ public class AthletePage extends AppCompatActivity {
 
 
     }
+
+    /**
+     * @param view view parameter required for the toggle
+     */
     public void changeCompleteFilter(View view) {
         Toast.makeText(getApplicationContext(),"Changing filter for complete",Toast.LENGTH_SHORT).show();
+
+        if(databaseInteraction.desiredCompleteValue==false){
+            databaseInteraction.desiredCompleteValue=true;
+        }
+        else{
+            databaseInteraction.desiredCompleteValue=false;
+        }
+
 
 
     }
