@@ -94,7 +94,7 @@ public class AssignExercise extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .document(SignIn.USERID)
+                .document(coachID)
                 .collection("Athlete")
                 .whereEqualTo("approval", true)
                 .get()

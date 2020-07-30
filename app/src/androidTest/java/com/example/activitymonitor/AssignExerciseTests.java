@@ -8,6 +8,8 @@ import androidx.test.espresso.Espresso;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -72,17 +74,33 @@ public class AssignExerciseTests {
         final ArrayList<String> athletes = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         athletes.add("choose an athlete");
+        String coachID = FirebaseAuth.getInstance().getUid();
+
         db.collection("Users")
-                .whereEqualTo("userType", 2)
+                .document(coachID)
+                .collection("Athlete")
+                .whereEqualTo("approval", true)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                String name = document.get("firstName").toString() + " " + document.get("lastName").toString();
-                                String userID = document.getId();
-                                athletes.add(name);
+                                String userID = document.get("Id").toString();
+
+                                db.collection("Users")
+                                        .document(userID)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    String name = document.get("firstName").toString() + " " + document.get("lastName").toString();
+                                                    athletes.add(name);
+                                                }
+                                            }
+                                        });
                             }
                         }
                     }
@@ -114,7 +132,7 @@ public class AssignExerciseTests {
         onView(withText("Confirm"))
                 .check(doesNotExist());
         onView(withId(R.id.athlete)).perform(click());
-        onData(anything()).atPosition(2).perform(click());
+        onData(anything()).atPosition(1).perform(click());
         onView(withId(R.id.button2)).perform(click());
         onView(withText("Confirm"))
                 .check(doesNotExist());
@@ -137,7 +155,7 @@ public class AssignExerciseTests {
         onView(withId(R.id.exercisedropdown)).perform(click());
         onData(anything()).atPosition(0).perform(click());
         onView(withId(R.id.athlete)).perform(click());
-        onData(anything()).atPosition(2).perform(click());
+        onData(anything()).atPosition(1).perform(click());
         onView(withId(R.id.NoteBox)).perform(typeText("This is a test note!"));
         onView(withId(R.id.editText1)).perform(click());
         onView(withId(R.id.editText1)).perform(click());
