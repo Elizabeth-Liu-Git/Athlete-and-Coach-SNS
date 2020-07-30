@@ -139,7 +139,7 @@ public class AcceptRelationship extends AppCompatActivity {
                             .document(theDocumentID)
                             .update("approval", true);
 
-                    Toast.makeText(AcceptRelationship.this, "You have rejected the request",
+                    Toast.makeText(AcceptRelationship.this, "You have accepted the request",
                             Toast.LENGTH_SHORT).show();
 
                     Intent newExercise = new Intent(AcceptRelationship.this, CoachPage.class);
@@ -174,7 +174,7 @@ public class AcceptRelationship extends AppCompatActivity {
                             .delete();
 
 
-                    Toast.makeText(AcceptRelationship.this, "You have accepted the request",
+                    Toast.makeText(AcceptRelationship.this, "You have rejected the request",
                             Toast.LENGTH_SHORT).show();
                     Intent newExercise = new Intent(AcceptRelationship.this, CoachPage.class);
                     startActivityForResult(newExercise,1);
