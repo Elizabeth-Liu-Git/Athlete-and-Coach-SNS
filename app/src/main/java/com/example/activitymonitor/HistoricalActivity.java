@@ -12,6 +12,7 @@ public class HistoricalActivity {
     private String Sets;//Amount of sets for particular activity
     private boolean complete;//if the exercise is complete
     private int timer;//how long the exercise took (seconds)
+    private String date;
 
     /**
      * @param activityName - name of activity
@@ -22,7 +23,7 @@ public class HistoricalActivity {
      * @param complete - boolean if the activity has been finished
      * @param timer - how long activity took
      */
-    public HistoricalActivity (String activityName, String athlete, String instructionalNotes, String reps, String sets, Boolean complete, int timer) {
+    public HistoricalActivity (String activityName, String athlete, String instructionalNotes, String reps, String sets, Boolean complete, int timer, String date) {
         ActivityName = activityName;
         this.athlete = athlete;
         InstructionalNotes = instructionalNotes;
@@ -30,6 +31,7 @@ public class HistoricalActivity {
         Sets = sets;
         this.complete = complete;
         this.timer = timer;
+        this.date = date;
     }
 
     /**
@@ -53,6 +55,8 @@ public class HistoricalActivity {
     public String getSets() {
         return Sets;
     }
+
+    public String getDate(){return date;}
 
     public boolean isComplete() {
         return complete;
