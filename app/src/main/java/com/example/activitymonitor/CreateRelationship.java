@@ -1,8 +1,10 @@
 package com.example.activitymonitor;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,13 +33,15 @@ import java.util.regex.Pattern;
 public class CreateRelationship extends AppCompatActivity {
 private FirebaseFirestore db;
 private static final String TAG = "CreateRelationship";
+private String theCoachName;
+private ArrayList<String> coaches = new ArrayList<>();
+private ArrayList<String> coachIDs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_relationship);
-        ArrayList<String> coaches = new ArrayList<>();
-        ArrayList<String> coachIDs = new ArrayList<>();
+
         String pleaseSelectACoach = "Please select a coach";
         String iWillAddCoachLater = "I will add coach later";
         coaches.add(pleaseSelectACoach);
@@ -69,43 +73,16 @@ private static final String TAG = "CreateRelationship";
         confirmCoachButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String thecoachName = coachDropDown.getSelectedItem().toString();
+                theCoachName = coachDropDown.getSelectedItem().toString();
                 // String to be scanned to find the pattern.
-                if (thecoachName.equals("Please select a coach")) {
+                if (theCoachName.equals("Please select a coach")) {
                     Toast.makeText(CreateRelationship.this, "Please select a coach",
                             Toast.LENGTH_SHORT).show();
-                } else if (thecoachName.equals("I will add coach later")){
+                } else if (theCoachName.equals("I will add coach later")){
                         NotAssignCoath ();
                     }
-                    else{Toast.makeText(CreateRelationship.this, "You choosed a coach",
-                            Toast.LENGTH_SHORT).show();
-                    String thecoachID = coachIDs.get(coaches.indexOf(thecoachName));
-                    final Map<String, Object> Athlete = new HashMap<>();
-                    String theAthleteID = SignIn.USERID;
-                    Athlete.put("approval", false);
-                    Athlete.put("Id", theAthleteID);
-                    db.collection("Users")
-                            .document(thecoachID)
-                            .collection("Athlete")
-                            .add(Athlete)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error adding document", e);
-                                }
-                            });
-                    db.collection("Users")
-                            .document(SignIn.USERID)
-                            .update("Coach", thecoachID,
-                                    "approval", 2);
-
-                    NotAssignCoath ();
+                    else{
+                        popup();
 
                 }
             }
@@ -114,6 +91,50 @@ private static final String TAG = "CreateRelationship";
     private void NotAssignCoath (){
         Intent intent = new Intent(CreateRelationship.this, AthletePage.class);
         startActivity(intent);
+    }
+    private void popup() {
+        AlertDialog.Builder window = new AlertDialog.Builder(CreateRelationship.this);
+        window.setTitle("Please Confirm To Choose This Coach")
+                .setMessage("Coach name: " + theCoachName)
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Toast.makeText(CreateRelationship.this, "You choosed a coach",
+                                Toast.LENGTH_SHORT).show();
+                        String theCoachID = coachIDs.get(coaches.indexOf(theCoachName));
+                        final Map<String, Object> Athlete = new HashMap<>();
+                        String theAthleteID = SignIn.USERID;
+                        Athlete.put("approval", false);
+                        Athlete.put("Id", theAthleteID);
+                        db.collection("Users")
+                                .document(theCoachID)
+                                .collection("Athlete")
+                                .add(Athlete)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error adding document", e);
+                                    }
+                                });
+                        db.collection("Users")
+                                .document(SignIn.USERID)
+                                .update("Coach", theCoachID,
+                                        "approval", 2);
+
+                        NotAssignCoath ();
+                    }
+                })
+                .setNegativeButton("Cancel", null);
+
+        AlertDialog alert = window.create();
+        alert.show();
     }
 
 }
