@@ -8,16 +8,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * Placeholder Activity that allows the user to sign out, will show user info later
  */
 public class ProfilePage extends AppCompatActivity {
+    private FirebaseFirestore db;
+    private static final String TAG = "ProfilePage";
+    Long userType = 0L;
+    String userID = "";
 
     LinearLayout sendMessageButton;
 
@@ -39,6 +51,58 @@ public class ProfilePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SignOut();
+            }
+        });
+        LinearLayout addFriend = findViewById(R.id.addACoach);
+        db = FirebaseFirestore.getInstance();
+
+        addFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DocumentReference docRef = db.collection("Users").document(SignIn.USERID);
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            userType = document.getLong("userType");
+                            Long coach = 1L;
+                            if (userType.equals(coach)) {
+                                Intent accept_request_intent = new Intent(ProfilePage.this, AcceptRelationship.class);
+                                startActivity(accept_request_intent);
+                                Toast.makeText(ProfilePage.this, "You are accepting request as a coach",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                long approved = 1L;
+                                long pending = 2L;
+                                if(document.getLong("approval").equals(approved)){
+                                    Toast.makeText(ProfilePage.this, "You can not choose another coach, you already have a coach",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                                else if(document.getLong("approval").equals(pending)){
+                                    Toast.makeText(ProfilePage.this, "You can not choose another coach, you already send request for a coach",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Intent send_request_intent = new Intent(ProfilePage.this, CreateRelationship.class);
+                                    startActivity(send_request_intent);
+                                    Toast.makeText(ProfilePage.this, "You are sending request as an athlete",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            if (document.exists()) {
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+
+
             }
         });
 

@@ -83,7 +83,7 @@ public class SignIn extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        //creating notification channel
+//        creating notification channel
         createNotificationChannel();
 
         emailText = findViewById(R.id.editTextTextEmailAddress);
@@ -193,6 +193,10 @@ public class SignIn extends AppCompatActivity {
      */
     private void profileSetup() {
         Intent intent = new Intent(this, ProfileSetUp.class);
+        this.startActivity(intent);
+    }
+    private void profilePage() {
+        Intent intent = new Intent(this, ProfilePage.class);
         this.startActivity(intent);
     }
 

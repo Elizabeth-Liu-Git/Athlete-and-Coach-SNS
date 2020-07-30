@@ -79,8 +79,8 @@ public class ProfileSetUp extends AppCompatActivity {
                             coachPage();
                         }
                         else{
-                            db.collection("Users").document(USERID).update("firstName", firstString, "lastName", lastString, "userType", 2);
-                            athletePage();
+                            db.collection("Users").document(USERID).update("firstName", firstString, "lastName", lastString, "userType", 2, "approval", 0);
+                            chooseCoachPage();
                         }
                     }
                 }
@@ -92,8 +92,8 @@ public class ProfileSetUp extends AppCompatActivity {
     /**
      * send user to the athlete page
      */
-    private void athletePage() {
-        Intent intent = new Intent(this, AthletePage.class);
+    private void chooseCoachPage() {
+        Intent intent = new Intent(this, CreateRelationship.class);
         this.startActivity(intent);
     }
 
