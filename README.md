@@ -1,2 +1,1 @@
-Hello, This is the activity monitor
-
+In order to run this project, open the folder with Android Studio, and click run on a virtual mechine or on a real Andriod device.
