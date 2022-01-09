@@ -1,1 +1,2 @@
 In order to run this project, open the folder with Android Studio, and click run on a virtual mechine or on a real Andriod device.
+This is an application for coaches to talk and assign exerices for their own athletes
