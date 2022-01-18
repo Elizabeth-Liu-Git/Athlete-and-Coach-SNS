@@ -4,4 +4,4 @@ Athlete can send friend requests for coaches, and if coaches accept their friend
 Athlete can also talk with each other through SNS
 Coach will have a calender of the tasks that are not finished yet
 Collabrators: Rita Liu, Zachary Long, William Robbins, Huize Xu, Charles Rockwell, Alexander Westhaver
-Used tools: Android SDK
+Used tools: Android SDK 
